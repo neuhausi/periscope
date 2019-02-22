@@ -1,0 +1,99 @@
+# ----------------------------------------
+# --          PROGRAM ui_body.R         --
+# ----------------------------------------
+# USE: Create UI elements for the
+#      application body (right side on the
+#      desktop; contains output) and
+#      ATTACH them to the UI by calling
+#      add_ui_body()
+#
+# NOTEs:
+#   - All variables/functions here are
+#     not available to the UI or Server
+#     scopes - this is isolated
+# ----------------------------------------
+
+# -- IMPORTS --
+
+
+# ----------------------------------------
+# --      BODY ELEMENT CREATION         --
+# ----------------------------------------
+
+# -- Create Elements
+body1 <- box( id     = "bodyElement1",
+              title  = "Code Specifics and Examples",
+              width  = 8,
+              status = "primary",
+              collapsible = TRUE,
+              collapsed   = TRUE,
+              htmlOutput("busyind"),
+              htmlOutput("tooltips"),
+              htmlOutput("alerts"),
+              htmlOutput("download"))
+
+body2 <- box( id     = "bodyElement2",
+              title  = "Framework Information",
+              width  = 4,
+              status = "success",
+              collapsible = TRUE,
+              collapsed   = TRUE,
+              htmlOutput("proginfo") )
+
+body3 <- box( id     = "bodyElement3",
+              title  = "Downloadable Table",
+              width  = 12,
+              status = "primary",
+              collapsible = TRUE,
+              collapsed   = TRUE,
+              downloadableTableUI("exampleDT1",
+                                  list("csv", "tsv"),
+                                  "Download table data") )
+
+body4 <- box( id = "bodyElement4",
+              title = "CanvasXpress Plot",
+              width = 4,
+              status = "info",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              canvasXpressOutput("examplePlot1"))
+
+plot2_hover <- hoverOpts(id = "examplePlot2_hover")
+
+body5 <- box( id = "bodyElement5",
+              title = "DownloadablePlots - ggplot2 & lattice",
+              width = 8,
+              status = "info",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              tags$table(
+                   width = "100%",
+                   tags$tr(
+                       valign = "top",
+                       tags$td(width = "45%",
+                               downloadablePlotUI("examplePlot2",
+                                                  list("jpeg", "csv"),
+                                                  "Download plot or data",
+                                                  btn_halign = "left",
+                                                  btn_valign = "top",
+                                                  btn_overlap = FALSE,
+                                                  hoverOpts = plot2_hover)),
+                       tags$td(width = "10%", HTML("&nbsp;")),
+                       tags$td(width = "45%",
+                               downloadablePlotUI("examplePlot3",
+                                                  list("png", "tiff",
+                                                       "txt", "tsv"),
+                                                  btn_overlap = FALSE,
+                                                  "Download plot or data"))) ),
+              uiOutput("hover_info") )
+
+body6 <- box( id     = "bodyElement6",
+              title  = "Logging Information",
+              width  = 12,
+              status = "danger",
+              collapsible = FALSE,
+              htmlOutput("loginfo") )
+
+# -- Register Elements in the ORDER SHOWN in the UI
+# --    Note: Will be added before the standard framework footer
+add_ui_body(list(body1, body2, body3, body4, body5, body6), append = FALSE)

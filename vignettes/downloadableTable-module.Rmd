@@ -1,0 +1,185 @@
+---
+title: "Using the downloadableTable Shiny Module"
+author: "Dr. Connie Brett"
+date: "`r Sys.Date()`"
+output: 
+    rmarkdown::html_vignette:
+        toc: TRUE
+        toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{Using the downloadableTable Shiny Module}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+# Overview
+
+## Purpose
+
+This *Shiny Module* was created in order to provide a consistent-looking and
+easy-to-use table including a downloadFileButton that is automatically created,
+linked and managed.
+
+## Features
+
+* Uses the downloadFile Shiny Module functionality to ensure consistent
+download functionality and paradigm for the table data.
+* Ability to link different data sets to the displayed table and downloadFile
+functionality if desired 
+* User selection of multiple rows by default - can be single select also by 
+setting the appropriate option
+* Returns a reactive expression containing the rows of the table selected by
+the user
+* Supports full-table searching including regular expressions with search 
+highlighting
+* Columns are sortable in both directions
+* Configurable table "window" (viewing area) height with infinite vertical 
+scrolling (no paging)
+* Supports rownames and a table caption
+* Requires minimal code (see the Usage section for details)
+
+<br>
+
+# Usage
+
+## Shiny Module Overview
+
+Shiny modules consist of a pair of functions that modularize, or package, a 
+small piece of reusable functionality.  The UI function is called directly by
+the user to place the UI in the correct location (as with other shiny UI
+objects).  The server function is not called directly by the user of the module.
+Instead the module server function is called only once to set it up using the
+shiny::callModule function inside the server function (ie user-local session
+scope.  The callModule function supplies the first three arguments of the 
+Shiny Module's function inputs - the input, output, and session.  Additional 
+arguments supplied by the user in the callModule function are passed to the
+specific shiny module that is called.  There can be additional helper functions
+that are a part of a shiny module.
+
+The **downloadableTable** Shiny Module is a part of the *periscope* package and 
+consists of the following functions:
+
+* **downloadableTableUI** - the UI function to place the table in the 
+application
+* **downloadableTable** - the Server function supplied to callModule.
+
+
+## downloadableTableUI
+
+The **downloadableTableUI** function is called from the ui.R (or equivalent) 
+file in the location where the table should be placed.  This is similar to other
+UI element placement in shiny.
+
+The downloadableTableUI looks like:
+
+<center><img src="figures/downloadableTable-1.jpg" width="500px"></center>
+
+The downloadableTableUI function takes the unique object ID for the UI object.
+The next two arguments (downloadtypes and hovertext) are passed to the
+downloadFileButton and set the file types the button will allow the user to
+request and the downloadFileButton's tooltip text.  The contentHeight argument
+is optional but important - it sets the viewable height of the table content
+which can be any css-recognizable size value.
+
+DownloadableTables are multi-select by default, however if you need a table
+to only allow single row selections you can set the singleSelect argument
+to TRUE.
+
+
+```{r, eval=F}
+# Inside ui_body.R or ui_sidebar.R
+
+downloadableTableUI("object_id1", 
+                    downloadtypes = c("csv", "tsv"), 
+                    hovertext = "Download the data here!",
+                    contentHeight = "300px",
+                    singleSelect = FALSE)
+```
+
+## downloadableTable
+
+The **downloadableTable** function is not called directly - instead a call to 
+shiny::callModule is made inside the server.R (or equivalent) file to initialize
+the module.
+
+The call consists of the following:
+
+* the name of the module - unquoted
+* the unique object ID that was provided to downloadableTableUI when creating 
+the UI object
+* the logging logger to be used
+* the root of the downloaded file name to be used in the browser as a character
+string or a reactive expression that returns a character string
+* a **named list** of functions that provide the data to the downloadFileButton 
+(see below).  It is important that the types of files to be downloaded are
+matched to the correct data function in the list.  The data functions are 
+unquoted function names.  The functions will be called at the time the user 
+initiates a download *(see requirements below)*.
+* a data function providing the data for the visible table.  It can be the same,
+or different, data as that provided by the download data functions.  This
+allows finer control over what the user can view vs. download if desired.
+* whether or not to show rownames on the table
+* a table caption, if desired.
+
+
+**Data Function Requirements**
+
+* The function must require NO parameters.  No parameters will be provided
+when the function is called to retrieve the data.
+* The function must return an appropriate data format for the file type.  For
+instance, for csv/tsv/xlsx types the data returned should be convertable to
+a tabular type.  *Note*: For data shown in the table the data must be able to
+be converted to tabular format.
+* Since the function is called at the time the user requests the data it is 
+acceptable and recommended to use reactive expressions providing dynamic data 
+to the user from the application.  All the above requirements apply.
+
+
+**Reactive Return Value**
+
+The callModule function returns a reactive expression containing the selected
+rows (data, not references, rownumbers, etc - the actual table row data).  This
+allows the user to capture this to upate another table, chart, etc. as desired.
+It is acceptable to ignore the return value as well if this functionality is not
+needed.
+
+
+```{r, eval = F}
+# Inside server_local.R
+
+selectedrows <- callModule(downloadableTable, 
+                           "object_id1", 
+                           logger = ss_userAction.Log,
+                           filenameroot = "mydownload1",
+                           downloaddatafxns = list(csv = mydatafxn1, tsv = mydatafxn2),
+                           tabledata = mydatafxn3,
+                           rownames = FALSE,
+                           caption = "This is a great table!  By: Me" )
+
+# selectedrows is the reactive return value, captured for later use
+```
+
+
+## Sample Application
+
+For a complete running shiny example application using the downloadableTable
+module you can create and run a *periscope* sample application using:
+
+```{r, eval=F}
+library(periscope)
+create_new_application('mysampleapp', sampleapp = TRUE)
+runApp('mysampleapp')
+```
+
+<br>
+
+# Additional Resources
+
+
+**Vignettes**
+
+* [New Application](new-application.html)
+* [downloadFile Module](downloadFile-module.html)
+* [downloadablePlot Module](downloadablePlot-module.html)
+

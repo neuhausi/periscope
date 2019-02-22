@@ -42,5 +42,5 @@ parameters.
 }
 
 \seealso{
-\link[logging]{logging}
+\link[logging-package]{logging}
 }

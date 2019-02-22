@@ -15,7 +15,7 @@ Description: This package supports a ui-standardized environment as well as
 URL: https://github.com/cb4ds/periscope.git, http://canvasxpress.org
 BugReports: https://github.com/cb4ds/periscope/issues
 Repository: BRAN
-License: MIT + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends:

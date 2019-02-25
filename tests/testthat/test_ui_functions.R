@@ -22,7 +22,11 @@ test_that("fw_create_header", {
 
 check_sidebar_result <- function(result, advanced_existing = FALSE) {
     expect_equal(result$name, "aside")
-    expect_equal(result$attribs, list(id = "sidebarCollapsed", class = "main-sidebar", 'data-collapsed' = "false"))
+    if (length(result$attribs) == 2) {
+        expect_equal(result$attribs, list(class = "main-sidebar", 'data-collapsed' = "false"))
+    } else {
+        expect_equal(result$attribs, list(id = "sidebarCollapsed", class = "main-sidebar", 'data-collapsed' = "false"))
+    }
 
     result.children <- result$children
     expect_equal(length(result.children), 2)
@@ -53,7 +57,6 @@ test_that("fw_create_sidebar", {
 })
 
 test_that("fw_create_sidebar with existing advanced", {
-
     # setup
     side_advanced         <- shiny::isolate(.g_opts$side_advanced)
     .g_opts$side_advanced <- list(tags$p())

@@ -23,6 +23,15 @@ register them to the application framework and show them on the body area
 of the dashboard application
 }
 
+\examples{
+require(shiny)
+
+body1 <- htmlOutput("example1")
+body2 <- actionButton("exButton", label = "Example")
+
+add_ui_body(list(body1, body2))
+
+}
 \seealso{
 \link[periscope]{add_ui_sidebar_basic}
 

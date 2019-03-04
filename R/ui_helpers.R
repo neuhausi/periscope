@@ -18,6 +18,14 @@
 #' @seealso \link[periscope]{add_ui_sidebar_advanced}
 #' @seealso \link[periscope]{add_ui_body}
 #'
+#' @examples 
+#' require(shiny)
+#' 
+#' s1 <- selectInput("sample1", "A Select", c("A", "B", "C"))
+#' s2 <- radioButtons("sample2", NULL, c("A", "B", "C"))
+#' 
+#' add_ui_sidebar_basic(list(s1, s2), append = FALSE)
+#' 
 #' @export
 add_ui_sidebar_basic <- function(elementlist = NULL,
                                  append = FALSE,
@@ -55,6 +63,14 @@ add_ui_sidebar_basic <- function(elementlist = NULL,
 #' @seealso \link[periscope]{add_ui_sidebar_basic}
 #' @seealso \link[periscope]{add_ui_body}
 #'
+#' @examples 
+#' require(shiny)
+#' 
+#' s1 <- selectInput("sample1", "A Select", c("A", "B", "C"))
+#' s2 <- radioButtons("sample2", NULL, c("A", "B", "C"))
+#' 
+#' add_ui_sidebar_advanced(list(s1, s2), append = FALSE)
+#' 
 #' @export
 add_ui_sidebar_advanced <- function(elementlist = NULL,
                                     append = FALSE,
@@ -91,6 +107,14 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
 #' @seealso \link[periscope]{add_ui_sidebar_basic}
 #' @seealso \link[periscope]{add_ui_sidebar_advanced}
 #'
+#' @examples 
+#' require(shiny)
+#' 
+#' body1 <- htmlOutput("example1")
+#' body2 <- actionButton("exButton", label = "Example")
+#' 
+#' add_ui_body(list(body1, body2))
+#' 
 #' @export
 add_ui_body <- function(elementlist = NULL, append = FALSE) {
     if (append) {
@@ -164,7 +188,7 @@ ui_tooltip <- function(id, label = "", text = "") {
 #' parameters.
 #'
 #' @seealso \link[logging:logging-package]{logging}
-#'
+#' 
 #' @export
 set_app_parameters <- function(title, titleinfo = NULL,
                                loglevel = "DEBUG",

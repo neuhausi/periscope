@@ -74,6 +74,13 @@
 #' name\\www\\img\\tooltip.png
 #' }
 #'
+#'@examples
+#' # sample app named 'mytestapp' created in a temp dir
+#' create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
+#' 
+#' # blank app named 'myblankapp' created in a temp dir
+#' create_new_application(name = 'mytestapp', location = tempdir())
+#'
 #' @export
 create_new_application <- function(name, location = ".", sampleapp = FALSE) {
     usersep <- .Platform$file.sep

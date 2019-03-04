@@ -60,6 +60,15 @@ Paired with a call to \code{shiny::callModule(downloadableTable, id, ...)}
 in server.R
 }
 
+\examples{
+# Inside ui_body.R or ui_sidebar.R
+downloadableTableUI("object_id1", 
+                    downloadtypes = c("csv", "tsv"), 
+                    hovertext = "Download the data here!",
+                    contentHeight = "300px",
+                    singleSelect = FALSE)
+
+}
 \seealso{
 \link[periscope]{downloadableTable}
 

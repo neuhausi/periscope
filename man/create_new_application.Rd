@@ -88,3 +88,11 @@ name\\www\\img\\tooltip.png
 }
 }
 
+\examples{
+# sample app named 'mytestapp' created in a temp dir
+create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
+
+# blank app named 'myblankapp' created in a temp dir
+create_new_application(name = 'mytestapp', location = tempdir())
+
+}

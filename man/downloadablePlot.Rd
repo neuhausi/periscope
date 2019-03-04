@@ -51,6 +51,18 @@ server.R using the same id provided in \code{downloadablePlotUI}:
 downloadfxns, visibleplot)}}
 }
 
+\examples{
+# Inside server_local.R
+
+# callModule(downloadablePlot,
+#            "object_id1", 
+#            logger = ss_userAction.Log,
+#            filenameroot = "mydownload1",
+#            aspectratio = 1.33,
+#            downloadfxns = list(png = myplotfxn, tsv = mydatafxn),
+#            visibleplot = myplotfxn)
+
+}
 \seealso{
 \link[periscope]{downloadablePlotUI}
 

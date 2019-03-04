@@ -2,6 +2,12 @@
 
 This is the initial release for this package to CRAN, and due to this there is a package build NOTE on rhub and win-builder builds about this being a new package release.
 
+Update the package per initial crann comments:
+
+* single-quoted proper names in Title & Description
+* added executables to the man (Rd) documentation
+* updated tests vignettes and examples to use tempdir() when creating new applications and running tests
+
 ---  
     
 ## Test Environments

@@ -39,7 +39,7 @@ These are included to get you started. You can either start with an empty applic
 
 ```r
 library(periscope)
-create_new_application('emptyapp')
+create_new_application('emptyapp', location = tempdir())
 runApp('emptyapp')
 ```
 
@@ -48,7 +48,7 @@ runApp('emptyapp')
 
 ```r
 library(periscope)
-create_new_application("sampleapp", sampleapp = TRUE)
+create_new_application("sampleapp", location = tempdir(), sampleapp = TRUE)
 runApp('sampleapp')
 
 ```

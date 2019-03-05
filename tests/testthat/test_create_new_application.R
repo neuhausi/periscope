@@ -53,7 +53,7 @@ test_that("create_new_application sample", {
 })
 
 test_that("create_new_application invalid location", {
-    expect_warning(create_new_application(name = "SOinvalid", location = tempfile(), sampleapp = FALSE),
+    expect_warning(create_new_application(name = "Invalid", location = tempfile(), sampleapp = FALSE),
                    "Framework creation could not proceed, location=.* does not exist!")
 })
 

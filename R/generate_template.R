@@ -82,7 +82,7 @@
 #' create_new_application(name = 'mytestapp', location = tempdir())
 #'
 #' @export
-create_new_application <- function(name, location = ".", sampleapp = FALSE) {
+create_new_application <- function(name, location, sampleapp = FALSE) {
     usersep <- .Platform$file.sep
     newloc <- paste(location, name, sep = usersep)
 

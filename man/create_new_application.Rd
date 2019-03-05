@@ -4,7 +4,7 @@
 \alias{create_new_application}
 \title{Create a new templated framework application}
 \usage{
-create_new_application(name, location = ".", sampleapp = FALSE)
+create_new_application(name, location, sampleapp = FALSE)
 }
 \arguments{
 \item{name}{name for the new application and directory}

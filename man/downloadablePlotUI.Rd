@@ -67,6 +67,15 @@ Paired with a call to \code{shiny::callModule(downloadablePlot, id, ...)}
 in server.R
 }
 
+\examples{
+# Inside ui_body.R or ui_sidebar.R
+downloadablePlotUI("object_id1", 
+                   downloadtypes = c("png", "csv"), 
+                   download_hovertext = "Download the plot and data here!",
+                   height = "500px", 
+                   btn_halign = "left")
+
+}
 \seealso{
 \link[periscope]{downloadablePlot}
 

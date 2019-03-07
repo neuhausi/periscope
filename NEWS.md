@@ -1,6 +1,6 @@
 #Revisions and Change Log
 
-### v0.4.0
-* Initial release
+### v0.4.1
+* Initial CRAN release
 
 

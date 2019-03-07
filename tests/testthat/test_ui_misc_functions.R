@@ -1,6 +1,6 @@
 context("periscope - misc functions")
 
-log_directory <- "log"
+log_directory <- tempdir()
 
 test_that("set_app_parameters", {
     result <- set_app_parameters(title = "application title", titleinfo = NULL, loglevel = "DEBUG", showlog = TRUE, app_version = "2.1.0")
@@ -33,8 +33,6 @@ test_that("fw_get_user_log", {
 })
 
 test_that("setup_logging", {
-    unlink(log_directory, recursive = TRUE)
-
     result <- shiny::isolate(.setup_logging(NULL, periscope:::fw_get_user_log()))
     expect_equal(class(result), c("reactiveExpr", "reactive"))
 })
@@ -45,6 +43,4 @@ test_that("setup_logging existing log", {
 
     result <- shiny::isolate(.setup_logging(NULL,logger))
     expect_equal(class(result), c("reactiveExpr", "reactive"))
-
-    unlink(log_directory, recursive = TRUE)
 })

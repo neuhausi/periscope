@@ -4,7 +4,7 @@
 \alias{create_new_application}
 \title{Create a new templated framework application}
 \usage{
-create_new_application(name, location = ".", sampleapp = FALSE)
+create_new_application(name, location, sampleapp = FALSE)
 }
 \arguments{
 \item{name}{name for the new application and directory}
@@ -88,3 +88,11 @@ name\\www\\img\\tooltip.png
 }
 }
 
+\examples{
+# sample app named 'mytestapp' created in a temp dir
+create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
+
+# blank app named 'myblankapp' created in a temp dir
+create_new_application(name = 'mytestapp', location = tempdir())
+
+}

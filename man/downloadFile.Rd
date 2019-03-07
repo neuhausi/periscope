@@ -15,7 +15,7 @@ downloadFile(input, output, session, logger, filenameroot,
 \item{session}{provided by \code{shiny::callModule}
 \cr \cr}
 
-\item{logger}{\link[logging]{logging} logger to use}
+\item{logger}{\link[logging:logging-package]{logging} logger to use}
 
 \item{filenameroot}{the base text used for user-downloaded file - can be
 either a character string or a reactive expression that returns a character
@@ -42,6 +42,26 @@ server.R using the same id provided in \code{downloadFileButton}:
 \strong{\code{callModule(downloadFile, id, logger, filenameroot, datafxns)}}
 }
 
+\examples{
+# Inside server_local.R
+
+#single download type
+# callModule(downloadFile, 
+#            "object_id1", 
+#            logger = ss_userAction.Log,
+#            filenameroot = "mydownload1",
+#            datafxns = list(csv = mydatafxn1),
+#            aspectratio = 1)
+
+#multiple download types
+# callModule(downloadFile, 
+#            "object_id2",
+#            logger = ss_userAction.Log,
+#            filenameroot = "mytype2",
+#            datafxns = list(csv = mydatafxn1, xlsx = mydatafxn2),
+#            aspectratio = 1)
+
+}
 \seealso{
 \link[periscope]{downloadFileButton}
 
@@ -51,5 +71,5 @@ server.R using the same id provided in \code{downloadFileButton}:
 
 \link[shiny]{callModule}
 
-\link[logging]{logging}
+\link[logging:logging-package]{logging}
 }

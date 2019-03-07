@@ -168,8 +168,10 @@ module you can create and run a *periscope* sample application using:
 
 ```{r, eval=F}
 library(periscope)
-create_new_application('mysampleapp', sampleapp = TRUE)
-runApp('mysampleapp')
+
+app_dir = tempdir()
+create_new_application('mysampleapp', location = app_dir, sampleapp = TRUE)
+runApp('mysampleapp', appDir = app_dir)
 ```
 
 <br>

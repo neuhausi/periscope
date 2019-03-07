@@ -28,6 +28,15 @@ them to the application framework and show them on the Basic tab in the
 dashboard sidebar
 }
 
+\examples{
+require(shiny)
+
+s1 <- selectInput("sample1", "A Select", c("A", "B", "C"))
+s2 <- radioButtons("sample2", NULL, c("A", "B", "C"))
+
+add_ui_sidebar_basic(list(s1, s2), append = FALSE)
+
+}
 \seealso{
 \link[periscope]{add_ui_sidebar_advanced}
 

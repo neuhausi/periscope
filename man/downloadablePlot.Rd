@@ -15,7 +15,7 @@ downloadablePlot(input, output, session, logger, filenameroot,
 \item{session}{provided by \code{shiny::callModule}
 \cr \cr}
 
-\item{logger}{\link[logging]{logging} logger to use}
+\item{logger}{\link[logging:logging-package]{logging} logger to use}
 
 \item{filenameroot}{the base text used for user-downloaded file - can be
 either a character string or a reactive expression returning a character
@@ -51,10 +51,22 @@ server.R using the same id provided in \code{downloadablePlotUI}:
 downloadfxns, visibleplot)}}
 }
 
+\examples{
+# Inside server_local.R
+
+# callModule(downloadablePlot,
+#            "object_id1", 
+#            logger = ss_userAction.Log,
+#            filenameroot = "mydownload1",
+#            aspectratio = 1.33,
+#            downloadfxns = list(png = myplotfxn, tsv = mydatafxn),
+#            visibleplot = myplotfxn)
+
+}
 \seealso{
 \link[periscope]{downloadablePlotUI}
 
 \link[shiny]{callModule}
 
-\link[logging]{logging}
+\link[logging:logging-package]{logging}
 }

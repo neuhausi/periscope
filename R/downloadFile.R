@@ -33,6 +33,19 @@
 #' @seealso \link[periscope]{downloadFile_ValidateTypes}
 #' @seealso \link[periscope]{downloadFile_AvailableTypes}
 #'
+#' @examples 
+#' # Inside ui_body.R or ui_sidebar.R
+#' 
+#' #single download type
+#' downloadFileButton("object_id1", 
+#'                    downloadtypes = c("csv"), 
+#'                    hovertext = "Button 1 Tooltip")
+#' 
+#' #multiple download types
+#' downloadFileButton("object_id2", 
+#'                    downloadtypes = c("csv", "tsv"), 
+#'                    hovertext = "Button 2 Tooltip")
+#' 
 #' @export
 downloadFileButton <- function(id,
                                downloadtypes = c("csv"),
@@ -95,7 +108,7 @@ downloadFileButton <- function(id,
 #' @param output provided by \code{shiny::callModule}
 #' @param session provided by \code{shiny::callModule}
 #' \cr \cr
-#' @param logger \link[logging]{logging} logger to use
+#' @param logger \link[logging:logging-package]{logging} logger to use
 #' @param filenameroot the base text used for user-downloaded file - can be
 #' either a character string or a reactive expression that returns a character
 #' string
@@ -116,8 +129,27 @@ downloadFileButton <- function(id,
 #' @seealso \link[periscope]{downloadFile_ValidateTypes}
 #' @seealso \link[periscope]{downloadFile_AvailableTypes}
 #' @seealso \link[shiny]{callModule}
-#' @seealso \link[logging]{logging}
+#' @seealso \link[logging:logging-package]{logging}
 #'
+#' @examples 
+#' # Inside server_local.R
+#' 
+#' #single download type
+#' # callModule(downloadFile, 
+#' #            "object_id1", 
+#' #            logger = ss_userAction.Log,
+#' #            filenameroot = "mydownload1",
+#' #            datafxns = list(csv = mydatafxn1),
+#' #            aspectratio = 1)
+#' 
+#' #multiple download types
+#' # callModule(downloadFile, 
+#' #            "object_id2",
+#' #            logger = ss_userAction.Log,
+#' #            filenameroot = "mytype2",
+#' #            datafxns = list(csv = mydatafxn1, xlsx = mydatafxn2),
+#' #            aspectratio = 1)
+#' 
 #' @export
 downloadFile <- function(input, output, session, logger,
                          filenameroot, datafxns = list(),

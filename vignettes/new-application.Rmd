@@ -167,18 +167,22 @@ which allows the user to download the plot in different file formats.
 
 ```{r, eval=F}
 library(periscope)
-create_new_application(name = 'mytestapp', sampleapp = TRUE)
+
+app_dir = tempdir()
+create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE)
 ```
 
-This generates a default sample application in a subdirectory named *mytestapp*.
+This generates a default sample application in a subdirectory named *mytestapp* 
+at the specified location.  The location must exist when calling this function.
 
-*Note*: If the *mytestapp* directory already exists it will not be overwritten -
-the function will give a warning and exit without modifying the user's system.
+*Note*: If the *mytestapp* directory in this location already exists it will not 
+be overwritten - the function will give a warning and exit without modifying the 
+user's system.
 
 ## Step 2: Run
 
 ```{r, eval=F}
-runApp('mytestapp')
+runApp('mytestapp', appDir = app_dir)
 ```
 
 The application should run in either the viewer or browser (depending on system
@@ -193,19 +197,22 @@ etc.  You can use this sample application to explore the functionality and code!
 
 ```{r, eval=F}
 library(periscope)
-create_new_application(name = 'mytestapp', location = 'mydir')
+
+app_dir = tempdir()
+create_new_application(name = 'mytestapp', location = app_dir)
 ```
 
 This generates a default blank application in a subdirectory named *mytestapp* 
 at the specified location.  The location must exist when calling this function.
 
-*Note*: If the *mytestapp* directory already exists it will not be overwritten -
-the function will give a warning and exit without modifying the user's system.
+*Note*: If the *mytestapp* directory in this location already exists it will not
+be overwritten - the function will give a warning and exit without modifying the 
+user's system.
 
 ## Step 2: Run (optional)
 
 ```{r, eval=F}
-runApp('mydir/mytestapp')
+runApp('mytestapp', appDir = app_dir)
 ```
 
 It is recommended to run the empty application after creation to ensure a

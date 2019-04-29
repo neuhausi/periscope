@@ -50,7 +50,7 @@ small piece of reusable functionality.  The UI function is called directly by
 the user to place the UI in the correct location (as with other shiny UI
 objects).  The server function is not called directly by the user of the module.
 Instead the module server function is called only once to set it up using the
-shiny::callModule function inside the server function (ie user-local session
+shiny::callModule function inside the server function (i.e. user-local session
 scope.  The callModule function supplies the first three arguments of the 
 Shiny Module's function inputs - the input, output, and session.  Additional 
 arguments supplied by the user in the callModule function are passed to the
@@ -82,7 +82,7 @@ request and the downloadFileButton's tooltip text.  The contentHeight argument
 is optional but important - it sets the viewable height of the table content
 which can be any css-recognizable size value.
 
-DownloadableTables are multi-select by default, however if you need a table
+downloadableTables are multi-select by default, however if you need a table
 to only allow single row selections you can set the singleSelect argument
 to TRUE.
 
@@ -128,7 +128,7 @@ allows finer control over what the user can view vs. download if desired.
 * The function must require NO parameters.  No parameters will be provided
 when the function is called to retrieve the data.
 * The function must return an appropriate data format for the file type.  For
-instance, for csv/tsv/xlsx types the data returned should be convertable to
+instance, for csv/tsv/xlsx types the data returned should be convertible to
 a tabular type.  *Note*: For data shown in the table the data must be able to
 be converted to tabular format.
 * Since the function is called at the time the user requests the data it is 
@@ -140,7 +140,7 @@ to the user from the application.  All the above requirements apply.
 
 The callModule function returns a reactive expression containing the selected
 rows (data, not references, rownumbers, etc - the actual table row data).  This
-allows the user to capture this to upate another table, chart, etc. as desired.
+allows the user to capture this to update another table, chart, etc. as desired.
 It is acceptable to ignore the return value as well if this functionality is not
 needed.
 

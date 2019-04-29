@@ -41,7 +41,7 @@ source(paste("program", "fxn", "plots.R", sep = .Platform$file.sep))
 
 # -- Initialize UI Elements
 output$proginfo <- renderUI({
-    list(p("All program-specific (ie application-specific) code should be ",
+    list(p("All program-specific (i.e. application-specific) code should be ",
            "modified/added in the ", strong("program subfolder"),
            " of the framework"),
          hr(),

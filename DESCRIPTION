@@ -29,7 +29,6 @@ Imports:
     lubridate (>= 1.6),
     DT (>= 0.2),
     openxlsx (>= 3.0),
-    httr (>= 1.3.1),
     ggplot2 (>= 2.2)
 RoxygenNote: 6.1.1
 Suggests:

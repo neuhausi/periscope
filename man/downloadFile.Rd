@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadFile.R
 \name{downloadFile}
 \alias{downloadFile}
-\title{DownloadFile Module}
+\title{downloadFile Module}
 \usage{
 downloadFile(input, output, session, logger, filenameroot,
   datafxns = list(), aspectratio = 1)
@@ -27,10 +27,10 @@ when the button UI was created.}
 
 \item{aspectratio}{the downloaded chart image width:height ratio (ex:
 1 = square, 1.3 = 4:3, 0.5 = 1:2). Where not applicable for a download type
-it is ignored (eg data downloads).}
+it is ignored (e.g. data downloads).}
 }
 \description{
-Server-side function for the DownloadFileButton.  This is a custom
+Server-side function for the downloadFileButton.  This is a custom
 high-functionality button for file downloads supporting single or multiple
 download types.  The server function is used to provide the data for download.
 }

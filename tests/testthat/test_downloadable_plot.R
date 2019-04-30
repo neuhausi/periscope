@@ -1,4 +1,4 @@
-context("periscope - DownloadablePlot")
+context("periscope - downloadablePlot")
 
 check_common_downloadablePlotUI_properties <- function(result.children) {
     expect_equal(length(result.children), 1)
@@ -29,7 +29,7 @@ check_common_downloadablePlotUI_properties <- function(result.children) {
     expect_equal(result.subsubchildren[[1]], shiny::HTML("$(document).ready(function() {setTimeout(function() {shinyBS.addTooltip('myid-dplotButtonID-png', 'tooltip', {'placement': 'top', 'trigger': 'hover', 'title': 'myhovertext'})}, 500)});"))
 }
 
-test_that("DownloadablePlotUI btn_overlap=true btn_halign=left btn_valign=bottom", {
+test_that("downloadablePlotUI btn_overlap=true btn_halign=left btn_valign=bottom", {
 
     result <- downloadablePlotUI(id = "myid",
                                  downloadtypes      = c("png"),
@@ -58,7 +58,7 @@ test_that("DownloadablePlotUI btn_overlap=true btn_halign=left btn_valign=bottom
     check_common_downloadablePlotUI_properties(result[[2]]$children)
 })
 
-test_that("DownloadablePlotUI btn_overlap=false btn_halign=center btn_valign=top", {
+test_that("downloadablePlotUI btn_overlap=false btn_halign=center btn_valign=top", {
 
     result <- downloadablePlotUI(id = "myid",
                                  downloadtypes      = c("png"),
@@ -88,7 +88,7 @@ test_that("DownloadablePlotUI btn_overlap=false btn_halign=center btn_valign=top
     expect_equal(result.children, list())
 })
 
-test_that("DownloadablePlotUI invalid btn_halign", {
+test_that("downloadablePlotUI invalid btn_halign", {
 
     expect_warning(downloadablePlotUI(id = "myid",
                                       downloadtypes      = c("png"),
@@ -104,7 +104,7 @@ test_that("DownloadablePlotUI invalid btn_halign", {
                    "bottom  is not a valid btn_halign input - using default value. Valid values: <'left', 'center', 'right'>")
 })
 
-test_that("DownloadablePlotUI invalid btn_valign", {
+test_that("downloadablePlotUI invalid btn_valign", {
 
     expect_warning(downloadablePlotUI(id = "myid",
                                       downloadtypes      = c("png"),

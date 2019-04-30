@@ -69,7 +69,7 @@ be accessible across all user sessions as well as within the UI context. \cr
 \cr
 \strong{\emph{name/program}/server_global.R} :\cr
 Use this location for code that would have previously resided in server.R
-above (ie outside of) the call to \code{shinyServer(...)}. Anything placed
+above (i.e. outside of) the call to \code{shinyServer(...)}. Anything placed
 in this file will be accessible across all user sessions. \cr
 \cr
 \strong{\emph{name/program}/server_local.R} :\cr

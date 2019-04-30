@@ -49,7 +49,7 @@ small piece of reusable functionality.  The UI function is called directly by
 the user to place the UI in the correct location (as with other shiny UI
 objects).  The server function is not called directly by the user of the module.
 Instead the module server function is called only once to set it up using the
-shiny::callModule function inside the server function (ie user-local session
+shiny::callModule function inside the server function (i.e. user-local session
 scope.  The callModule function supplies the first three arguments of the 
 Shiny Module's function inputs - the input, output, and session.  Additional 
 arguments supplied by the user in the callModule function are passed to the
@@ -126,8 +126,8 @@ allows finer control over what the user can view vs. download if desired.
 * The function must require NO parameters.  No parameters will be provided
 when the function is called to retrieve the plot or data.
 * The function must return an appropriate data format for the file type.  For
-instance: csv/tsv/xlsx types require data that is convertable to a tabular type,
-tiff requires a tiff class object, etc.  For more information on convertions of data 
+instance: csv/tsv/xlsx types require data that is convertible to a tabular type,
+tiff requires a tiff class object, etc.  For more information on conversion of data 
 to various download types see the downloadFile module help or vignette. 
 *Note*: For the visible plot the return value must be from the ggplot2, grob or lattice 
 classes (or a superclass)

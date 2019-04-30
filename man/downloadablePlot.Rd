@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadablePlot.R
 \name{downloadablePlot}
 \alias{downloadablePlot}
-\title{DownloadablePlot Module}
+\title{downloadablePlot Module}
 \usage{
 downloadablePlot(input, output, session, logger, filenameroot,
   aspectratio = 1, downloadfxns = list(), visibleplot)
@@ -23,7 +23,7 @@ string}
 
 \item{aspectratio}{the downloaded chart image width:height ratio (ex:
 1 = square, 1.3 = 4:3, 0.5 = 1:2).  Where not applicable for a download type
-it is ignored (eg data, html downloads)}
+it is ignored (e.g. data, html downloads)}
 
 \item{downloadfxns}{a \strong{named} list of functions providing download
 images or data tables as return values.  The names for the list should be

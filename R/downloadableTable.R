@@ -1,7 +1,7 @@
-# DownloadableTable Shiny Module --
+# downloadableTable Shiny Module --
 
 
-#' DownloadableTable UI
+#' downloadableTable UI
 #'
 #' Creates a custom high-functionality table paired with a linked downloadFile
 #' button.  The table has search and highlight functionality, infinite scrolling,
@@ -17,7 +17,7 @@
 #' @section Table Features:
 #' \itemize{
 #'     \item Consistent styling of the table
-#'     \item DownloadFile module button functionality built-in to the table
+#'     \item downloadFile module button functionality built-in to the table
 #'     \item Ability to show different data from the download data
 #'     \item Table is automatically fit to the window size with infinite
 #'     y-scrolling
@@ -84,9 +84,9 @@ downloadableTableUI <- function(id,
 }
 
 
-#' DownloadableTable Module
+#' downloadableTable Module
 #'
-#' Server-side function for the DownloadableTableUI.  This is a custom
+#' Server-side function for the downloadableTableUI.  This is a custom
 #' high-functionality table paired with a linked downloadFile
 #' button.
 #'

@@ -34,7 +34,7 @@ sg_example_data <- read.csv("program/data/example.csv",
     #       should only load data that will be available to ALL users/sessions.
     #       ** IMPORTANT **
     #       Do not read user-specific data in this file or global.R, use
-    #       server-local.R for user-specific (ie session-specific) data!
+    #       server-local.R for user-specific (i.e. session-specific) data!
 
 # -- FUNCTIONS --
 

@@ -38,7 +38,7 @@ small piece of reusable functionality.  The UI function is called directly by
 the user to place the UI in the correct location (as with other shiny UI
 objects).  The server function is not called directly by the user of the module. 
 Instead the module server function is called only once to set it up using the
-shiny::callModule function inside the server function (ie user-local session
+shiny::callModule function inside the server function (i.e. user-local session
 scope.  The callModule function supplies the first three arguments of the 
 Shiny Module's function inputs - the input, output, and session.  Additional 
 arguments supplied by the user in the callModule function are passed to the
@@ -131,7 +131,7 @@ regardless of the size or shape of the application browser window.
 * The function must require NO parameters.  No parameters will be provided
 when the function is called to retrieve the data.
 * The function must return an appropriate data format for the file type.  For
-instance, for csv/tsv/xlsx types the data returned should be convertable to
+instance, for csv/tsv/xlsx types the data returned should be convertible to
 a tabular type.
 * Since the function is called at the time the user requests the data it is 
 acceptable and recommended to use reactive expressions providing dynamic data 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadFile.R
 \name{downloadFile_AvailableTypes}
 \alias{downloadFile_AvailableTypes}
-\title{DownloadFile Helper}
+\title{downloadFile Helper}
 \usage{
 downloadFile_AvailableTypes()
 }

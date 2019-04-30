@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadableTable.R
 \name{downloadableTableUI}
 \alias{downloadableTableUI}
-\title{DownloadableTable UI}
+\title{downloadableTable UI}
 \usage{
 downloadableTableUI(id, downloadtypes = c("csv"), hovertext = NULL,
   contentHeight = "200px", singleSelect = FALSE)
@@ -28,7 +28,7 @@ sorting by columns and returns a reactive dataset of selected items.
 
 \itemize{
     \item Consistent styling of the table
-    \item DownloadFile module button functionality built-in to the table
+    \item downloadFile module button functionality built-in to the table
     \item Ability to show different data from the download data
     \item Table is automatically fit to the window size with infinite
     y-scrolling

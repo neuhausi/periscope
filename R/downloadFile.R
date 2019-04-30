@@ -1,7 +1,7 @@
-# DownloadFile Shiny Module -----
+# downloadFile Shiny Module -----
 
 
-#' DownloadFileButton UI
+#' downloadFileButton UI
 #'
 #' Creates a custom high-functionality button for file downloads with two
 #' states - single download type or multiple-download types.  The button image
@@ -98,9 +98,9 @@ downloadFileButton <- function(id,
 }
 
 
-#' DownloadFile Module
+#' downloadFile Module
 #'
-#' Server-side function for the DownloadFileButton.  This is a custom
+#' Server-side function for the downloadFileButton.  This is a custom
 #' high-functionality button for file downloads supporting single or multiple
 #' download types.  The server function is used to provide the data for download.
 #'
@@ -117,7 +117,7 @@ downloadFileButton <- function(id,
 #' when the button UI was created.
 #' @param aspectratio the downloaded chart image width:height ratio (ex:
 #' 1 = square, 1.3 = 4:3, 0.5 = 1:2). Where not applicable for a download type
-#' it is ignored (eg data downloads).
+#' it is ignored (e.g. data downloads).
 #'
 #' @section Shiny Usage:
 #' This function is not called directly by consumers - it is accessed in
@@ -309,7 +309,7 @@ downloadFile <- function(input, output, session, logger,
 }
 
 
-#' DownloadFile Helper
+#' downloadFile Helper
 #'
 #' Checks a given list of file types and warns if an invalid type is included
 #'
@@ -336,7 +336,7 @@ downloadFile_ValidateTypes <- function(types) {
 }
 
 
-#' DownloadFile Helper
+#' downloadFile Helper
 #'
 #' Returns a list of all supported types
 #'

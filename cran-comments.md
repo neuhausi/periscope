@@ -1,13 +1,7 @@
 ## Comments from Maintainer
 
-This is the initial release for this package to CRAN, and due to this there is a package build NOTE on rhub and win-builder builds about this being a new package release.
-
-Update the package per initial CRAN submission comments:
-
-* single-quoted proper names in Title & Description
-* added executables to the man (Rd) documentation
-* updated package to NOT have a default filesystem location when creating a new templated application
-* updated tests vignettes & examples to use tempdir()
+Removed unused import httr that causes build notes
+Documentation updates
 
 ---  
     
@@ -18,13 +12,14 @@ RStudio Server Pro (ubuntu 16.04.5)
 
 * R 3.3.3  
 * R 3.4.4  
-* R 3.5.2  
+* R 3.5.3  
+* R 3.6.0
 
 Travis-CI (ubuntu 14.04.5)
 
-* R 3.4.4
-* R 3.5.2
-* R devel - 2019-02-22 r76149
+* R 3.5.3
+* R 3.6.0
+* R devel (2019-04-29 r76439)
 
 win-builder  
 
@@ -61,5 +56,5 @@ tools::package_dependencies(packages = c('periscope'),
                             db = pdb, reverse = TRUE)
 
 $periscope  
-NULL
+character(0)
 ```

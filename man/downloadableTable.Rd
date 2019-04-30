@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadableTable.R
 \name{downloadableTable}
 \alias{downloadableTable}
-\title{DownloadableTable Module}
+\title{downloadableTable Module}
 \usage{
 downloadableTable(input, output, session, logger, filenameroot,
   downloaddatafxns = list(), tabledata, rownames = TRUE,
@@ -38,7 +38,7 @@ Reactive expression containing the currently selected rows in the
 display table
 }
 \description{
-Server-side function for the DownloadableTableUI.  This is a custom
+Server-side function for the downloadableTableUI.  This is a custom
 high-functionality table paired with a linked downloadFile
 button.
 }

@@ -1,35 +1,34 @@
 ## Comments from Maintainer
 
-Removed unused import httr that causes build notes
-Documentation updates
+Added feature: support for openxlsx workbook input for FileDownload buttons 
 
 ---  
     
 ## Test Environments
     
 
-RStudio Server Pro (ubuntu 16.04.5)  
+RStudio Server Pro (Ubuntu 18.04.2)  
 
-* R 3.3.3  
 * R 3.4.4  
 * R 3.5.3  
-* R 3.6.0
+* R 3.6.1
 
-Travis-CI (ubuntu 14.04.5)
+Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
 * R 3.6.0
-* R devel (2019-04-29 r76439)
+* R devel (2019-06-26 r76742)
 
-win-builder  
+WinBuilder
 
-  * oldrelease
-  * release
-  * devel
+* devtools::check_win_devel()  
+* devtools::check_win_release()  
+* devtools::check_win_oldrelease()  
 
-devtools::check_rhub()  
+RHub
 
-  * Ubuntu Linux 16.04 LTS, R-release
+* devtools::check_rhub(interactive = F)  
+  * Ubuntu Linux 16.04 LTS, R-release, GCC
   * Windows Server 2008 R2 SP1, R-devel, 32/64 bit
   * Fedora Linux, R-devel, clang, gfortran
 

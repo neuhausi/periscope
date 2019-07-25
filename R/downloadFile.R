@@ -202,7 +202,12 @@ downloadFile <- function(input, output, session, logger,
         }
         # excel file
         else if (type == "xlsx") {
-            openxlsx::write.xlsx(data, file, asTable = TRUE)
+            if ((class(data) == "Workbook") && ("openxlsx" %in% attributes(class(data)))) {
+                openxlsx::saveWorkbook(data, file)
+            }
+            else {
+                openxlsx::write.xlsx(data, file, asTable = TRUE)
+            }
         }
         # text file processing
         else if (type == "txt") {

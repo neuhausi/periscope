@@ -1,7 +1,7 @@
-# DownloadablePlot Shiny Module --
+# downloadablePlot Shiny Module --
 
 
-#' DownloadablePlot UI
+#' downloadablePlot UI
 #'
 #' Creates a custom plot output that is paired with a linked downloadFile
 #' button.  This module is compatible with ggplot2, grob and lattice
@@ -128,7 +128,7 @@ downloadablePlotUI <- function(id,
     }
 }
 
-#' DownloadablePlot Module
+#' downloadablePlot Module
 #'
 #' Server-side function for the downloadablePlotUI.  This is a custom
 #' plot output paired with a linked downloadFile button.
@@ -143,7 +143,7 @@ downloadablePlotUI <- function(id,
 #' string
 #' @param aspectratio the downloaded chart image width:height ratio (ex:
 #' 1 = square, 1.3 = 4:3, 0.5 = 1:2).  Where not applicable for a download type
-#' it is ignored (eg data, html downloads)
+#' it is ignored (e.g. data, html downloads)
 #' @param downloadfxns a \strong{named} list of functions providing download
 #' images or data tables as return values.  The names for the list should be
 #' the same names that were used when the plot UI was created.

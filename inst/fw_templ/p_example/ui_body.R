@@ -61,7 +61,7 @@ body4 <- box( id = "bodyElement4",
 plot2_hover <- hoverOpts(id = "examplePlot2_hover")
 
 body5 <- box( id = "bodyElement5",
-              title = "DownloadablePlots - ggplot2 & lattice",
+              title = "downloadablePlots - ggplot2 & lattice",
               width = 8,
               status = "info",
               collapsible = TRUE,

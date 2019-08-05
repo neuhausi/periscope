@@ -54,7 +54,7 @@ runApp('sampleapp')
 ```
 
 
-#### DownloadFile module
+#### downloadFile module
 
 ```r
 # Inside ui_body.R or ui_sidebar.R
@@ -87,7 +87,7 @@ callModule(downloadFile,
                    
 ```
 
-#### DownloadableTable module
+#### downloadableTable module
 
 ```r
 # Inside ui_body.R or ui_sidebar.R

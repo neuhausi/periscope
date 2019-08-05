@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadablePlot.R
 \name{downloadablePlotUI}
 \alias{downloadablePlotUI}
-\title{DownloadablePlot UI}
+\title{downloadablePlot UI}
 \usage{
 downloadablePlotUI(id, downloadtypes = c("png"),
   download_hovertext = NULL, width = "100\%", height = "400px",

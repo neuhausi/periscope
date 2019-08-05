@@ -113,10 +113,10 @@ logwarn("Your Warning Message!", logger = ss_userAction.Log)
 
 There are three standardized locations for user-alerts: the top of the basic
 sidebar tab, the top of the advanced sidebar tab, and at the top of the body.  
-All the alerts are dismissable by the user and can be colored by setting the
+All the alerts are dismissible by the user and can be colored by setting the
 status.
 
-Alerts can accumulate (ie append to each other) or replace previous alerts. 
+Alerts can accumulate (i.e. append to each other) or replace previous alerts. 
 
 <center><img src="figures/new-application-5.jpg" width="500px"></center>
 
@@ -306,7 +306,7 @@ body2 <- box( id     = "bodyElement2",
               status = "danger",   #colored bar at the top
               collapsible = FALSE,
               p("Some great text in paragraph format"),
-              pre("A pre-formatted (eg code) block"),
+              pre("A pre-formatted (e.g. code) block"),
               actionButton("exButton", label = "Example") )
 
 add_ui_body(list(body1, body2))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadFile.R
 \name{downloadFileButton}
 \alias{downloadFileButton}
-\title{DownloadFileButton UI}
+\title{downloadFileButton UI}
 \usage{
 downloadFileButton(id, downloadtypes = c("csv"), hovertext = NULL)
 }

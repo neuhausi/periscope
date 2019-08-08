@@ -102,7 +102,7 @@ downloadableTableUI <- function(id,
 #' return values.  The names for the list should be the same names that were used
 #' when the table UI was created.
 #' @param tabledata function or reactive expression providing the table display
-#' data as a return value.  This function should require no input parameters.
+#' data as a return value. This function should require no input parameters.
 #' @param rownames whether or not to show the rownames in the table
 #' @param caption table caption
 #'
@@ -174,8 +174,15 @@ downloadableTable <- function(input, output, session, logger,
         sourcedata <- dtInfo$tabledata
 
         if (!is.null(sourcedata) && nrow(sourcedata) > 0) {
-            DT_RowId <- paste0("rowid_", seq(1:nrow(sourcedata)))
-            sourcedata <- cbind(DT_RowId, sourcedata)
+            row.names <- rownames(sourcedata)
+            row.ids   <- seq(1:nrow(sourcedata))
+            if (is.null(row.names) || identical(row.names, as.character(row.ids))) {
+                DT_RowId <- paste0("rowid_", seq(1:nrow(sourcedata)))
+                sourcedata <- cbind(DT_RowId, sourcedata)
+            } else {
+                DT_RowName <- row.names
+                sourcedata <- cbind(DT_RowName, sourcedata)
+            }
         }
         sourcedata
     },

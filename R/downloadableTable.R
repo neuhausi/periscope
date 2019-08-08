@@ -175,9 +175,9 @@ downloadableTable <- function(input, output, session, logger,
 
         if (!is.null(sourcedata) && nrow(sourcedata) > 0) {
             row.names <- rownames(sourcedata)
-            row.ids   <- seq(1:nrow(sourcedata))
-            if (is.null(row.names) || identical(row.names, as.character(row.ids))) {
-                DT_RowId <- paste0("rowid_", seq(1:nrow(sourcedata)))
+            row.ids   <- as.character(seq(1:nrow(sourcedata)))
+            if (is.null(row.names) || identical(row.names, row.ids)) {
+                DT_RowId <- paste0("rowid_", row.ids)
                 sourcedata <- cbind(DT_RowId, sourcedata)
             } else {
                 DT_RowName <- row.names

@@ -180,8 +180,9 @@ downloadableTable <- function(input, output, session, logger,
                 DT_RowId <- paste0("rowid_", row.ids)
                 sourcedata <- cbind(DT_RowId, sourcedata)
             } else {
-                DT_RowName <- row.names
-                sourcedata <- cbind(DT_RowName, sourcedata)
+                col.names  <- colnames(sourcedata)
+                sourcedata <- cbind(row.names, sourcedata)
+                colnames(sourcedata) <- c(" ", col.names)
             }
         }
         sourcedata

@@ -27,7 +27,7 @@ return values.  The names for the list should be the same names that were used
 when the table UI was created.}
 
 \item{tabledata}{function or reactive expression providing the table display
-data as a return value.  This function should require no input parameters.}
+data as a return value. This function should require no input parameters.}
 
 \item{rownames}{whether or not to show the rownames in the table}
 

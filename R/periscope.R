@@ -4,6 +4,8 @@
 #' a variety of convenience functions for shiny applications.  Base
 #' reusable functionality as well as UI paradigms are included to ensure a
 #' consistent user experience regardless of application or developer.
+#' 
+#' A gallery of example apps is hosted at \href{http://periscopeapps.org:3838}{http://periscopeapps.org}
 #'
 #' @section Function Overview:
 #'

@@ -1,6 +1,7 @@
 ## Comments from Maintainer
 
-Added feature: support for openxlsx workbook input for FileDownload buttons 
+Added feature: support for openxlsx workbook input for FileDownload buttons
+Documentation updates (minor)
 
 ---  
     

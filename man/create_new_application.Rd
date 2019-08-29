@@ -15,8 +15,11 @@ create_new_application(name, location, sampleapp = FALSE)
 }
 \description{
 Creates ready-to-use templated application files using the periscope
-framework.  The application can be created either empty or with a
-sample/documented example application.
+framework.  The application can be created either empty (default) or with a
+sample/documented example application.\cr \cr A running instance of the exact 
+sample application that will be created is
+\href{http://periscopeapps.org:3838/framework_template}{hosted here} if you
+would like to see the sample application before creating your own copy.
 }
 \section{Name}{
 

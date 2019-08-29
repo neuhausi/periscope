@@ -398,6 +398,11 @@ across all sessions and UI)*
 
 # Additional Resources
 
+**Application Gallery**
+
+There is a gallery of example applications using the periscope framework at [http://periscopeapps.org](http://periscopeapps.org:3838)
+
+
 **Vignettes**
 
 * [downloadFile Module](downloadFile-module.html)

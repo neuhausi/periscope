@@ -3,8 +3,11 @@
 #' Create a new templated framework application
 #'
 #' Creates ready-to-use templated application files using the periscope
-#' framework.  The application can be created either empty or with a
-#' sample/documented example application.
+#' framework.  The application can be created either empty (default) or with a
+#' sample/documented example application.\cr \cr A running instance of the exact 
+#' sample application that will be created is
+#' \href{http://periscopeapps.org:3838/framework_template}{hosted here} if you
+#' would like to see the sample application before creating your own copy.
 #'
 #' @param name name for the new application and directory
 #' @param location base path for creation of \code{name}

@@ -17,8 +17,8 @@ RStudio Server Pro (Ubuntu 18.04.2)
 Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
-* R 3.6.0
-* R devel (2019-06-26 r76742)
+* R 3.6.1
+* R devel (2019-08-28 r77082)
 
 WinBuilder
 

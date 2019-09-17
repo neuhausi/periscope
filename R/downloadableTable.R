@@ -65,7 +65,6 @@ downloadableTableUI <- function(id,
         shiny::span(
             id = ns("dtableButtonDiv"),
             class = "periscope-downloadable-table-button",
-            style = "display:none",
             downloadFileButton(ns("dtableButtonID"),
                                downloadtypes,
                                hovertext)),

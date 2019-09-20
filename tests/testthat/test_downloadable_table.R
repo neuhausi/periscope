@@ -10,7 +10,6 @@ test_that("downloadableTable", {
     expect_equal(result[[1]]$name, "span")
     expect_equal(result[[1]]$attribs$id, "myid-dtableButtonDiv")
     expect_equal(result[[1]]$attribs$class, "periscope-downloadable-table-button")
-    expect_equal(result[[1]]$attribs$style, "display:none")
 
     expect_equal(result[[2]][[1]]$name, "div")
     expect_equal(result[[2]][[1]]$attribs$id, "myid-dtableOutputID")

@@ -1,7 +1,6 @@
 ## Comments from Maintainer
 
-Added feature: support for openxlsx workbook input for FileDownload buttons
-Documentation updates (minor)
+Bugfix: downloadable table button not appearing in dynamically created UI reactives
 
 ---  
     
@@ -18,7 +17,7 @@ Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
 * R 3.6.1
-* R devel (2019-08-28 r77082)
+* R devel 2019-09-15 r77192)
 
 WinBuilder
 

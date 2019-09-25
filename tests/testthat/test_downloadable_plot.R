@@ -4,7 +4,7 @@ check_common_downloadablePlotUI_properties <- function(result.children) {
     expect_equal(length(result.children), 1)
 
     expect_equal(result.children[[1]]$name, "span")
-    expect_equal(result.children[[1]]$attribs, list())
+    expect_type(result.children[[1]]$attribs, "list")
 
     result.subchildren <- result.children[[1]]$children
     expect_equal(length(result.subchildren), 2)
@@ -22,7 +22,7 @@ check_common_downloadablePlotUI_properties <- function(result.children) {
     expect_equal(result.subsubchildren[[2]], NULL)
 
     expect_equal(result.subchildren[[2]]$name, "script")
-    expect_equal(result.subchildren[[2]]$attribs, list())
+    expect_type(result.subchildren[[2]]$attribs, "list")
 
     result.subsubchildren <- result.subchildren[[2]]$children
     expect_equal(length(result.subsubchildren), 1)

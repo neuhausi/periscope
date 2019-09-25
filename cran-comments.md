@@ -20,7 +20,7 @@ Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
 * R 3.6.1
-* R devel 2019-09-15 r77192)
+* R devel (2019-09-25 r77216)
 
 WinBuilder
 

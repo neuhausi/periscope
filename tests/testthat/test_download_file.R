@@ -5,7 +5,7 @@ test_that("downloadFileButton", {
     result <- downloadFileButton(id = "myid", downloadtypes = c("csv"), hovertext = "myhovertext")
 
     expect_equal(result$name, "span")
-    expect_equal(result$attribs, list())
+    expect_type(result$attribs, "list")
 
     result.children <- result$children
     expect_equal(length(result.children), 2)
@@ -17,7 +17,7 @@ test_that("downloadFileButton", {
     expect_equal(result.children[[1]]$attribs$download, NA)
 
     expect_equal(result.children[[2]]$name, "script")
-    expect_equal(result.children[[2]]$attribs, list())
+    expect_type(result.children[[2]]$attribs, "list")
     expect_equal(length(result.children[[2]]$children), 1)
     expect_equal(result$children[[2]]$children[[1]], shiny::HTML("$(document).ready(function() {setTimeout(function() {shinyBS.addTooltip('myid-csv', 'tooltip', {'placement': 'top', 'trigger': 'hover', 'title': 'myhovertext'})}, 500)});"))
 })
@@ -54,7 +54,7 @@ test_that("downloadFileButton multiple types", {
     expect_equal(result.subsubchilds[[1]][[1]], list())
 
     expect_equal(result.subsubchilds[[1]][[2]]$name, "li")
-    expect_equal(result.subsubchilds[[1]][[2]]$attribs, list())
+    expect_type(result.subsubchilds[[1]][[2]]$attribs, "list")
     result.subsubsubchilds <- result.subsubchilds[[1]][[2]]$children
     expect_equal(length(result.subsubsubchilds), 1)
 
@@ -67,7 +67,7 @@ test_that("downloadFileButton multiple types", {
     expect_equal(result.subsubsubchilds[[1]]$children[[1]], "csv")
 
     expect_equal(result.children[[3]]$name, "script")
-    expect_equal(result.children[[3]]$attribs, list())
+    expect_type(result.children[[3]]$attribs, "list")
     expect_equal(length(result.children[[3]]$children), 1)
     expect_equal(result$children[[3]]$children[[1]], shiny::HTML("$(document).ready(function() {setTimeout(function() {shinyBS.addTooltip('myid-downloadFileList', 'tooltip', {'placement': 'top', 'trigger': 'hover', 'title': 'myhovertext'})}, 500)});"))
 })

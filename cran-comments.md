@@ -1,6 +1,9 @@
 ## Comments from Maintainer
 
-Added feature: support for openxlsx workbook input for FileDownload buttons 
+Bugfix: hide downloadable table button if there are no download functions defined
+
+Updated tests to be compatable with the next release of htmltools (0.4, schloerke)
+
 
 ---  
     
@@ -16,8 +19,8 @@ RStudio Server Pro (Ubuntu 18.04.2)
 Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
-* R 3.6.0
-* R devel (2019-06-26 r76742)
+* R 3.6.1
+* R devel (2019-09-25 r77216)
 
 WinBuilder
 

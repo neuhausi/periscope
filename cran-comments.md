@@ -1,6 +1,9 @@
 ## Comments from Maintainer
 
-Bugfix: downloadable table button not appearing in dynamically created UI reactives
+Bugfix: hide downloadable table button if there are no download functions defined
+
+Updated tests to be compatable with the next release of htmltools (0.4, schloerke)
+
 
 ---  
     
@@ -17,7 +20,7 @@ Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
 * R 3.6.1
-* R devel 2019-09-15 r77192)
+* R devel (2019-09-25 r77216)
 
 WinBuilder
 

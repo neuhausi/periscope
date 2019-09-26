@@ -192,9 +192,6 @@ downloadFile <- function(input, output, session, logger,
 
     # filename is expected to be a reactive expression
     writeFile <- function(type, data, file, logger, filename) {
-        show_rownames_attr <- attr(data, "show_rownames")
-        show_rownames      <- !is.null(show_rownames_attr) && show_rownames_attr
-        
         # tabular values
         if ((type == "csv") | (type == "tsv")) {
             utils::write.table(data, file,
@@ -209,7 +206,10 @@ downloadFile <- function(input, output, session, logger,
                 openxlsx::saveWorkbook(data, file)
             }
             else {
-                openxlsx::write.xlsx(data, file, asTable = TRUE, row.names = show_rownames)
+                show_rownames <- attr(data, "show_rownames")
+                openxlsx::write.xlsx(data, file, 
+                                     asTable   = TRUE, 
+                                     row.names = !is.null(show_rownames) && show_rownames)
             }
         }
         # text file processing

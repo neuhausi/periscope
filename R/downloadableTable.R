@@ -65,6 +65,7 @@ downloadableTableUI <- function(id,
         shiny::span(
             id = ns("dtableButtonDiv"),
             class = "periscope-downloadable-table-button",
+            style = ifelse(length(downloadtypes) > 0, "", "display:none"),
             downloadFileButton(ns("dtableButtonID"),
                                downloadtypes,
                                hovertext)),
@@ -147,6 +148,10 @@ downloadableTable <- function(input, output, session, logger,
 
     shiny::callModule(downloadFile,  "dtableButtonID",
                       logger, filenameroot, downloaddatafxns)
+    
+    session$sendCustomMessage("downloadbutton_toggle",
+                              message = list(btn  = session$ns("dtableButtonDiv"),
+                                             rows = -1))
 
     dtInfo <- shiny::reactiveValues(selected  = NULL,
                                     tabledata = NULL,
@@ -164,9 +169,9 @@ downloadableTable <- function(input, output, session, logger,
         dtInfo$downloaddatafxns <- lapply(downloaddatafxns, do.call, list())
 
         rowct <- lapply(dtInfo$downloaddatafxns, nrow)
-            session$sendCustomMessage("downloadbutton_toggle",
-                message = list(btn  = session$ns("dtableButtonDiv"),
-                               rows = sum(unlist(rowct))))
+        session$sendCustomMessage("downloadbutton_toggle",
+                                  message = list(btn  = session$ns("dtableButtonDiv"),
+                                                 rows = sum(unlist(rowct))))
     })
 
     output$dtableOutputID <- DT::renderDataTable({

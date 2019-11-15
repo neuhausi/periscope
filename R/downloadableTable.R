@@ -163,9 +163,13 @@ downloadableTable <- function(input, output, session, logger,
                                     downloaddatafxns = NULL)
 
     shiny::observe({
-        result <- list(ifelse(input$dtableSingleSelect == "TRUE", "single", "multi"))
+        result <- list(mode = ifelse(input$dtableSingleSelect == "TRUE", "single", "multiple"))
         if (!is.null(selection)) {
-            result[["selected"]] <- selection()
+            selection_value <- selection()
+            if (result[["mode"]] == "single" && length(selection_value) > 1) {
+                selection_value <- selection_value[1]
+            }
+            result[["selected"]] <- selection_value
             dtInfo$selection <- NULL
         }
         dtInfo$selection <- result

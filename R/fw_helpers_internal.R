@@ -19,13 +19,15 @@
     app_version         = "1.0.0",
     data_download_types = c("csv", "xlsx", "tsv", "txt"),
     plot_download_types = c("png", "jpeg", "tiff", "bmp"),
+    reset_button        = TRUE,
     reset_wait          = 5000,  #milliseconds
     show_userlog        = TRUE,
     body_elements       = c(),
     side_basic          = .g_sidebar_default_value,
     side_basic_label    = "Basic",
     side_advanced       = .g_sidebar_default_value,
-    side_advanced_label = "Advanced"
+    side_advanced_label = "Advanced",
+    sidebar_right_icon  = "gears"
 )
 
 # reset app options
@@ -33,6 +35,7 @@
     .g_opts$side_basic    <- .g_sidebar_default_value
     .g_opts$side_advanced <- .g_sidebar_default_value
 }
+
 
 # UI ----------------------------
 # Creates the tags and JS for the processing image and text in the header
@@ -51,8 +54,14 @@
                           paste("<a href='", app_info,
                                 "' target = '_blank'>",
                                 app_title, "</a>"))),
-            "</div>\").insertBefore($(\"div.navbar-custom-menu\"));")))
+            "</div>\").insertAfter($(\"a.sidebar-toggle\"));")))
     return(items)
+}
+
+.right_sidebar_injection <- function() {
+    shiny::tags$script(shiny::HTML("setTimeout(function() {
+                                        $('[class~=\"control-sidebar-tabs\"]').find('li:first').remove();
+                                   }, 5000);"))
 }
 
 # Returns the custom css as HTML
@@ -100,11 +109,12 @@
                     color: white;
                 }
                 .main-header .periscope-title {
-                    display: block;
                     text-align: center;
                     line-height: 50px;
                     font-size: x-large;
                     color: white;
+                    width: 80%;
+                    float:left;
                 }
                 .main-header .periscope-title a {
                     font-size: x-large;

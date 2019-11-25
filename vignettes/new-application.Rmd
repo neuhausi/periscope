@@ -6,6 +6,7 @@ output:
     rmarkdown::html_vignette:
         toc: TRUE
         toc_depth: 3
+        css: "style.css"
 vignette: >
   %\VignetteIndexEntry{Creating a new framework-based application}
   %\VignetteEngine{knitr::rmarkdown}
@@ -30,11 +31,11 @@ aspects of new applications such as alerting, logging, etc.
 
 ## UI Sections
 
-<center><img src="figures/new-application-1.jpg" width="300px"></center>
+<center><img src="figures/new-application-1.jpg" width="400px"></center>
 
-*1: Sidebar*
+*1: Left Sidebar*
 
-The sidebar is reserved for configuration options, settings, and general user
+The left sidebar is reserved for configuration options, settings, and general user
 application controls and functionality that will affect the body of the
 application.  
 
@@ -44,7 +45,7 @@ is intended to be used for commonly accessed options and settings whereas the
 names (or labels) can be changed.  The Advanced tab is optional and if it is not
 present there will be no tabs shown (the sidebar will not have tabbed areas).
 
-The sidebar can be collapsed in desktop mode to maximize the user's view of the
+The left sidebar can be collapsed in desktop mode to maximize the user's view of the
 application body when they do not immediately need the configuration options and
 settings.
 
@@ -53,6 +54,15 @@ settings.
 This is the main body area for applications where charts and figures, tables, 
 etc. are placed by the application developer.  If desired the developer can
 add tabbed pages, etc.
+
+*3: Right Sidebar*
+
+The right sidebar is, like the left sidebar, reserved for configuration options, settings, 
+and general user application controls and functionality that will affect the body of the
+application.  
+Users can create their own tabs in the right sidebar up to a maximum of 5.
+
+The right sidebar is collapsed by default, it can be opened by clicking on the (customizable) icon.
 
 <br>
 **Note:** The blue area running across the top of the application is the header bar.  This
@@ -111,8 +121,9 @@ logwarn("Your Warning Message!", logger = ss_userAction.Log)
 
 #### Alerting
 
-There are three standardized locations for user-alerts: the top of the basic
-sidebar tab, the top of the advanced sidebar tab, and at the top of the body.  
+There are four standardized locations for user-alerts: the top of the basic
+sidebar tab, the top of the advanced sidebar tab, the top of the body and at 
+the top of the right sidebar.
 All the alerts are dismissible by the user and can be colored by setting the
 status.
 
@@ -133,8 +144,11 @@ createAlert(session, "sidebarAdvancedAlert",
 # Alert in the Body Area
 createAlert(session, "bodyAlert", style = "success",
             content = "Body Alert Text", append = FALSE)
+# Alert on Right Sidebar
+createAlert(session, "sidebarRightAlert", 
+            style = "error", 
+            content = "Error Alert Text")
 ```
-
 
 ### Shiny Modules
 
@@ -170,9 +184,15 @@ library(periscope)
 
 app_dir = tempdir()
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE)
+# application without a reset button
+create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, resetbutton = FALSE)
+# application with a right sidebar using the default icon
+create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, rightsidebar = TRUE)
+# application with a right sidebar using a custom icon
+create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, rightsidebar = "table")
 ```
 
-This generates a default sample application in a subdirectory named *mytestapp* 
+This generates a default sample application optionally with a right sidebar in a subdirectory named *mytestapp* 
 at the specified location.  The location must exist when calling this function.
 
 *Note*: If the *mytestapp* directory in this location already exists it will not 
@@ -200,9 +220,15 @@ library(periscope)
 
 app_dir = tempdir()
 create_new_application(name = 'mytestapp', location = app_dir)
+# application without a reset button
+create_new_application(name = 'mytestapp', location = app_dir, resetbutton = FALSE)
+# application with a right sidebar using the default icon
+create_new_application(name = 'mytestapp', location = app_dir, rightsidebar = TRUE)
+# application with a right sidebar using a custom icon
+create_new_application(name = 'mytestapp', location = app_dir, rightsidebar = "table")
 ```
 
-This generates a default blank application in a subdirectory named *mytestapp* 
+This generates a default blank application optionally with a right sidebar in a subdirectory named *mytestapp* 
 at the specified location.  The location must exist when calling this function.
 
 *Note*: If the *mytestapp* directory in this location already exists it will not
@@ -263,7 +289,7 @@ set_app_parameters(title = "My Application Title",
 
 ### program/ui_sidebar.R  
 
-Create UI components for the sidebar and register them with the framework using
+Create UI components for the left sidebar and register them with the framework using
 a call to *add_ui_sidebar_basic()* or *add_ui_sidebar_advanced()* according to
 which tab they should appear on in the sidebar.  
 
@@ -283,6 +309,27 @@ add_ui_sidebar_basic(list(s1, s2), append = FALSE)
 
 # -- Change the Label of the Basic Tab
 add_ui_sidebar_basic(list(s1, s2), append = FALSE, tabname = "Options")
+```
+
+### program/ui_sidebar_right.R  
+
+Create UI components for the right sidebar and register them with the framework using
+a call to *add_ui_sidebar_right()*.  
+
+```{r, eval=F}
+# -- Create UI sidebar Elements
+s1 <- rightSidebarTabContent(id = 1, 
+                             icon = "desktop", 
+                             title = "Tab 1", 
+                             active = TRUE, 
+                             div(helpText(align = "center", 
+                                          "Sample UI Text"),
+                                 selectInput("sample1", 
+                                             "A Select", 
+                                             c("A", "B", "C"))))
+                  
+# -- Register Basic Elements in the ORDER SHOWN in the UI
+add_ui_sidebar_right(list(s1), append = FALSE)
 ```
 
 ### program/ui_body.R

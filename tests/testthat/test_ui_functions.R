@@ -36,17 +36,17 @@ check_sidebar_result <- function(result, advanced_existing = FALSE) {
     expect_equal(result.children[[2]]$attribs$class, "sidebar")
 
     result.subchilds <- result.children[[2]]$children[[1]]
-    expect_equal(length(result.subchilds), 2)
+    expect_equal(length(result.subchilds), 3)
 
     expect_equal(result.subchilds[[1]][[1]]$name, "script")
     expect_true(grepl("Set using set_app_parameters\\() in program/global.R", result.subchilds[[1]][[1]]$children[[1]]))
 
-    expect_equal(result.subchilds[[2]]$name, "div")
+    expect_equal(result.subchilds[[3]]$name, "div")
 
     if (advanced_existing) {
-        expect_equal(result.subchilds[[2]]$attribs$class, "tab-content")
+        expect_equal(result.subchilds[[3]]$attribs$class, "tab-content")
     } else {
-        expect_equal(result.subchilds[[2]]$attribs$class, "notab-content")
+        expect_equal(result.subchilds[[3]]$attribs$class, "notab-content")
     }
 }
 

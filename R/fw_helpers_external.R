@@ -6,7 +6,9 @@
 fw_server_setup <- function(input, output, session, logger) {
     logfile <- shiny::isolate(.setup_logging(session, logger))
     shiny::callModule(.bodyFooter, "footerId",   logfile)
-    shiny::callModule(.appReset,   "appResetId", logger)
+    if (shiny::isolate(.g_opts$reset_button)) {
+        shiny::callModule(.appReset, "appResetId", logger)
+    }
 }
 
 # Reset app options
@@ -43,12 +45,26 @@ fw_create_header <- function() {
                                shiny::img(alt = "Working...",
                                           hspace = "5px",
                                           src = "img/loader.gif") ),
-            titleWidth = shiny::isolate(.g_opts$sidebar_size) )
+            titleWidth = shiny::isolate(.g_opts$sidebar_size))
     )
 }
 
-# Framework UI Sidebar Creation
-fw_create_sidebar <- function() {
+# Framework UI Header Creation that includes a right sidebar
+fw_create_header_plus <- function(sidebar_right_icon = shiny::isolate(.g_opts$sidebar_right_icon)) {
+    return(
+        shinydashboardPlus::dashboardHeaderPlus(
+            title = shiny::div(class = "periscope-busy-ind",
+                               "Working",
+                               shiny::img(alt = "Working...",
+                                          hspace = "5px",
+                                          src = "img/loader.gif") ),
+            titleWidth = shiny::isolate(.g_opts$sidebar_size),
+            enable_rightsidebar = TRUE, rightSidebarIcon = sidebar_right_icon)
+    )
+}
+
+# Framework UI Left Sidebar Creation
+fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)) {
     basic <- shiny::isolate(.g_opts$side_basic)
     adv   <- shiny::isolate(.g_opts$side_advanced)
 
@@ -56,6 +72,7 @@ fw_create_sidebar <- function() {
         shinydashboard::dashboardSidebar(
             width = shiny::isolate(.g_opts$sidebar_size),
             .header_injection(),             #injected header elements
+            .right_sidebar_injection(),
             if (!is.null(adv[[1]])) {
                 shiny::div(class = "tab-content",
                     shiny::tabsetPanel(
@@ -67,13 +84,26 @@ fw_create_sidebar <- function() {
                         shiny::tabPanel(
                             shiny::isolate(.g_opts$side_advanced_label),
                             adv,
-                            .appResetButton("appResetId"))) )
+                            switch(resetbutton + 1, NULL, .appResetButton("appResetId")))))
             }
             else {
                 shiny::div(class = "notab-content",
                             basic)
             }
         ) )
+}
+
+# Framework UI Right Sidebar Creation
+fw_create_right_sidebar <- function() {
+    side_right <- shiny::isolate(.g_opts$side_right)
+    
+    params <- list(background = "dark", shinyBS::bsAlert("sidebarRightAlert"))
+    if (!is.null(side_right) && length(side_right) > 0) {
+        for (element in side_right) {
+            params <- append(params, list(element))
+        }
+    }
+    return(do.call(shinydashboardPlus::rightSidebar, params))
 }
 
 # Framework UI Body Creation
@@ -94,7 +124,7 @@ fw_create_body <- function() {
         shinydashboard::dashboardBody(
             shiny::tags$head(
                 shiny::tags$style(.framework_css()),
-                shiny::tags$script(.framework_js()) ),
+                shiny::tags$script(.framework_js())),
             info_content,
             shiny::isolate(.g_opts$body_elements),
             if (shiny::isolate(.g_opts$show_userlog)) {

@@ -12,6 +12,9 @@
 #' @param name name for the new application and directory
 #' @param location base path for creation of \code{name}
 #' @param sampleapp whether to create a sample shiny application
+#' @param resetbutton whether the reset button should be added on the Advanced (left) sidebar.
+#' @param rightsidebar parameter to set the right sidebar. It can be TRUE/FALSE or a character 
+#' containing the name of a shiny::icon().
 #'
 #' @section Name:
 #' The \code{name} directory must not exist in \code{location}.  If the code
@@ -47,6 +50,10 @@
 #' framework using a call to \link[periscope]{add_ui_sidebar_basic} or
 #' \link[periscope]{add_ui_sidebar_advanced} \cr
 #' \cr
+#' \strong{\emph{name/program}/ui_sidebar_right.R} :\cr
+#' Create right sidebar UI elements in this file and register them with the
+#' framework using a call to \link[periscope]{add_ui_sidebar_right} \cr
+#' \cr
 #' \strong{\emph{name/program/data}} directory :\cr
 #' Use this location for data files.  There is a \strong{.gitignore} file
 #' included in this directory to prevent accidental versioning of data\cr
@@ -76,16 +83,30 @@
 #' name\\www\\img\\loader.gif
 #' name\\www\\img\\tooltip.png
 #' }
+#' 
+#' @section Right Sidebar:
+#'  \preformatted{
+#'  value
+#'  FALSE   --- no sidebar
+#'  TRUE    --- sidebar with default icon ('gears').
+#'  "table" --- sidebar with table icon. The character string should be a valid "font-awesome" icon.
+#'  }
+#'
+#'@seealso \link[shiny:icon]{shiny:icon()}
 #'
 #'@examples
 #' # sample app named 'mytestapp' created in a temp dir
 #' create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
 #' 
+#' # sample app named 'mytestapp' with a right sidebar using a custom icon created in a temp dir
+#' create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE, 
+#' rightsidebar = "table")
+#' 
 #' # blank app named 'myblankapp' created in a temp dir
 #' create_new_application(name = 'mytestapp', location = tempdir())
 #'
 #' @export
-create_new_application <- function(name, location, sampleapp = FALSE) {
+create_new_application <- function(name, location, sampleapp = FALSE, resetbutton = TRUE, rightsidebar = FALSE) {
     usersep <- .Platform$file.sep
     newloc <- paste(location, name, sep = usersep)
 
@@ -98,9 +119,21 @@ create_new_application <- function(name, location, sampleapp = FALSE) {
                 location, "> does not exist!")
     }
     else {
+        dashboard_plus <- FALSE
+        right_sidebar_icon <- NULL
+        if (!is.null(rightsidebar)) {
+            if (class(rightsidebar) == "logical") {
+                if (rightsidebar) { dashboard_plus <- TRUE  }
+            } else if (class(rightsidebar) == "character") {
+                dashboard_plus <- TRUE
+                right_sidebar_icon <- rightsidebar
+            } else {
+                stop("Framework creation could not proceed, invalid type for rightsidebar, only logical or character allowed")
+            }
+        }
         .create_dirs(newloc, usersep)
-        .copy_fw_files(newloc, usersep)
-        .copy_program_files(newloc, usersep, sampleapp)
+        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, right_sidebar_icon)
+        .copy_program_files(newloc, usersep, sampleapp, resetbutton, dashboard_plus)
 
         message("Framework creation was successful.")
     }
@@ -131,15 +164,32 @@ create_new_application <- function(name, location, sampleapp = FALSE) {
 }
 
 # Create Framework Files ----------------------------
-.copy_fw_files <- function(newloc, usersep) {
+.copy_fw_files <- function(newloc, usersep, resetbutton = TRUE, dashboard_plus = FALSE, right_sidebar_icon = NULL) {
     files <- c("global.R",
-               "server.R",
-               "ui.R")
+               "server.R")
+    if (dashboard_plus) {
+        files <- c(files, "ui_plus.R")
+    } else {
+        files <- c(files, "ui.R")
+    }
 
     for (file in files) {
         writeLines(readLines(
             con = system.file("fw_templ", file, package = "periscope")),
             con = paste(newloc, file, sep = usersep))
+    }
+    if (dashboard_plus) {
+        file.rename(paste(newloc, "ui_plus.R", sep = usersep), paste(newloc, "ui.R", sep = usersep))
+        if (!is.null(right_sidebar_icon)) {
+            writeLines(gsub("fw_create_header_plus\\(", paste0("fw_create_header_plus\\(sidebar_right_icon = '", right_sidebar_icon, "'"), 
+                            readLines(con = paste(newloc, "ui.R", sep = usersep))), 
+                       con = paste(newloc, "ui.R", sep = usersep))
+        }
+    }
+    if (!resetbutton) {
+        writeLines(gsub("fw_create_sidebar\\(", "fw_create_sidebar\\(resetbutton = FALSE", 
+                        readLines(con = paste(newloc, "ui.R", sep = usersep))), 
+                   con = paste(newloc, "ui.R", sep = usersep))
     }
 
     #subdir copies
@@ -156,12 +206,25 @@ create_new_application <- function(name, location, sampleapp = FALSE) {
 }
 
 # Create Program Files ----------------------------
-.copy_program_files <- function(newloc, usersep, sampleapp) {
+.copy_program_files <- function(newloc, usersep, sampleapp, resetbutton = TRUE, dashboard_plus = FALSE) {
     files <- c("global.R",
                "server_global.R",
                "server_local.R",
-               "ui_body.R",
-               "ui_sidebar.R")
+               "ui_body.R")
+    if (sampleapp && !resetbutton) {
+        files <- c(files, "ui_sidebar_no_reset.R")
+    } else {
+        files <- c(files, "ui_sidebar.R")
+    }
+               
+    if (dashboard_plus) {
+        files <- c(files, "ui_sidebar_right.R")
+        if (sampleapp) {
+            files <- c(files, "server_local_plus.R")
+        }
+    } else {
+        files <- c(files, "server_local.R")
+    }
 
     targetdir <- paste(newloc, "program", sep = usersep)
     sourcedir <- paste("fw_templ",
@@ -172,6 +235,12 @@ create_new_application <- function(name, location, sampleapp = FALSE) {
         writeLines(readLines(
             con = system.file(sourcedir, file, package = "periscope")),
             con = paste(targetdir, file, sep = usersep))
+    }
+    if (sampleapp && dashboard_plus) {
+        file.rename(paste(targetdir, "server_local_plus.R", sep = usersep), paste(targetdir, "server_local.R", sep = usersep))
+    }
+    if (sampleapp && !resetbutton) {
+        file.rename(paste(targetdir, "ui_sidebar_no_reset.R", sep = usersep), paste(targetdir, "ui_sidebar.R", sep = usersep))
     }
 
     #subdir copies for sampleapp

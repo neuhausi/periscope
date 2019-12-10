@@ -1,9 +1,6 @@
 ## Comments from Maintainer
 
-Bugfix: hide downloadable table button if there are no download functions defined
-
-Updated tests to be compatable with the next release of htmltools (0.4, schloerke)
-
+Enhancement to add a right sidebar, additional preference for reset button, documentation updates, etc.
 
 ---  
     
@@ -20,7 +17,7 @@ Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
 * R 3.6.1
-* R devel (2019-09-25 r77216)
+* R devel (2019-11-23 r77455)
 
 WinBuilder
 

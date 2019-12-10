@@ -21,6 +21,7 @@
 #' \emph{Register user-created UI objects to the requisite application locations:\cr}
 #' \link[periscope]{add_ui_sidebar_basic}\cr
 #' \link[periscope]{add_ui_sidebar_advanced}\cr
+#' \link[periscope]{add_ui_sidebar_right}\cr
 #' \link[periscope]{add_ui_body}
 #'
 #' \emph{Included shiny modules with a customized UI:\cr}

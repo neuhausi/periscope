@@ -25,13 +25,13 @@ latest version of ***periscope*** from GitHub as follows:
 devtools::install_github('cb4ds/periscope')
 ```
 
+<br/>
+
 ---
-
-
 
 ### Examples
 
-These are included to get you started. You can either start with an empty application or an application that includes samples of the components that you can use within your application.
+These are included to get you started. You can either start with an empty application or an application that includes samples of the components that you can use within your application.  There is extensive package documentation and full Vignettes are also available to help you with all the options.
 
 <br/>
 
@@ -44,68 +44,20 @@ runApp('emptyapp')
 ```
 
 
-#### Sample application
+#### Sample application - no right sidebar
 
 ```r
 library(periscope)
-create_new_application("sampleapp", location = tempdir(), sampleapp = TRUE)
-runApp('sampleapp')
+create_new_application("sampleapp1", location = tempdir(), sampleapp = TRUE)
+runApp('sampleapp1')
 
 ```
 
-
-#### downloadFile module
-
-```r
-# Inside ui_body.R or ui_sidebar.R
-
-#single download type
-downloadFileButton("object_id1", 
-                   downloadtypes = c("csv"), 
-                   hovertext = "Button 1 Tooltip")
-
-#multiple download types
-downloadFileButton("object_id2", 
-                   downloadtypes = c("csv", "tsv"), 
-                   hovertext = "Button 2 Tooltip")
-                
-# Inside server_local.R
-
-#single download type
-callModule(downloadFile, 
-           "object_id1", 
-           logger = ss_userAction.Log,
-           filenameroot = "mydownload1",
-           datafxns = list(csv = mydatafxn1))
-
-#multiple download types
-callModule(downloadFile, 
-           "object_id2",
-           logger = ss_userAction.Log,
-           filenameroot = "mytype2",
-           datafxns = list(csv = mydatafxn1, xlsx = mydatafxn2))   
-                   
-```
-
-#### downloadableTable module
+#### Sample application - including a right sidebar
 
 ```r
-# Inside ui_body.R or ui_sidebar.R
+library(periscope)
+create_new_application("sampleapp2", location = tempdir(), sampleapp = TRUE, rightsidebar = TRUE)
+runApp('sampleapp2')
 
-downloadableTableUI("object_id1", 
-                    downloadtypes = c("csv", "tsv"), 
-                    hovertext = "Download the data here!",
-                    contentHeight = "300px",
-                    singleSelect = FALSE)
-                    
-# Inside server_local.R
-
-selectedrows <- callModule(downloadableTable, 
-                           "object_id1", 
-                           logger = ss_userAction.Log,
-                           filenameroot = "mydownload1",
-                           downloaddatafxns = list(csv = mydatafxn1, tsv = mydatafxn2),
-                           tabledata = mydatafxn3,
-                           rownames = FALSE,
-                           caption = "This is a great table!  By: Me" )
 ```

@@ -1,7 +1,7 @@
 context("periscope create new application")
 
 
-expect_cleanup_create_new_application <- function(fullname, sampleapp = FALSE) {
+expect_cleanup_create_new_application <- function(fullname, sampleapp = FALSE, dashboard_plus = FALSE) {
     expect_true(dir.exists(fullname))
     expect_true(file.exists(paste0(fullname, "/global.R")))
     expect_true(file.exists(paste0(fullname, "/server.R")))
@@ -27,6 +27,11 @@ expect_cleanup_create_new_application <- function(fullname, sampleapp = FALSE) {
         expect_true(file.exists(paste0(fullname, "/program/fxn/program_helpers.R")))
         expect_true(file.exists(paste0(fullname, "/program/fxn/plots.R")))
     }
+    if (dashboard_plus) {
+        expect_true(file.exists(paste0(fullname, "/program/ui_sidebar_right.R")))
+    } else {
+        expect_true(!file.exists(paste0(fullname, "/program/ui_sidebar_right.R")))
+    }
 
     # clean up
     unlink(fullname, TRUE)
@@ -37,7 +42,7 @@ test_that("create_new_application", {
     appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
     appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
 
-    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE), 
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, rightsidebar = NULL), 
                    "Framework creation was successful.")
     expect_cleanup_create_new_application(appTemp)
 })
@@ -47,7 +52,28 @@ test_that("create_new_application sample", {
     appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
     appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
     
-    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE), 
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, rightsidebar = NULL), 
+                   "Framework creation was successful.")
+    expect_cleanup_create_new_application(appTemp, sampleapp = TRUE)
+})
+
+test_that("create_new_application sample right_sidebar", {
+    appTemp.dir   <- tempdir()
+    appTemp       <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
+    appTemp.name  <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
+    right_sidebar <- "gears"
+    
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, rightsidebar = right_sidebar), 
+                   "Framework creation was successful.")
+    expect_cleanup_create_new_application(appTemp, sampleapp = TRUE, dashboard_plus = !is.null(right_sidebar))
+})
+
+test_that("create_new_application no reset button", {
+    appTemp.dir   <- tempdir()
+    appTemp       <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
+    appTemp.name  <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
+    
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = TRUE, resetbutton = FALSE), 
                    "Framework creation was successful.")
     expect_cleanup_create_new_application(appTemp, sampleapp = TRUE)
 })

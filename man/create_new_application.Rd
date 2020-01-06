@@ -4,7 +4,8 @@
 \alias{create_new_application}
 \title{Create a new templated framework application}
 \usage{
-create_new_application(name, location, sampleapp = FALSE)
+create_new_application(name, location, sampleapp = FALSE,
+  resetbutton = TRUE, rightsidebar = FALSE)
 }
 \arguments{
 \item{name}{name for the new application and directory}
@@ -12,6 +13,11 @@ create_new_application(name, location, sampleapp = FALSE)
 \item{location}{base path for creation of \code{name}}
 
 \item{sampleapp}{whether to create a sample shiny application}
+
+\item{resetbutton}{whether the reset button should be added on the Advanced (left) sidebar.}
+
+\item{rightsidebar}{parameter to set the right sidebar. It can be TRUE/FALSE or a character 
+containing the name of a shiny::icon().}
 }
 \description{
 Creates ready-to-use templated application files using the periscope
@@ -60,6 +66,10 @@ Create sidebar UI elements in this file and register them with the
 framework using a call to \link[periscope]{add_ui_sidebar_basic} or
 \link[periscope]{add_ui_sidebar_advanced} \cr
 \cr
+\strong{\emph{name/program}/ui_sidebar_right.R} :\cr
+Create right sidebar UI elements in this file and register them with the
+framework using a call to \link[periscope]{add_ui_sidebar_right} \cr
+\cr
 \strong{\emph{name/program/data}} directory :\cr
 Use this location for data files.  There is a \strong{.gitignore} file
 included in this directory to prevent accidental versioning of data\cr
@@ -91,11 +101,28 @@ name\\www\\img\\tooltip.png
 }
 }
 
+\section{Right Sidebar}{
+
+ \preformatted{
+ value
+ FALSE   --- no sidebar
+ TRUE    --- sidebar with default icon ('gears').
+ "table" --- sidebar with table icon. The character string should be a valid "font-awesome" icon.
+ }
+}
+
 \examples{
 # sample app named 'mytestapp' created in a temp dir
 create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE)
 
+# sample app named 'mytestapp' with a right sidebar using a custom icon created in a temp dir
+create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRUE, 
+rightsidebar = "table")
+
 # blank app named 'myblankapp' created in a temp dir
 create_new_application(name = 'mytestapp', location = tempdir())
 
+}
+\seealso{
+\link[shiny:icon]{shiny:icon()}
 }

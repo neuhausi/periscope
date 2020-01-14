@@ -31,7 +31,7 @@ Imports:
     DT (>= 0.2),
     openxlsx (>= 3.0),
     ggplot2 (>= 2.2)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests:
     knitr,
     rmarkdown,

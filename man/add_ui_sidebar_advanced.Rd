@@ -4,8 +4,11 @@
 \alias{add_ui_sidebar_advanced}
 \title{Add UI Elements to the Sidebar (Advanced Tab)}
 \usage{
-add_ui_sidebar_advanced(elementlist = NULL, append = FALSE,
-  tabname = "Advanced")
+add_ui_sidebar_advanced(
+  elementlist = NULL,
+  append = FALSE,
+  tabname = "Advanced"
+)
 }
 \arguments{
 \item{elementlist}{list of UI elements to add to the sidebar tab}

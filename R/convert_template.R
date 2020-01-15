@@ -4,6 +4,9 @@ ui_filename               <- "ui.R"
 ui_plus_filename          <- "ui_plus.R"
 ui_right_sidebar_filename <- "ui_sidebar_right.R"
 
+reset_button_expression    <- "fw_create_sidebar\\(resetbutton = FALSE\\)"
+no_reset_button_expression <- "fw_create_sidebar\\(\\)"
+
 # Checks if the location contains a periscope application.
 .is_periscope_app <- function(location = ".") {
     result <- TRUE
@@ -36,9 +39,18 @@ add_right_sidebar <- function(location) {
             # replace ui by ui_plus (take car of resetbutton!)
             ui_content <- readLines(con = paste(location, ui_filename, sep = usersep))
             # update ui if needed
-            if (!any(grepl("shinydashboardPlus", ui_content))) {
-                writeLines(readLines(con = system.file("fw_templ", ui_plus_filename, package = "periscope")), 
-                           con = paste(location, ui_filename, sep = usersep))
+            if (!any(grepl("fw_create_right_sidebar", ui_content))) {
+                # check if resetbutton is disabled
+                reset_button <- TRUE
+                if (any(grepl(reset_button_expression, ui_content))) {
+                    reset_button <- FALSE
+                }
+                new_ui_content <- readLines(con = system.file("fw_templ", ui_plus_filename, package = "periscope"))
+                if (!reset_button) {
+                    new_ui_content <- gsub(no_reset_button_expression, reset_button_expression, new_ui_content)
+                }
+                writeLines(new_ui_content, con = paste(location, ui_filename, sep = usersep))   
+                
                 # add right_sidebar file    
                 writeLines(readLines(con = system.file("fw_templ",  "p_blank", ui_right_sidebar_filename, package = "periscope")), 
                            con = paste(location, "program", ui_right_sidebar_filename, sep = usersep))

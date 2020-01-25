@@ -4,10 +4,19 @@
 \alias{downloadablePlotUI}
 \title{downloadablePlot UI}
 \usage{
-downloadablePlotUI(id, downloadtypes = c("png"),
-  download_hovertext = NULL, width = "100\%", height = "400px",
-  btn_halign = "right", btn_valign = "bottom", btn_overlap = TRUE,
-  clickOpts = NULL, hoverOpts = NULL, brushOpts = NULL)
+downloadablePlotUI(
+  id,
+  downloadtypes = c("png"),
+  download_hovertext = NULL,
+  width = "100\%",
+  height = "400px",
+  btn_halign = "right",
+  btn_valign = "bottom",
+  btn_overlap = TRUE,
+  clickOpts = NULL,
+  hoverOpts = NULL,
+  brushOpts = NULL
+)
 }
 \arguments{
 \item{id}{character id for the object}

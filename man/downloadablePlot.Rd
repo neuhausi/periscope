@@ -4,8 +4,16 @@
 \alias{downloadablePlot}
 \title{downloadablePlot Module}
 \usage{
-downloadablePlot(input, output, session, logger, filenameroot,
-  aspectratio = 1, downloadfxns = list(), visibleplot)
+downloadablePlot(
+  input,
+  output,
+  session,
+  logger,
+  filenameroot,
+  aspectratio = 1,
+  downloadfxns = list(),
+  visibleplot
+)
 }
 \arguments{
 \item{input}{provided by \code{shiny::callModule}}

@@ -4,8 +4,13 @@
 \alias{downloadableTableUI}
 \title{downloadableTable UI}
 \usage{
-downloadableTableUI(id, downloadtypes = c("csv"), hovertext = NULL,
-  contentHeight = "200px", singleSelect = FALSE)
+downloadableTableUI(
+  id,
+  downloadtypes = c("csv"),
+  hovertext = NULL,
+  contentHeight = "200px",
+  singleSelect = FALSE
+)
 }
 \arguments{
 \item{id}{character id for the object}

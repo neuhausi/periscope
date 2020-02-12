@@ -68,12 +68,16 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
     basic <- shiny::isolate(.g_opts$side_basic)
     adv   <- shiny::isolate(.g_opts$side_advanced)
 
+    if (!is.null(adv) && length(adv) > 0 && resetbutton) {
+        adv[[length(adv) + 1]] <- .appResetButton("appResetId")
+    }
+    
     return(
         shinydashboard::dashboardSidebar(
             width = shiny::isolate(.g_opts$sidebar_size),
             .header_injection(),             #injected header elements
             .right_sidebar_injection(),
-            if (!is.null(adv[[1]])) {
+            if (!is.null(basic[[1]]) && !is.null(adv[[1]])) {
                 shiny::div(class = "tab-content",
                     shiny::tabsetPanel(
                         id = "Options",
@@ -83,12 +87,15 @@ fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)
                             basic),
                         shiny::tabPanel(
                             shiny::isolate(.g_opts$side_advanced_label),
-                            adv,
-                            switch(resetbutton + 1, NULL, .appResetButton("appResetId")))))
+                            adv)))
             }
-            else {
+            else if (!is.null(basic[[1]]) && is.null(adv[[1]])) {
                 shiny::div(class = "notab-content",
-                            basic)
+                           basic)
+            }
+            else if (is.null(basic[[1]]) && !is.null(adv[[1]])) {
+                shiny::div(class = "notab-content",
+                           adv)
             }
         ) )
 }

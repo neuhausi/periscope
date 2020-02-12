@@ -42,8 +42,8 @@ application.
 There are two tabs in the sidebar **Basic** and **Advanced**.  The *Basic* tab
 is intended to be used for commonly accessed options and settings whereas the 
 *Advanced* tab is reserved for less-common options and settings.  The tab 
-names (or labels) can be changed.  The Advanced tab is optional and if it is not
-present there will be no tabs shown (the sidebar will not have tabbed areas).
+names (or labels) can be changed. Both tabs are optional and if one of them or both 
+are missing there will be no tabs shown (the sidebar will not have tabbed areas).
 
 The left sidebar can be collapsed in desktop mode to maximize the user's view of the
 application body when they do not immediately need the configuration options and

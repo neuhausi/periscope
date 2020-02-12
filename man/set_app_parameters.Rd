@@ -4,8 +4,13 @@
 \alias{set_app_parameters}
 \title{Set Application Parameters}
 \usage{
-set_app_parameters(title, titleinfo = NULL, loglevel = "DEBUG",
-  showlog = TRUE, app_version = "1.0.0")
+set_app_parameters(
+  title,
+  titleinfo = NULL,
+  loglevel = "DEBUG",
+  showlog = TRUE,
+  app_version = "1.0.0"
+)
 }
 \arguments{
 \item{title}{application title text}

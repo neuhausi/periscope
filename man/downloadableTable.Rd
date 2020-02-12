@@ -4,9 +4,18 @@
 \alias{downloadableTable}
 \title{downloadableTable Module}
 \usage{
-downloadableTable(input, output, session, logger, filenameroot,
-  downloaddatafxns = list(), tabledata, rownames = TRUE,
-  caption = NULL, selection = NULL)
+downloadableTable(
+  input,
+  output,
+  session,
+  logger,
+  filenameroot,
+  downloaddatafxns = list(),
+  tabledata,
+  rownames = TRUE,
+  caption = NULL,
+  selection = NULL
+)
 }
 \arguments{
 \item{input}{provided by \code{shiny::callModule}}

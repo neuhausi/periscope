@@ -181,15 +181,19 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
     if (dashboard_plus) {
         file.rename(paste(newloc, "ui_plus.R", sep = usersep), paste(newloc, "ui.R", sep = usersep))
         if (!is.null(right_sidebar_icon)) {
+            ui_file <- file(paste(newloc, "ui.R", sep = usersep), open = "r+")
             writeLines(gsub("fw_create_header_plus\\(", paste0("fw_create_header_plus\\(sidebar_right_icon = '", right_sidebar_icon, "'"), 
-                            readLines(con = paste(newloc, "ui.R", sep = usersep))), 
-                       con = paste(newloc, "ui.R", sep = usersep))
+                            readLines(con = ui_file)), 
+                       con = ui_file)
+            close(ui_file)
         }
     }
     if (!resetbutton) {
+        ui_file <- file(paste(newloc, "ui.R", sep = usersep), open = "r+")
         writeLines(gsub("fw_create_sidebar\\(", "fw_create_sidebar\\(resetbutton = FALSE", 
-                        readLines(con = paste(newloc, "ui.R", sep = usersep))), 
-                   con = paste(newloc, "ui.R", sep = usersep))
+                        readLines(con = ui_file)), 
+                   con = ui_file)
+        close(ui_file)
     }
 
     #subdir copies

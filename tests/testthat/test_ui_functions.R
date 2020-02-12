@@ -20,7 +20,7 @@ test_that("fw_create_header", {
     expect_equal(result.children[[2]]$children[[1]]$children[[1]], "Working")
 })
 
-check_sidebar_result <- function(result, advanced_existing = FALSE) {
+check_sidebar_result <- function(result, basic_existing = FALSE, advanced_existing = FALSE) {
     expect_equal(result$name, "aside")
     if (length(result$attribs) == 2) {
         expect_equal(result$attribs, list(class = "main-sidebar", 'data-collapsed' = "false"))
@@ -40,32 +40,69 @@ check_sidebar_result <- function(result, advanced_existing = FALSE) {
 
     expect_equal(result.subchilds[[1]][[1]]$name, "script")
     expect_true(grepl("Set using set_app_parameters\\() in program/global.R", result.subchilds[[1]][[1]]$children[[1]]))
-
-    expect_equal(result.subchilds[[3]]$name, "div")
-
-    if (advanced_existing) {
-        expect_equal(result.subchilds[[3]]$attribs$class, "tab-content")
-    } else {
-        expect_equal(result.subchilds[[3]]$attribs$class, "notab-content")
+    
+    if (basic_existing || advanced_existing) {
+        expect_equal(result.subchilds[[3]]$name, "div")
+        
+        if (basic_existing && advanced_existing) {
+            expect_equal(result.subchilds[[3]]$attribs$class, "tab-content")
+        } else {
+            expect_equal(result.subchilds[[3]]$attribs$class, "notab-content")
+        }
     }
 }
 
-test_that("fw_create_sidebar", {
+test_that("fw_create_sidebar empty", {
     result <- periscope:::fw_create_sidebar()
 
     check_sidebar_result(result)
 })
 
-test_that("fw_create_sidebar with existing advanced", {
+test_that("fw_create_sidebar only basic", {
     # setup
+    side_basic            <- shiny::isolate(.g_opts$side_basic)
+    .g_opts$side_basic    <- list(tags$p())
+    side_advanced         <- shiny::isolate(.g_opts$side_advanced)
+    .g_opts$side_advanced <- NULL
+    
+    result <- periscope:::fw_create_sidebar()
+    
+    check_sidebar_result(result, basic_existing = TRUE)
+    
+    # teardown
+    .g_opts$side_basic    <- side_basic
+    .g_opts$side_advanced <- side_advanced
+})
+
+test_that("fw_create_sidebar only advanced", {
+    # setup
+    side_basic            <- shiny::isolate(.g_opts$side_basic)
+    .g_opts$side_basic    <- NULL
+    side_advanced         <- shiny::isolate(.g_opts$side_advanced)
+    .g_opts$side_advanced <- list(tags$p())
+
+    result <- periscope:::fw_create_sidebar()
+    
+    check_sidebar_result(result, basic_existing = TRUE)
+
+    # teardown
+    .g_opts$side_basic    <- side_basic
+    .g_opts$side_advanced <- side_advanced
+})
+
+test_that("fw_create_sidebar basic and advanced", {
+    # setup
+    side_basic            <- shiny::isolate(.g_opts$side_basic)
+    .g_opts$side_basic    <- list(tags$p())
     side_advanced         <- shiny::isolate(.g_opts$side_advanced)
     .g_opts$side_advanced <- list(tags$p())
 
     result <- periscope:::fw_create_sidebar()
 
-    check_sidebar_result(result, advanced_existing = TRUE)
+    check_sidebar_result(result, basic_existing = TRUE, advanced_existing = TRUE)
 
     # teardown
+    .g_opts$side_basic    <- side_basic
     .g_opts$side_advanced <- side_advanced
 })
 

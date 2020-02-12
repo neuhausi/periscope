@@ -22,7 +22,7 @@ LazyData: true
 Depends:
     R (>= 3.4)
 Imports:
-    shiny (>= 1.0),
+    shiny (>= 1.1),
     shinydashboard (>= 0.5),
     shinydashboardPlus (>= 0.5),
     shinyBS (>= 0.61),

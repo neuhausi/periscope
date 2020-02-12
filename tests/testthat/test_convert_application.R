@@ -27,6 +27,16 @@ expect_converted_application <- function(location, right_sidebar = NULL, reset_b
             expect_true(any(grepl("resetbutton", ui_content)))   
         }
     }
+    # clean up
+    unlink(location, TRUE)
+}
+
+# creates a temp directory, copies the sample_app to this directory and returns the path of the temp app
+create_app_tmp_dir <- function() {
+    app_name     <- "sample_app"
+    app_temp.dir <- tempdir()
+    file.copy(app_name, app_temp.dir, recursive = TRUE)
+    file.path(app_temp.dir, app_name)
 }
 
 
@@ -53,28 +63,18 @@ test_that("add_right_sidebar location does not contain an existing application",
 })
 
 test_that("add_right_sidebar valid location", {
-    dir.create('myname')
-    file.copy("sample_app", "myname", recursive = TRUE)
-    app_location <- "myname/sample_app"
+    app_location <- create_app_tmp_dir()
     
     expect_message(add_right_sidebar(location = app_location), "Add right sidebar conversion was successful. File\\(s\\) updated: ui.R")
     expect_converted_application(location = app_location, right_sidebar = TRUE)
-    
-    # clean up
-    unlink("myname", TRUE)
 })
 
 test_that("add_right_sidebar valid location, added twice", {
-    dir.create('myname')
-    file.copy("sample_app", "myname", recursive = TRUE)
-    app_location <- "myname/sample_app"
+    app_location <- create_app_tmp_dir()
     
     expect_message(add_right_sidebar(location = app_location), "Add right sidebar conversion was successful. File\\(s\\) updated: ui.R")
     expect_message(add_right_sidebar(location = app_location), "Right sidebar already available, no conversion needed")
     expect_converted_application(location = app_location, right_sidebar = TRUE)
-    
-    # clean up
-    unlink("myname", TRUE)
 })
 
 
@@ -101,27 +101,17 @@ test_that("remove_reset_button location does not contain an existing application
 })
 
 test_that("remove_reset_button valid location", {
-    dir.create('myname')
-    file.copy("sample_app", "myname", recursive = TRUE)
-    app_location <- "myname/sample_app"
+    app_location <- create_app_tmp_dir()
     
     expect_message(remove_reset_button(location = app_location), "Remove reset button conversion was successful. File\\(s\\) updated: ui.R")
     expect_converted_application(location = app_location, reset_button = FALSE)
-    
-    # clean up
-    unlink("myname", TRUE)
 })
 
 test_that("remove_reset_button valid location, remove twice", {
-    dir.create('myname')
-    file.copy("sample_app", "myname", recursive = TRUE)
-    app_location <- "myname/sample_app"
+    app_location <- create_app_tmp_dir()
     
     expect_message(remove_reset_button(location = app_location), "Remove reset button conversion was successful. File\\(s\\) updated: ui.R")
     expect_message(remove_reset_button(location = app_location), "Reset button already removed, no conversion needed")
-    
-    # clean up
-    unlink("myname", TRUE)
 })
 
 ## add_reset_button tests
@@ -147,25 +137,15 @@ test_that("add_reset_button location does not contain an existing application", 
 })
 
 test_that("add_reset_button valid location, already available", {
-    dir.create('myname')
-    file.copy("sample_app", "myname", recursive = TRUE)
-    app_location <- "myname/sample_app"
+    app_location <- create_app_tmp_dir()
     
     expect_message(add_reset_button(location = app_location), "Reset button already available, no conversion needed")
-    
-    # clean up
-    unlink("myname", TRUE)
 })
 
 test_that("add_reset_button valid location, not available yet", {
-    dir.create('myname')
-    file.copy("sample_app", "myname", recursive = TRUE)
-    app_location <- "myname/sample_app"
+    app_location <- create_app_tmp_dir()
     
     remove_reset_button(location = app_location)
     expect_message(add_reset_button(location = app_location), "Add reset button conversion was successful. File\\(s\\) updated: ui.R")
     expect_converted_application(location = app_location, reset_button = TRUE)
-    
-    # clean up
-    unlink("myname", TRUE)
 })

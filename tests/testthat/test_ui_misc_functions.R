@@ -40,7 +40,7 @@ test_that("setup_logging", {
 test_that("setup_logging existing log", {
     logger <- periscope:::fw_get_user_log()
     file.create(paste0(paste(log_directory, logger$name, sep = .Platform$file.sep), ".log"))
-    
+
     result <- shiny::isolate(.setup_logging(NULL,logger))
     expect_equal(class(result), c("reactiveExpr", "reactive"))
 })
@@ -49,3 +49,6 @@ test_that("fw_reset_app_options", {
     result <- periscope:::fw_reset_app_options()
     expect_null(result, "fw_reset_app_options")
 })
+
+# clean up
+unlink("log", TRUE)

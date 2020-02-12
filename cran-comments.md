@@ -1,6 +1,6 @@
 ## Comments from Maintainer
 
-Enhancement to add a right sidebar, additional preference for reset button, documentation updates, etc.
+Enhancements and added functionality as detailed in News
 
 ---  
     

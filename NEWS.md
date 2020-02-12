@@ -1,5 +1,12 @@
 #Revisions and Change Log
 
+### v0.4.8
+* Added functionality to add or remove the reset button from an existing application
+* Added functionality to add the right sidebar to an existing application
+* Added ability to disable row.names in csv/tsv downloadFile
+* Update to allow only the Advanced tab to be used in the sidebar
+* Tested shiny 1.4 functionality - compatible
+
 ### v0.4.7
 * Added shinydashboard plus functionality for a right-hand sidebar as an option
 * Updated documentation and examples for shinydashboardplus functionality

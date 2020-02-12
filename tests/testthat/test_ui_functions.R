@@ -20,7 +20,7 @@ test_that("fw_create_header", {
     expect_equal(result.children[[2]]$children[[1]]$children[[1]], "Working")
 })
 
-check_sidebar_result <- function(result, advanced_existing = FALSE) {
+check_sidebar_result <- function(result, basic_existing = FALSE, advanced_existing = FALSE) {
     expect_equal(result$name, "aside")
     if (length(result$attribs) == 2) {
         expect_equal(result$attribs, list(class = "main-sidebar", 'data-collapsed' = "false"))
@@ -40,32 +40,69 @@ check_sidebar_result <- function(result, advanced_existing = FALSE) {
 
     expect_equal(result.subchilds[[1]][[1]]$name, "script")
     expect_true(grepl("Set using set_app_parameters\\() in program/global.R", result.subchilds[[1]][[1]]$children[[1]]))
-
-    expect_equal(result.subchilds[[3]]$name, "div")
-
-    if (advanced_existing) {
-        expect_equal(result.subchilds[[3]]$attribs$class, "tab-content")
-    } else {
-        expect_equal(result.subchilds[[3]]$attribs$class, "notab-content")
+    
+    if (basic_existing || advanced_existing) {
+        expect_equal(result.subchilds[[3]]$name, "div")
+        
+        if (basic_existing && advanced_existing) {
+            expect_equal(result.subchilds[[3]]$attribs$class, "tab-content")
+        } else {
+            expect_equal(result.subchilds[[3]]$attribs$class, "notab-content")
+        }
     }
 }
 
-test_that("fw_create_sidebar", {
+test_that("fw_create_sidebar empty", {
     result <- periscope:::fw_create_sidebar()
 
     check_sidebar_result(result)
 })
 
-test_that("fw_create_sidebar with existing advanced", {
+test_that("fw_create_sidebar only basic", {
     # setup
+    side_basic            <- shiny::isolate(.g_opts$side_basic)
+    .g_opts$side_basic    <- list(tags$p())
+    side_advanced         <- shiny::isolate(.g_opts$side_advanced)
+    .g_opts$side_advanced <- NULL
+    
+    result <- periscope:::fw_create_sidebar()
+    
+    check_sidebar_result(result, basic_existing = TRUE)
+    
+    # teardown
+    .g_opts$side_basic    <- side_basic
+    .g_opts$side_advanced <- side_advanced
+})
+
+test_that("fw_create_sidebar only advanced", {
+    # setup
+    side_basic            <- shiny::isolate(.g_opts$side_basic)
+    .g_opts$side_basic    <- NULL
+    side_advanced         <- shiny::isolate(.g_opts$side_advanced)
+    .g_opts$side_advanced <- list(tags$p())
+
+    result <- periscope:::fw_create_sidebar()
+    
+    check_sidebar_result(result, basic_existing = TRUE)
+
+    # teardown
+    .g_opts$side_basic    <- side_basic
+    .g_opts$side_advanced <- side_advanced
+})
+
+test_that("fw_create_sidebar basic and advanced", {
+    # setup
+    side_basic            <- shiny::isolate(.g_opts$side_basic)
+    .g_opts$side_basic    <- list(tags$p())
     side_advanced         <- shiny::isolate(.g_opts$side_advanced)
     .g_opts$side_advanced <- list(tags$p())
 
     result <- periscope:::fw_create_sidebar()
 
-    check_sidebar_result(result, advanced_existing = TRUE)
+    check_sidebar_result(result, basic_existing = TRUE, advanced_existing = TRUE)
 
     # teardown
+    .g_opts$side_basic    <- side_basic
     .g_opts$side_advanced <- side_advanced
 })
 
@@ -200,3 +237,75 @@ test_that("ui_tooltip no text", {
     expect_warning(ui_tooltip(id = "id", label = "mylabel", text = ""), "ui_tooltip\\() called without tooltip text.")
 })
 
+test_that("fw_create_header_plus", {
+    result <- periscope:::fw_create_header_plus()
+    expect_equal(result$name, "header")
+    expect_equal(result$attribs, list(class = "main-header"))
+    
+    result.children <- result$children
+    expect_equal(length(result.children), 3)
+    expect_equal(result.children[[1]], NULL) ## ?
+    
+    expect_equal(result.children[[2]]$name, "span")
+    expect_equal(result.children[[2]]$attribs$class, "logo")
+    expect_equal(length(result.children[[2]]$children), 1)
+    
+    expect_equal(result.children[[2]]$children[[1]]$name, "div")
+    expect_equal(result.children[[2]]$children[[1]]$attribs, list(class = "periscope-busy-ind"))
+    
+    expect_equal(length(result.children[[2]]$children[[1]]$children), 2)
+    expect_equal(result.children[[2]]$children[[1]]$children[[1]], "Working")
+    
+    expect_equal(result.children[[3]]$name, "nav")
+    expect_equal(result.children[[3]]$attribs$class, "navbar navbar-static-top")
+    expect_equal(length(result.children[[3]]$children), 4)
+    
+    expect_equal(result.children[[3]]$children[[1]]$name, "span")
+    expect_equal(result.children[[3]]$children[[1]]$attribs, list(style = "display:none;"))
+    
+    expect_equal(result.children[[3]]$children[[2]]$name, "a")
+    expect_equal(result.children[[3]]$children[[2]]$attribs, list(href = "#", class = "sidebar-toggle", `data-toggle` = "offcanvas", role = "button"))
+    
+    expect_equal(result.children[[3]]$children[[3]]$name, "div")
+    expect_equal(result.children[[3]]$children[[3]]$attribs, list(class = "navbar-custom-menu", style = "float: left; margin-left: 10px;"))
+    
+    expect_equal(result.children[[3]]$children[[4]]$name, "div")
+    expect_equal(result.children[[3]]$children[[4]]$attribs, list(class = "navbar-custom-menu"))
+})
+
+test_that("fw_create_right_sidebar", {
+    result <- periscope:::fw_create_right_sidebar()
+    
+    expect_equal(length(result), 2)
+    expect_equal(result[[1]]$name, "head")
+    expect_equal(length(result[[1]]$attribs), 0)
+    expect_equal(length(result[[1]]$children), 1)
+    
+    result1.children <- result[[1]]$children[[1]]
+    
+    expect_equal(result1.children$name, "style")
+    expect_equal(length(result1.children$attribs), 0)
+    
+    expect_equal(result[[2]]$name, "div")
+    expect_equal(result[[2]]$attribs, list(id = "controlbar"))
+    expect_equal(length(result[[2]]$children), 2)
+    
+    result2.children <- result[[2]]$children
+    
+    expect_equal(result2.children[[1]]$name, "aside")
+    expect_equal(length(result2.children[[1]]$children), 2)
+    
+    expect_equal(result2.children[[1]]$children[[1]]$name, "ul")
+    expect_equal(result2.children[[1]]$children[[1]]$attribs, list(class = "nav nav-tabs nav-justified control-sidebar-tabs"))
+    
+    expect_equal(result2.children[[1]]$children[[2]]$name, "div")
+    expect_equal(result2.children[[1]]$children[[2]]$attribs, list(class = "controlbar tab-content"))
+    
+    expect_equal(result2.children[[2]]$name, "div")
+    expect_equal(result2.children[[2]]$attribs, list(class = "control-sidebar-bg", style = "width: 230px;"))
+})
+
+test_that("add_ui_sidebar_right", {
+    result <- add_ui_sidebar_right(elementlist = NULL, append = TRUE)
+    expect_null(result, "add_ui_sidebar_right")
+})

@@ -6,7 +6,6 @@ library(lattice)
 data(mtcars)
 mtcars$cyl <- factor(mtcars$cyl, levels = c(4,6,8),
                      labels = c("4cyl", "6cyl", "8cyl"))
-attr(mtcars, "show_rownames") <- TRUE
 
 
 # -- plotting functions

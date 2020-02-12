@@ -194,11 +194,19 @@ downloadFile <- function(input, output, session, logger,
     writeFile <- function(type, data, file, logger, filename) {
         # tabular values
         if ((type == "csv") | (type == "tsv")) {
+            show_rownames <- attr(data, "show_rownames")
+            show_rownames <- !is.null(show_rownames) && show_rownames
+            show_colnames <- TRUE
+            if (show_rownames) {
+                show_colnames <- NA
+            }
+            
             utils::write.table(data, file,
                                sep = ifelse(type == "tsv", "\t", ","),
                                dec = ".",
                                qmethod = "double",
-                               col.names = NA)
+                               col.names = show_colnames,
+                               row.names = show_rownames)
         }
         # excel file
         else if (type == "xlsx") {

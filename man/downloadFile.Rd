@@ -4,8 +4,15 @@
 \alias{downloadFile}
 \title{downloadFile Module}
 \usage{
-downloadFile(input, output, session, logger, filenameroot,
-  datafxns = list(), aspectratio = 1)
+downloadFile(
+  input,
+  output,
+  session,
+  logger,
+  filenameroot,
+  datafxns = list(),
+  aspectratio = 1
+)
 }
 \arguments{
 \item{input}{provided by \code{shiny::callModule}}

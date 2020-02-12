@@ -1,6 +1,6 @@
 ## Comments from Maintainer
 
-Enhancement to add a right sidebar, additional preference for reset button, documentation updates, etc.
+Enhancements and added functionality as detailed in News
 
 ---  
     
@@ -11,13 +11,13 @@ RStudio Server Pro (Ubuntu 18.04.2)
 
 * R 3.4.4  
 * R 3.5.3  
-* R 3.6.1
+* R 3.6.2
 
 Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
-* R 3.6.1
-* R devel (2019-11-23 r77455)
+* R 3.6.2
+* R devel (2020-02-12 r77798)
 
 WinBuilder
 
@@ -57,3 +57,4 @@ tools::package_dependencies(packages = c('periscope'),
 $periscope  
 character(0)
 ```
+

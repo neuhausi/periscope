@@ -4,8 +4,7 @@
 \alias{add_ui_sidebar_basic}
 \title{Add UI Elements to the Sidebar (Basic Tab)}
 \usage{
-add_ui_sidebar_basic(elementlist = NULL, append = FALSE,
-  tabname = "Basic")
+add_ui_sidebar_basic(elementlist = NULL, append = FALSE, tabname = "Basic")
 }
 \arguments{
 \item{elementlist}{list of UI elements to add to the sidebar tab}

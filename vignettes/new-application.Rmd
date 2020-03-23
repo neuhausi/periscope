@@ -47,7 +47,7 @@ are missing there will be no tabs shown (the sidebar will not have tabbed areas)
 
 The left sidebar can be collapsed in desktop mode to maximize the user's view of the
 application body when they do not immediately need the configuration options and
-settings.
+settings. Also, it is possible to create an application without a left sidebar.
 
 *2: Body*
 
@@ -184,6 +184,8 @@ library(periscope)
 
 app_dir = tempdir()
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE)
+# application without a left sidebar
+create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, leftsidebar = FALSE)
 # application without a reset button
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, resetbutton = FALSE)
 # application with a right sidebar using the default icon
@@ -192,7 +194,7 @@ create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE,
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, rightsidebar = "table")
 ```
 
-This generates a default sample application optionally with a right sidebar in a subdirectory named *mytestapp* 
+This generates a default sample application optionally with a left/right sidebar in a subdirectory named *mytestapp* 
 at the specified location.  The location must exist when calling this function.
 
 *Note*: If the *mytestapp* directory in this location already exists it will not 
@@ -220,6 +222,8 @@ library(periscope)
 
 app_dir = tempdir()
 create_new_application(name = 'mytestapp', location = app_dir)
+# application without a left sidebar
+create_new_application(name = 'mytestapp', location = app_dir, leftsidebar = FALSE)
 # application without a reset button
 create_new_application(name = 'mytestapp', location = app_dir, resetbutton = FALSE)
 # application with a right sidebar using the default icon
@@ -228,7 +232,7 @@ create_new_application(name = 'mytestapp', location = app_dir, rightsidebar = TR
 create_new_application(name = 'mytestapp', location = app_dir, rightsidebar = "table")
 ```
 
-This generates a default blank application optionally with a right sidebar in a subdirectory named *mytestapp* 
+This generates a default blank application optionally with a left/right sidebar in a subdirectory named *mytestapp* 
 at the specified location.  The location must exist when calling this function.
 
 *Note*: If the *mytestapp* directory in this location already exists it will not

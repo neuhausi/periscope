@@ -1,5 +1,11 @@
 #Revisions and Change Log
 
+### v0.4.9
+* Added functionality to remove the left sidebar
+* Bugfixes for corner cases
+* Updated tests, documentation
+
+
 ### v0.4.8
 * Added functionality to add or remove the reset button from an existing application
 * Added functionality to add the right sidebar to an existing application

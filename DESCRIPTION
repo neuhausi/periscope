@@ -1,7 +1,7 @@
 Package: periscope
 Type: Package
 Title: Enterprise Streamlined 'Shiny' Application Framework
-Version: 0.4.9.9000
+Version: 0.4.9
 Authors@R: c(
     person("Constance", "Brett", email="connie@aggregate-genius.com", role = c("aut", "cre")),
     person("Isaac", "Neuhaus", role = "aut", comment = "canvasXpress JavaScript Library Maintainer"),
@@ -12,7 +12,7 @@ Description: An enterprise-targeted scalable and UI-standardized 'shiny' framewo
     including a variety of developer convenience functions with the goal of both 
     streamlining robust application development while assisting with creating a 
     consistent user experience regardless of application or developer.
-URL: https://github.com/cb4ds/periscope.git, http://periscopeapps.org:3838, http://canvasxpress.org
+URL: https://github.com/cb4ds/periscope.git, http://periscopeapps.org:3838, https://www.canvasxpress.org
 BugReports: https://github.com/cb4ds/periscope/issues
 Repository: BRAN
 License: GPL-3

@@ -1,6 +1,6 @@
 ## Comments from Maintainer
 
-Enhancements and added functionality as detailed in News
+Enhancements, bug fixes and additional functionality as detailed in News
 
 ---  
     
@@ -17,7 +17,7 @@ Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
 * R 3.6.2
-* R devel (2020-02-12 r77798)
+* R devel (2020-03-13 r77948)
 
 WinBuilder
 

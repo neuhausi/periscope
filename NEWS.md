@@ -1,5 +1,10 @@
 #Revisions and Change Log
 
+
+### v0.4.9-1
+* Fixed url typo in readme link
+
+
 ### v0.4.9
 * Added functionality to remove the left sidebar
 * Bugfixes for corner cases

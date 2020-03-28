@@ -2,6 +2,8 @@
 
 Enhancements, bug fixes and additional functionality as detailed in News
 
+Fixed typo in url in README
+
 ---  
     
 ## Test Environments

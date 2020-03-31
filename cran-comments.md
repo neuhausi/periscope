@@ -2,7 +2,9 @@
 
 Enhancements, bug fixes and additional functionality as detailed in News
 
-Fixed typo in url in README
+Fixed typo in one url in the README file.  
+
+NOTE: I'm seeing URLs occasionally giving 'could not resolve' notes on urls that are valid, I think it is likely an internet connectivity/slowdown issue where not enough time is given to the request to check the URL.  The https://www.canvasxpress.org url is valid, the certificate matches, and the site is up and accessible.  If you know of a way to deal with this on my end I'm happy to resolve it but will need some additional input on what to set/etc.
 
 ---  
     

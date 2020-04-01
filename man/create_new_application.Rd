@@ -9,7 +9,8 @@ create_new_application(
   location,
   sampleapp = FALSE,
   resetbutton = TRUE,
-  rightsidebar = FALSE
+  rightsidebar = FALSE,
+  leftsidebar = TRUE
 )
 }
 \arguments{
@@ -23,6 +24,8 @@ create_new_application(
 
 \item{rightsidebar}{parameter to set the right sidebar. It can be TRUE/FALSE or a character 
 containing the name of a shiny::icon().}
+
+\item{leftsidebar}{whether the left sidebar should be enabled.}
 }
 \description{
 Creates ready-to-use templated application files using the periscope
@@ -125,7 +128,9 @@ create_new_application(name = 'mytestapp', location = tempdir(), sampleapp = TRU
 rightsidebar = "table")
 
 # blank app named 'myblankapp' created in a temp dir
-create_new_application(name = 'mytestapp', location = tempdir())
+create_new_application(name = 'myblankapp', location = tempdir())
+# blank app named 'myblankapp' without a left sidebar created in a temp dir
+create_new_application(name = 'myblankapp', location = tempdir(), leftsidebar = FALSE)
 
 }
 \seealso{

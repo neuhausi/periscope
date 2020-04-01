@@ -64,40 +64,47 @@ fw_create_header_plus <- function(sidebar_right_icon = shiny::isolate(.g_opts$si
 }
 
 # Framework UI Left Sidebar Creation
-fw_create_sidebar <- function(resetbutton = shiny::isolate(.g_opts$reset_button)) {
-    basic <- shiny::isolate(.g_opts$side_basic)
-    adv   <- shiny::isolate(.g_opts$side_advanced)
-
-    if (!is.null(adv) && length(adv) > 0 && resetbutton) {
-        adv[[length(adv) + 1]] <- .appResetButton("appResetId")
+fw_create_sidebar <- function(showsidebar = shiny::isolate(.g_opts$show_left_sidebar), resetbutton = shiny::isolate(.g_opts$reset_button)) {
+    result <- NULL
+    if (showsidebar) {
+        basic <- shiny::isolate(.g_opts$side_basic)
+        adv   <- shiny::isolate(.g_opts$side_advanced)
+        
+        if (!is.null(adv) && length(adv) > 0 && resetbutton) {
+            adv[[length(adv) + 1]] <- .appResetButton("appResetId")
+        }
+        result <- shinydashboard::dashboardSidebar(
+                    width = shiny::isolate(.g_opts$sidebar_size),
+                    .header_injection(),             #injected header elements
+                    .right_sidebar_injection(),
+                    if (!is.null(basic[[1]]) && !is.null(adv[[1]])) {
+                        shiny::div(class = "tab-content",
+                                   shiny::tabsetPanel(
+                                       id = "Options",
+                                       selected = shiny::isolate(.g_opts$side_basic_label),
+                                       shiny::tabPanel(
+                                           shiny::isolate(.g_opts$side_basic_label),
+                                           basic),
+                                       shiny::tabPanel(
+                                           shiny::isolate(.g_opts$side_advanced_label),
+                                           adv)))
+                    }
+                    else if (!is.null(basic[[1]]) && is.null(adv[[1]])) {
+                        shiny::div(class = "notab-content",
+                                   basic)
+                    }
+                    else if (is.null(basic[[1]]) && !is.null(adv[[1]])) {
+                        shiny::div(class = "notab-content",
+                                   adv)
+                    })
+    } else {
+        result <- shinydashboard::dashboardSidebar(width = 0,
+                                                   collapsed = TRUE,
+                                                   .header_injection(),
+                                                   .right_sidebar_injection(),
+                                                   .remove_sidebar_toggle())
     }
-    
-    return(
-        shinydashboard::dashboardSidebar(
-            width = shiny::isolate(.g_opts$sidebar_size),
-            .header_injection(),             #injected header elements
-            .right_sidebar_injection(),
-            if (!is.null(basic[[1]]) && !is.null(adv[[1]])) {
-                shiny::div(class = "tab-content",
-                    shiny::tabsetPanel(
-                        id = "Options",
-                        selected = shiny::isolate(.g_opts$side_basic_label),
-                        shiny::tabPanel(
-                            shiny::isolate(.g_opts$side_basic_label),
-                            basic),
-                        shiny::tabPanel(
-                            shiny::isolate(.g_opts$side_advanced_label),
-                            adv)))
-            }
-            else if (!is.null(basic[[1]]) && is.null(adv[[1]])) {
-                shiny::div(class = "notab-content",
-                           basic)
-            }
-            else if (is.null(basic[[1]]) && !is.null(adv[[1]])) {
-                shiny::div(class = "notab-content",
-                           adv)
-            }
-        ) )
+    result
 }
 
 # Framework UI Right Sidebar Creation

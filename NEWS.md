@@ -1,5 +1,16 @@
 #Revisions and Change Log
 
+
+### v0.4.9-1
+* Fixed url typo in readme link
+
+
+### v0.4.9
+* Added functionality to remove the left sidebar
+* Bugfixes for corner cases
+* Updated tests, documentation
+
+
 ### v0.4.8
 * Added functionality to add or remove the reset button from an existing application
 * Added functionality to add the right sidebar to an existing application
@@ -15,6 +26,9 @@
 ### v0.4.6
 * Bugfix - hide downloadable table button if there are no download functions defined
 * Updated tests to be compatible with the next release of htmltools (0.4, schloerke)
+
+### v0.4.5
+* Bugfix - downloadable table button was not appearing when created in a reactive block
 
 ### v0.4.4
 * Supporting openxlsx workbook format for xlsx downloads in addition to data tables

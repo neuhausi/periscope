@@ -1,6 +1,10 @@
 ## Comments from Maintainer
 
-Enhancements and added functionality as detailed in News
+Enhancements, bug fixes and additional functionality as detailed in News
+
+Fixed typo in one url in the README file.  
+
+NOTE: I'm seeing URLs occasionally giving 'could not resolve' notes on urls that are valid, I think it is likely an internet connectivity/slowdown issue where not enough time is given to the request to check the URL.  The https://www.canvasxpress.org url is valid, the certificate matches, and the site is up and accessible.  If you know of a way to deal with this on my end I'm happy to resolve it but will need some additional input on what to set/etc.
 
 ---  
     
@@ -17,7 +21,7 @@ Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
 * R 3.6.2
-* R devel (2020-02-12 r77798)
+* R devel (2020-03-13 r77948)
 
 WinBuilder
 

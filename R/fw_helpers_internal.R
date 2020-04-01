@@ -23,6 +23,7 @@
     reset_wait          = 5000,  #milliseconds
     show_userlog        = TRUE,
     body_elements       = c(),
+    show_left_sidebar   = TRUE,
     side_basic          = .g_sidebar_default_value,
     side_basic_label    = "Basic",
     side_advanced       = .g_sidebar_default_value,
@@ -62,6 +63,11 @@
     shiny::tags$script(shiny::HTML("setTimeout(function() {
                                         $('[class~=\"control-sidebar-tabs\"]').find('li:first').remove();
                                    }, 5000);"))
+}
+
+.remove_sidebar_toggle <- function() {
+    shiny::tags$script(shiny::HTML("$('[class~=\"sidebar-toggle\"]').remove();
+                                    $('[class~=\"logo\"]').css('background-color', '#3c8dbc');"))
 }
 
 # Returns the custom css as HTML

@@ -1,5 +1,7 @@
 #Revisions and Change Log
 
+### v0.4.10
+* Fixed tests for compatibility with the next release of shiny
 
 ### v0.4.9-1
 * Fixed url typo in readme link

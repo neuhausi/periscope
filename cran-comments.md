@@ -1,5 +1,7 @@
 ## Comments from Maintainer
 
+This is a very minor correction to our just-accepted 0.4.10 release - we missed a file change being checked in to the release
+
 Fixed tests based on input from Barret Schloerke in preparation for the next release of shiny to CRAN next week.
 
 ---  

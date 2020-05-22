@@ -1,6 +1,6 @@
 #Revisions and Change Log
 
-### v0.4.10
+### v0.4.10-1
 * Fixed tests for compatibility with the next release of shiny
 
 ### v0.4.9-1

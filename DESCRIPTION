@@ -1,7 +1,7 @@
 Package: periscope
 Type: Package
 Title: Enterprise Streamlined 'Shiny' Application Framework
-Version: 0.4.9-1
+Version: 0.4.10-1
 Authors@R: c(
     person("Constance", "Brett", email="connie@aggregate-genius.com", role = c("aut", "cre")),
     person("Isaac", "Neuhaus", role = "aut", comment = "canvasXpress JavaScript Library Maintainer"),
@@ -31,7 +31,7 @@ Imports:
     DT (>= 0.2),
     openxlsx (>= 3.0),
     ggplot2 (>= 2.2)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Suggests:
     knitr,
     rmarkdown,

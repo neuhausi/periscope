@@ -1,10 +1,8 @@
 ## Comments from Maintainer
 
-Enhancements, bug fixes and additional functionality as detailed in News
+This is a very minor correction to our just-accepted 0.4.10 release - we missed a file change in the merge for the release, apologies in advance.
 
-Fixed typo in one url in the README file.  
-
-NOTE: I'm seeing URLs occasionally giving 'could not resolve' notes on urls that are valid, I think it is likely an internet connectivity/slowdown issue where not enough time is given to the request to check the URL.  The https://www.canvasxpress.org url is valid, the certificate matches, and the site is up and accessible.  If you know of a way to deal with this on my end I'm happy to resolve it but will need some additional input on what to set/etc.
+Fixed tests based on input from Barret Schloerke in preparation for the next release of shiny to CRAN next week.
 
 ---  
     
@@ -13,15 +11,15 @@ NOTE: I'm seeing URLs occasionally giving 'could not resolve' notes on urls that
 
 RStudio Server Pro (Ubuntu 18.04.2)  
 
-* R 3.4.4  
 * R 3.5.3  
-* R 3.6.2
+* R 3.6.3
+* R 4.0.0
 
 Travis-CI (Ubuntu 16.04.6)
 
 * R 3.5.3
-* R 3.6.2
-* R devel (2020-03-13 r77948)
+* R 3.6.3
+* R devel (2020-05-04 r78358)
 
 WinBuilder
 
@@ -31,10 +29,7 @@ WinBuilder
 
 RHub
 
-* devtools::check_rhub(interactive = F)  
-  * Ubuntu Linux 16.04 LTS, R-release, GCC
-  * Windows Server 2008 R2 SP1, R-devel, 32/64 bit
-  * Fedora Linux, R-devel, clang, gfortran
+* devtools::check_rhub(interactive = F)
 
 ---  
     

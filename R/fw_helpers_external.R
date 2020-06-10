@@ -33,7 +33,7 @@ fw_get_version <- function() {
 
 # Get User Action Log
 fw_get_user_log <- function() {
-    logging::getLogger(name = "actions")
+    getLogger(name = "actions")
 }
 
 # Framework UI Header Creation

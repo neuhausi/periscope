@@ -230,17 +230,17 @@ downloadFile <- function(input, output, session, logger,
             }
             else {
                 msg <- paste(type, "could not be processed")
-                logging::logwarn(msg)
+                logwarn(msg)
                 warning(msg)
             }
         }
         # error - type not handled
         else {
             msg <- paste(type, "not implemented as a download type")
-            logging::logwarn(msg)
+            logwarn(msg)
             warning(msg)
         }
-        logging::loginfo(paste("File downloaded in browser: <",
+        loginfo(paste("File downloaded in browser: <",
                                filename(), ">"), logger = logger)
     }
 
@@ -290,7 +290,7 @@ downloadFile <- function(input, output, session, logger,
             else {
                 msg <- paste("Unsupported plot type for ggplot download - ",
                              "must be in: <png, jpeg, tiff, bmp>")
-                logging::logwarn(msg)
+                logwarn(msg)
                 warning(msg)
             }
         }
@@ -308,7 +308,7 @@ downloadFile <- function(input, output, session, logger,
             else {
                 msg <- paste("Unsupported plot type for lattice download - ",
                              "must be in: <png, jpeg, tiff, bmp>")
-                logging::logwarn(msg)
+                logwarn(msg)
                 warning(msg)
             }
         }
@@ -316,10 +316,10 @@ downloadFile <- function(input, output, session, logger,
         # ------- should really never be hit
         else {
             msg <- paste(type, "not implemented as a download type")
-            logging::logwarn(msg)
+            logwarn(msg)
             warning(msg)
         }
-        logging::loginfo(paste("File downloaded in browser: <",
+        loginfo(paste("File downloaded in browser: <",
                                filename(), ">"), logger = logger)
     }
 }

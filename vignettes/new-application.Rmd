@@ -65,8 +65,8 @@ Users can create their own tabs in the right sidebar up to a maximum of 5.
 The right sidebar is collapsed by default, it can be opened by clicking on the (customizable) icon.
 
 <br>
-**Note:** The blue area running across the top of the application is the header bar.  This
-area is reserved for framework use. 
+**Note:** The blue area running across the top of the application is the header bar. This
+area is reserved for framework use.
 
 <br>
 
@@ -150,6 +150,13 @@ createAlert(session, "sidebarRightAlert",
             content = "Error Alert Text")
 ```
 
+#### Styling
+
+The application can be created with a custom style. For now, only the color of the application header bar can be changed, 
+but more options will be added later on. The bar color (aka the 'skin') is by default blue, but it can also be set to "black", "purple", "green", "red" or "yellow".
+
+*See the Creating a Sample Application and Creating your Application sections for an example* 
+
 ### Shiny Modules
 
 #### downloadFile
@@ -192,6 +199,8 @@ create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE,
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, rightsidebar = TRUE)
 # application with a right sidebar using a custom icon
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, rightsidebar = "table")
+# application with a custom header bar color (skin)
+create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, style = list(skin = "green"))
 ```
 
 This generates a default sample application optionally with a left/right sidebar in a subdirectory named *mytestapp* 
@@ -230,6 +239,8 @@ create_new_application(name = 'mytestapp', location = app_dir, resetbutton = FAL
 create_new_application(name = 'mytestapp', location = app_dir, rightsidebar = TRUE)
 # application with a right sidebar using a custom icon
 create_new_application(name = 'mytestapp', location = app_dir, rightsidebar = "table")
+# application with a custom header bar color (skin)
+create_new_application(name = 'mytestapp', location = app_dir, style = list(skin = "green"))
 ```
 
 This generates a default blank application optionally with a left/right sidebar in a subdirectory named *mytestapp* 

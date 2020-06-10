@@ -227,17 +227,17 @@
 
     file.create(logfile)
 
-    logging::addHandler(logging::writeToFile,
-                        file = logfile,
-                        level = loglevel,
-                        logger = logger,
-                        formatter = formatter)
+    addHandler(writeToFile,
+               file = logfile,
+               level = loglevel,
+               logger = logger,
+               formatter = formatter)
 
     if (loglevel == "DEBUG") {
-        logging::addHandler(logging::writeToConsole,
-                            level = loglevel,
-                            logger = logger,
-                            formatter = formatter)
+        addHandler(writeToConsole,
+                   level = loglevel,
+                   logger = logger,
+                   formatter = formatter)
     }
 
     return(logfile)

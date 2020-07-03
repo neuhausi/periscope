@@ -62,10 +62,9 @@ button will be hidden as there is nothing to download.  The linked
 downloadfxns are set in the paired callModule (see the \strong{Shiny Usage}
 section)
 
-This module is NOT compatible with the built-in (base) graphics \emph{(any
-functions provided by the \link[graphics]{graphics} package such as plot)}
-because they cannot be saved into an object and are directly output by the
-system at the time of creation.
+This module is NOT compatible with the built-in (base) graphics \emph{(such as 
+basic plot, etc.)} because they cannot be saved into an object and are directly 
+output by the system at the time of creation.
 }
 
 \section{Shiny Usage}{

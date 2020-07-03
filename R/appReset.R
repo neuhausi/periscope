@@ -36,7 +36,7 @@
 
         if (input$resetButton && !(pending)) {
             # reset initially requested
-            logging::logwarn(paste("Application Reset requested by user. ",
+            logwarn(paste("Application Reset requested by user. ",
                                    "Resetting in ", (waittime / 1000),
                                    "seconds."),
                              logger = logger)
@@ -59,7 +59,7 @@
         }
         else if (!input$resetButton && pending) {
             # reset cancelled by pushing the button again
-            logging::loginfo("Application Reset cancelled by user.",
+            loginfo("Application Reset cancelled by user.",
                              logger = logger)
 
             shinyBS::createAlert(
@@ -78,7 +78,7 @@
         }
         else if (pending) {
             # reset timed out
-            logging::logwarn("Application Reset", logger = logger)
+            logwarn("Application Reset", logger = logger)
             session$reload()
         }
     })

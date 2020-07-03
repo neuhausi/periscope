@@ -94,7 +94,7 @@ downloadableTableUI <- function(id,
 #' @param output provided by \code{shiny::callModule}
 #' @param session provided by \code{shiny::callModule}
 #' \cr \cr
-#' @param logger \link[logging:logging-package]{logging} logger to use
+#' @param logger logger to use
 #' @param filenameroot the base text used for user-downloaded file - can be
 #' either a character string or a reactive expression returning a character
 #' string
@@ -127,7 +127,6 @@ downloadableTableUI <- function(id,
 #'
 #' @seealso \link[periscope]{downloadableTableUI}
 #' @seealso \link[shiny]{callModule}
-#' @seealso \link[logging:logging-package]{logging}
 #'
 #' @examples 
 #' # Inside server_local.R

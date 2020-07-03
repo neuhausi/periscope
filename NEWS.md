@@ -1,9 +1,15 @@
 #Revisions and Change Log
 
-### v0.4.10-1
+### v0.5.1  
+* Added support for other color schemes in the dashboard
+* Replaced CRAN-archived logging package functionality
+
+
+### v0.4.10-1  
 * Fixed tests for compatibility with the next release of shiny
 
-### v0.4.9-1
+
+### v0.4.9-1  
 * Fixed url typo in readme link
 
 

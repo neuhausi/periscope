@@ -64,3 +64,12 @@ create_new_application("sampleapp2", location = tempdir(), sampleapp = TRUE, rig
 runApp('sampleapp2')
 
 ```
+
+#### Sample application - custom styling
+
+```r
+library(periscope)
+create_new_application("sampleapp3", location = tempdir(), sampleapp = TRUE, style = list(skin = "green"))
+runApp('sampleapp3')
+
+```

@@ -46,6 +46,3 @@ Call this function from \code{program/global.R} to set the application
 parameters.
 }
 
-\seealso{
-\link[logging:logging-package]{logging}
-}

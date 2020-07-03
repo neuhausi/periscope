@@ -226,8 +226,6 @@ ui_tooltip <- function(id, label = "", text = "") {
 #' @section Shiny Usage:
 #' Call this function from \code{program/global.R} to set the application
 #' parameters.
-#'
-#' @seealso \link[logging:logging-package]{logging}
 #' 
 #' @export
 set_app_parameters <- function(title, titleinfo = NULL,

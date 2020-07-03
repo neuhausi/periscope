@@ -22,7 +22,7 @@ downloadFile(
 \item{session}{provided by \code{shiny::callModule}
 \cr \cr}
 
-\item{logger}{\link[logging:logging-package]{logging} logger to use}
+\item{logger}{logger to use}
 
 \item{filenameroot}{the base text used for user-downloaded file - can be
 either a character string or a reactive expression that returns a character
@@ -77,6 +77,4 @@ server.R using the same id provided in \code{downloadFileButton}:
 \link[periscope]{downloadFile_AvailableTypes}
 
 \link[shiny]{callModule}
-
-\link[logging:logging-package]{logging}
 }

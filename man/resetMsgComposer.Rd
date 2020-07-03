@@ -7,7 +7,7 @@
 resetMsgComposer(container = "")
 }
 \arguments{
-\item{container}{name of logger to reser message composer for (type: character)}
+\item{container}{name of logger to reset message composer for (type: character)}
 }
 \description{
 Resets previously set message composer.

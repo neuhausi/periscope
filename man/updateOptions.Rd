@@ -25,13 +25,10 @@ Changes settings of logger or handler.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{character}: Update options for logger identified
-by name.
+\item \code{character}: Update options for logger identified by name.
 
-\item \code{environment}: Update options of logger or handler
-passed by reference.
+\item \code{environment}: Update options of logger or handler passed by reference.
 
-\item \code{Logger}: Update options of logger or handler
-passed by reference.
+\item \code{Logger}: Update options of logger or handler passed by reference.
 }}
 

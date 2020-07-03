@@ -9,12 +9,12 @@ setMsgComposer(composer_f, container = "")
 \arguments{
 \item{composer_f}{message composer function (type: function(msg, ...))}
 
-\item{container}{name of logger to reser message composer for (type: character)}
+\item{container}{name of logger to reset message composer for (type: character)}
 }
 \description{
-Message composer is used to compose log message out of formating string and arguments.
-It is function with signature \code{function(msg, ...)}. Formating message is passed under msg
-and formating arguments are passed as \code{...}.
+Message composer is used to compose log message out of formatting string and arguments.
+It is function with signature \code{function(msg, ...)}. Formatting message is passed under msg
+and formatting arguments are passed as \code{...}.
 }
 \details{
 If message composer is not set default is in use (realized with \code{sprintf}). If message

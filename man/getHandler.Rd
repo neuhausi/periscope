@@ -12,7 +12,7 @@ getHandler(handler, logger = "")
 \item{logger}{Optional: the name of the logger. Defaults to the root logger.}
 }
 \value{
-The retrieved handler object. It returns NULL if handler is not registerd.
+The retrieved handler object. It returns NULL if handler is not registered.
 }
 \description{
 Handlers are not uniquely identified by their name. Only within the logger to which

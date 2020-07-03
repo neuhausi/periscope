@@ -11,7 +11,7 @@ writeToConsole(msg, handler, ...)
 writeToFile(msg, handler, ...)
 }
 \arguments{
-\item{msg}{A formated message to handle.}
+\item{msg}{A formatted message to handle.}
 
 \item{handler}{The handler environment containing its options. You can
 register the same action to handlers with different properties.}
@@ -23,16 +23,16 @@ When you define a handler, you specify its name and the associated action.
 A few predefined actions described below are provided.
 }
 \details{
-A handler action is a function that accepts a formated message and handler
+A handler action is a function that accepts a formatted message and handler
 configuration.
 
 Messages passed are filtered already regarding loglevel.
 
 \dots parameters are used by logging system to interact with the action. \dots can
 contain \var{dry} key to inform action that it meant to initialize itself. In the case
-action should return TRUE if initialization succeded.
+action should return TRUE if initialization succeeded.
 
-If it's not a dry run \dots contain the whole preformated \var{logging.record}.
+If it's not a dry run \dots contain the whole preformatted \var{logging.record}.
 A \var{logging.record} is a named list and has following structure:
 \describe{
   \item{msg}{contains the real formatted message}

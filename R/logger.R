@@ -16,6 +16,7 @@
 ## Copyright (c) 2009..2013 by Mario Frasca
 ##
 
+
 ## create the logging environment
 logging.options <- new.env()
 
@@ -24,9 +25,7 @@ logging.options <- new.env()
 #'
 #' This list associates names to values and vice versa.\cr
 #' Names and values are the same as in the python standard logging module.
-#'
-#'
-#'
+#' 
 loglevels <- c(NOTSET = 0,
                FINEST = 1,
                FINER = 4,
@@ -491,7 +490,7 @@ removeHandler <- function(handler, logger = "") {
 #' @param handler The name of the handler, or its action.
 #' @param logger Optional: the name of the logger. Defaults to the root logger.
 #'
-#' @return The retrieved handler object. It returns NULL if handler is not registerd.
+#' @return The retrieved handler object. It returns NULL if handler is not registered.
 #' 
 #'
 getHandler <- function(handler, logger = "") {
@@ -531,15 +530,15 @@ setLevel <- function(level, container = "") {
 #'
 #' Sets message composer for logger.
 #'
-#' Message composer is used to compose log message out of formating string and arguments.
-#' It is function with signature \code{function(msg, ...)}. Formating message is passed under msg
-#' and formating arguments are passed as \code{...}.
+#' Message composer is used to compose log message out of formatting string and arguments.
+#' It is function with signature \code{function(msg, ...)}. Formatting message is passed under msg
+#' and formatting arguments are passed as \code{...}.
 #'
 #' If message composer is not set default is in use (realized with \code{sprintf}). If message
 #' composer is not set for sub-logger, parent's message composer will be used.
 #'
 #' @param composer_f message composer function (type: function(msg, ...))
-#' @param container name of logger to reser message composer for (type: character)
+#' @param container name of logger to reset message composer for (type: character)
 #'
 setMsgComposer <- function(composer_f, container = "") {
     if (is.null(container)) {
@@ -556,10 +555,8 @@ setMsgComposer <- function(composer_f, container = "") {
 #'
 #' Resets previously set message composer.
 #'
-#' @param container name of logger to reser message composer for (type: character)
-#'
+#' @param container name of logger to reset message composer for (type: character)
 #' 
-#'
 resetMsgComposer <- function(container = "") {
     if (is.null(container)) {
         stop("NULL container provided: cannot resset message composer for NULL container")
@@ -577,24 +574,18 @@ resetMsgComposer <- function(container = "") {
 #' @param container a logger, its name or a handler.
 #' @param ... options to set for the container.
 #'
-#' 
-#'
 updateOptions <- function(container, ...)
     UseMethod("updateOptions")
 
-#' @describeIn updateOptions Update options for logger identified
-#'   by name.
+#' @describeIn updateOptions Update options for logger identified by name.
 #' 
-#'
 updateOptions.character <- function(container, ...) {
     ## container is really just the name of the container
     updateOptions(getLogger(container), ...)
 }
 
-#' @describeIn updateOptions Update options of logger or handler
-#'   passed by reference.
+#' @describeIn updateOptions Update options of logger or handler passed by reference.
 #' 
-#'
 updateOptions.environment <- function(container, ...) {
     ## the container is a logger
     config <- list(...)
@@ -615,10 +606,8 @@ updateOptions.environment <- function(container, ...) {
     invisible()
 }
 
-#' @describeIn updateOptions Update options of logger or handler
-#'   passed by reference.
-#' 
-#'
+#' @describeIn updateOptions Update options of logger or handler passed by reference.
+#'   
 updateOptions.Logger <- function(container, ...) {
     updateOptions.environment(container, ...)
 }
@@ -629,16 +618,16 @@ updateOptions.Logger <- function(container, ...) {
 #' When you define a handler, you specify its name and the associated action.
 #' A few predefined actions described below are provided.
 #'
-#' A handler action is a function that accepts a formated message and handler
+#' A handler action is a function that accepts a formatted message and handler
 #' configuration.
 #'
 #' Messages passed are filtered already regarding loglevel.
 #'
 #' \dots parameters are used by logging system to interact with the action. \dots can
 #' contain \var{dry} key to inform action that it meant to initialize itself. In the case
-#' action should return TRUE if initialization succeded.
+#' action should return TRUE if initialization succeeded.
 #'
-#' If it's not a dry run \dots contain the whole preformated \var{logging.record}.
+#' If it's not a dry run \dots contain the whole preformatted \var{logging.record}.
 #' A \var{logging.record} is a named list and has following structure:
 #' \describe{
 #'   \item{msg}{contains the real formatted message}
@@ -648,7 +637,7 @@ updateOptions.Logger <- function(container, ...) {
 #'   \item{timestamp}{formatted message timestamp}
 #' }
 #'
-#' @param msg A formated message to handle.
+#' @param msg A formatted message to handle.
 #' @param handler The handler environment containing its options. You can
 #'   register the same action to handlers with different properties.
 #' @param ... parameters provided by logger system to interact with the action.
@@ -667,9 +656,7 @@ NULL
 #' \code{writeToConsole} detects if crayon package is available and uses it
 #' to color messages. The coloring can be switched off by means of configuring
 #' the handler with \var{color_output} option set to FALSE.
-#'
 #' 
-#'
 writeToConsole <- function(msg, handler, ...) {
     if (length(list(...)) && "dry" %in% names(list(...))) {
         if (!is.null(handler$color_output) && handler$color_output == FALSE) {
@@ -726,9 +713,7 @@ writeToConsole <- function(msg, handler, ...) {
 #'
 #' @details \code{writeToFile} action expects file path to write to under
 #'  \var{file} key in handler options.
-#'
-#' 
-#'
+#'  
 writeToFile <- function(msg, handler, ...) {
     if (length(list(...)) && "dry" %in% names(list(...)))
         return(exists("file", envir = handler))

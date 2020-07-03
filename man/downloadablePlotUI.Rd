@@ -64,7 +64,7 @@ section)
 
 This module is NOT compatible with the built-in (base) graphics \emph{(such as 
 basic plot, etc.)} because they cannot be saved into an object and are directly 
-output by thecsystem at the time of creation.
+output by the system at the time of creation.
 }
 
 \section{Shiny Usage}{

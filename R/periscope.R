@@ -44,3 +44,16 @@ NULL
 .onLoad <- function(libname, pkgname) {
     #TBD
 }
+
+.onAttach <- function(libname, pkgname) {
+    current_location <- getwd()
+    server_filename  <- "server.R"
+    if (interactive() && file.exists(file.path(current_location, c(server_filename)))) {
+        server_file    <- file(paste(current_location, server_filename, sep = .Platform$file.sep))
+        server_content <- readLines(con = server_file)
+        close(server_file)
+        if (any(grepl("library\\(logging\\)", server_content))) {
+            packageStartupMessage(paste("The logging package is not supported anymore. Please remove the line 'library(logging)' in", server_filename))
+        }
+    }
+}

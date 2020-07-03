@@ -32,10 +32,9 @@
 #' downloadfxns are set in the paired callModule (see the \strong{Shiny Usage}
 #' section)
 #'
-#' This module is NOT compatible with the built-in (base) graphics \emph{(any
-#' functions provided by the \link[graphics]{graphics} package such as plot)}
-#' because they cannot be saved into an object and are directly output by the
-#' system at the time of creation.
+#' This module is NOT compatible with the built-in (base) graphics \emph{(such as 
+#' basic plot, etc.)} because they cannot be saved into an object and are directly 
+#' output by the system at the time of creation.
 #'
 #' @section Shiny Usage:
 #' Call this function at the place in ui.R where the plot should be placed.
@@ -137,7 +136,7 @@ downloadablePlotUI <- function(id,
 #' @param output provided by \code{shiny::callModule}
 #' @param session provided by \code{shiny::callModule}
 #' \cr \cr
-#' @param logger \link[logging:logging-package]{logging} logger to use
+#' @param logger logger to use
 #' @param filenameroot the base text used for user-downloaded file - can be
 #' either a character string or a reactive expression returning a character
 #' string
@@ -163,7 +162,6 @@ downloadablePlotUI <- function(id,
 #'
 #' @seealso \link[periscope]{downloadablePlotUI}
 #' @seealso \link[shiny]{callModule}
-#' @seealso \link[logging:logging-package]{logging}
 #'
 #' @examples 
 #' # Inside server_local.R

@@ -40,8 +40,17 @@ expect_converted_application <- function(location, right_sidebar = NULL, reset_b
 }
 
 # creates a temp directory, copies the sample_app to this directory and returns the path of the temp app
-create_app_tmp_dir <- function(left_sidebar = TRUE) {
-    app_name     <- ifelse(left_sidebar, "sample_app", "sample_app_no_sidebar")
+create_app_tmp_dir <- function(left_sidebar = TRUE, right_sidebar = FALSE) {
+    app_name     <- "sample_app"
+    
+    if (left_sidebar && right_sidebar) {
+        app_name <- "sample_app_both_sidebar"
+    } else if (!left_sidebar && right_sidebar) {
+        app_name <- "sample_app_r_sidebar"
+    } else if (!left_sidebar && !right_sidebar) {
+        app_name <- "sample_app_no_sidebar"
+    }
+    
     app_temp.dir <- tempdir()
     file.copy(app_name, app_temp.dir, recursive = TRUE)
     file.path(app_temp.dir, app_name)
@@ -69,8 +78,15 @@ test_that("add_left_sidebar location does not contain an existing application", 
                    "Add left sidebar conversion could not proceed, location=<../testthat> does not contain a valid periscope application!")
 })
 
-test_that("add_left_sidebar valid location", {
-    app_location <- create_app_tmp_dir(left_sidebar = FALSE)
+test_that("add_left_sidebar to r sidebar, valid location", {
+    app_location <- create_app_tmp_dir(left_sidebar = FALSE, right_sidebar = TRUE)
+    
+    expect_message(add_left_sidebar(location = app_location), "Add left sidebar conversion was successful. File\\(s\\) updated: ui.R")
+    expect_converted_application(location = app_location, left_sidebar = TRUE)
+})
+
+test_that("add_left_sidebar to no sidebars, valid location", {
+    app_location <- create_app_tmp_dir(left_sidebar = FALSE, right_sidebar = FALSE)
     
     expect_message(add_left_sidebar(location = app_location), "Add left sidebar conversion was successful. File\\(s\\) updated: ui.R")
     expect_converted_application(location = app_location, left_sidebar = TRUE)
@@ -106,7 +122,7 @@ test_that("add_right_sidebar location does not contain an existing application",
                    "Add right sidebar conversion could not proceed, location=<../testthat> does not contain a valid periscope application!")
 })
 
-test_that("add_right_sidebar valid location", {
+test_that("add_right_sidebar to l sidebar", {
     app_location <- create_app_tmp_dir()
     
     expect_message(add_right_sidebar(location = app_location), "Add right sidebar conversion was successful. File\\(s\\) updated: ui.R")
@@ -117,6 +133,20 @@ test_that("add_right_sidebar valid location, added twice", {
     app_location <- create_app_tmp_dir()
     
     expect_message(add_right_sidebar(location = app_location), "Add right sidebar conversion was successful. File\\(s\\) updated: ui.R")
+    expect_message(add_right_sidebar(location = app_location), "Right sidebar already available, no conversion needed")
+    expect_converted_application(location = app_location, right_sidebar = TRUE)
+})
+
+test_that("add_right_sidebar to no sidebars", {
+    app_location <- create_app_tmp_dir(left_sidebar = FALSE)
+    
+    expect_message(add_right_sidebar(location = app_location), "Add right sidebar conversion was successful. File\\(s\\) updated: ui.R")
+    expect_converted_application(location = app_location, right_sidebar = TRUE)
+})
+
+test_that("add_right_sidebar to r sidebar already present", {
+    app_location <- create_app_tmp_dir(left_sidebar = FALSE, right_sidebar = TRUE)
+    
     expect_message(add_right_sidebar(location = app_location), "Right sidebar already available, no conversion needed")
     expect_converted_application(location = app_location, right_sidebar = TRUE)
 })
@@ -144,7 +174,7 @@ test_that("remove_reset_button location does not contain an existing application
                    "Remove reset button conversion could not proceed, location=<../testthat> does not contain a valid periscope application!")
 })
 
-test_that("remove_reset_button valid location", {
+test_that("remove_reset_button left sidebar", {
     app_location <- create_app_tmp_dir()
     
     expect_message(remove_reset_button(location = app_location), "Remove reset button conversion was successful. File\\(s\\) updated: ui.R")
@@ -156,6 +186,19 @@ test_that("remove_reset_button valid location, remove twice", {
     
     expect_message(remove_reset_button(location = app_location), "Remove reset button conversion was successful. File\\(s\\) updated: ui.R")
     expect_message(remove_reset_button(location = app_location), "Reset button already removed, no conversion needed")
+})
+
+test_that("remove_reset_button both sidebar", {
+    app_location <- create_app_tmp_dir(left_sidebar = TRUE, right_sidebar = TRUE)
+    
+    expect_message(remove_reset_button(location = app_location), "Remove reset button conversion was successful. File\\(s\\) updated: ui.R")
+    expect_converted_application(location = app_location, reset_button = FALSE)
+})
+
+test_that("remove_reset_button r sidebar", {
+    app_location <- create_app_tmp_dir(left_sidebar = FALSE, right_sidebar = TRUE)
+    
+    expect_message(remove_reset_button(location = app_location), "Left sidebar not available, reset button cannot be removed")
 })
 
 ## add_reset_button tests

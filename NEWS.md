@@ -1,5 +1,9 @@
 #Revisions and Change Log
 
+### v0.5.2
+* Moved openxlsx to suggested
+* Added tests
+
 ### v0.5.1  
 * Added support for other color schemes in the dashboard
 * Replaced CRAN-archived logging package functionality

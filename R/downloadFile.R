@@ -212,8 +212,7 @@ downloadFile <- function(input, output, session, logger,
             if ("openxlsx" %in% utils::installed.packages()) {
                 if ((class(data) == "Workbook") && ("openxlsx" %in% attributes(class(data)))) {
                     openxlsx::saveWorkbook(data, file)
-                }
-                else {
+                } else {
                     show_rownames <- attr(data, "show_rownames")
                         openxlsx::write.xlsx(data, file, 
                                              asTable   = TRUE, 

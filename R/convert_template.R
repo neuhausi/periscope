@@ -95,16 +95,22 @@ add_right_sidebar <- function(location) {
             usersep <- .Platform$file.sep
             
             files_updated <- c()
-            # replace ui by ui_plus (take car of resetbutton!)
+            # replace ui by ui_plus (take care of resetbutton!)
             ui_content <- gsub(" ", "", readLines(con = paste(location, ui_filename, sep = usersep)))
             # update ui if needed
             if (!any(grepl("fw_create_right_sidebar", ui_content))) {
-                reset_button <- TRUE
+                reset_button   <- TRUE
+                new_ui_content <- ui_content
                 if (any(grepl("resetbutton=FALSE", ui_content))) { 
                     reset_button <- FALSE 
                 }
                 if (!any(grepl("showsidebar=FALSE", ui_content))) { 
                     new_ui_content <- readLines(con = system.file("fw_templ", ui_plus_filename, package = "periscope"))
+                    if (!reset_button) {
+                        new_ui_content <- gsub(create_left_sidebar_closed_expr, no_reset_button_closed_expr, new_ui_content)
+                    }
+                } else {
+                    new_ui_content <- readLines(con = system.file("fw_templ", ui_plus_no_sidebar_filename, package = "periscope"))
                     if (!reset_button) {
                         new_ui_content <- gsub(create_left_sidebar_closed_expr, no_reset_button_closed_expr, new_ui_content)
                     }

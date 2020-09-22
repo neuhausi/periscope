@@ -209,14 +209,17 @@ downloadFile <- function(input, output, session, logger,
         }
         # excel file
         else if (type == "xlsx") {
-            if ((class(data) == "Workbook") && ("openxlsx" %in% attributes(class(data)))) {
-                openxlsx::saveWorkbook(data, file)
-            }
-            else {
-                show_rownames <- attr(data, "show_rownames")
-                openxlsx::write.xlsx(data, file, 
-                                     asTable   = TRUE, 
-                                     row.names = !is.null(show_rownames) && show_rownames)
+            if ("openxlsx" %in% utils::installed.packages()) {
+                if ((class(data) == "Workbook") && ("openxlsx" %in% attributes(class(data)))) {
+                    openxlsx::saveWorkbook(data, file)
+                } else {
+                    show_rownames <- attr(data, "show_rownames")
+                        openxlsx::write.xlsx(data, file, 
+                                             asTable   = TRUE, 
+                                             row.names = !is.null(show_rownames) && show_rownames)
+                }
+            } else {
+                writexl::write_xlsx(data, file)
             }
         }
         # text file processing

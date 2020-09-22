@@ -118,6 +118,25 @@ test_that("create_new_application custom style", {
     expect_cleanup_create_new_application(appTemp, skin = "green")
 })
 
+test_that("create_new_application bad style", {
+    appTemp.dir  <- tempdir()
+    appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
+    appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
+    
+    expect_error(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, rightsidebar = NULL, style = list("green")), 
+                   "Framework creation could not proceed, invalid type for skin, only character allowed")
+})
+
+test_that("create_new_application custom style right sidebar", {
+    appTemp.dir  <- tempdir()
+    appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
+    appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
+    
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, rightsidebar = TRUE, style = list(skin = "green")), 
+                   "Framework creation was successful.")
+    expect_cleanup_create_new_application(appTemp, dashboard_plus = TRUE, skin = "green")
+})
+
 test_that("create_new_application invalid style", {
     appTemp.dir  <- tempdir()
     appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)

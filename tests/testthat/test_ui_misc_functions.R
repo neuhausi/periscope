@@ -7,9 +7,15 @@ test_that("set_app_parameters", {
     expect_null(result, "set_app_parameters")
 })
 
-test_that("get_url_parameters", {
+test_that("get_url_parameters - NULL", {
     result <- get_url_parameters(NULL)
     expect_equal(result, list(), "get_url_parameters")
+})
+
+test_that("get_url_parameters", {
+    fake_session <- list(clientData = list(url_search = "&test1=ABC&test2=123"))
+    result <- get_url_parameters(fake_session)
+    expect_equal(result, list(test1 = "ABC", test2 = "123"), "get_url_parameters")
 })
 
 test_that("fw_get_loglevel", {

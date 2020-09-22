@@ -34,6 +34,37 @@ source(paste("program", "fxn", "program_helpers.R", sep = .Platform$file.sep))
 source(paste("program", "fxn", "plots.R", sep = .Platform$file.sep))
 
 
+plot2_data <- reactive({
+    result <- plot2ggplot_data()
+    if (!input$enableGGPlot) {
+        result <- NULL
+    }
+    result
+})
+
+plot2 <- reactive({
+    result <- NULL
+    if (!is.null(plot2_data())) {
+        result <- plot2ggplot()
+    }
+    result
+})
+
+plot3_data <- reactive({
+    result <- plot3lattice_data()
+    if (!input$enableLatticePlot) {
+        result <- NULL
+    }
+    result
+})
+
+plot3 <- reactive({
+    result <- NULL
+    if (!is.null(plot3_data())) {
+        result <- plot3lattice()
+    }
+    result
+})
 
 # ----------------------------------------
 # --          SHINY SERVER CODE         --
@@ -104,7 +135,7 @@ output$alerts   <- renderUI({
                        style  = "info",
                        append = FALSE,
                        width  = "25%")) )
-    })
+})
 
 output$loginfo <- renderUI({
     list(p("The collapsed ",
@@ -152,7 +183,11 @@ output$hover_info <- renderUI({
 # -- CanvasXpress Plot Example
 
 output$examplePlot1  <- renderCanvasXpress({
-    plot_htmlwidget()
+    result <- plot_htmlwidget()
+    if (!input$enableCXPlot) {
+        result <- canvasXpress(destroy = TRUE)
+    }
+    result
 })
 
 loginfo("Be Sure to Remember to Log ALL user actions",
@@ -173,19 +208,19 @@ callModule(downloadableTable, "exampleDT1",  ss_userAction.Log,
 
 callModule(downloadablePlot, "examplePlot2", ss_userAction.Log,
            filenameroot = "plot2_ggplot",
-           downloadfxns = list(jpeg = plot2ggplot,
-                               csv  = plot2ggplot_data),
+           downloadfxns = list(jpeg = plot2,
+                               csv  = plot2_data),
            aspectratio  = 1.5,
-           visibleplot  = plot2ggplot)
+           visibleplot  = plot2)
 
 callModule(downloadablePlot, "examplePlot3", ss_userAction.Log,
            filenameroot = "plot3_lattice",
            aspectratio  = 2,
-           downloadfxns = list(png  = plot3lattice,
-                               tiff = plot3lattice,
-                               txt  = plot3lattice_data,
-                               tsv  = plot3lattice_data),
-           visibleplot  = plot3lattice)
+           downloadfxns = list(png  = plot3,
+                               tiff = plot3,
+                               txt  = plot3_data,
+                               tsv  = plot3_data),
+           visibleplot  = plot3)
 
 # -- Observe UI Changes
 observeEvent(input$exampleBasicAlert, {
@@ -203,6 +238,15 @@ observeEvent(input$exampleAdvancedAlert, {
                 style = "warning",
                 content = "Example Advanced Sidebar Alert")
 
+})
+
+observeEvent(input$exampleRightAlert, {
+    loginfo("Sidebar Right Alert Example Button Pushed",
+            logger = ss_userAction.Log)
+    createAlert(session, "sidebarRightAlert",
+                style = "danger",
+                content = "Example Right Sidebar Alert")
+    
 })
 
 observeEvent(input$exampleBodyAlert, {

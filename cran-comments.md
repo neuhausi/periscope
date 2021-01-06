@@ -1,13 +1,7 @@
 ## Comments from Maintainer
 
-UPDATE 9/20: removed .git from DESCRIPTION file to resolve note appearing on some servers
-
-Moved openxlsx to suggested and added tests.
-
-There is a NOTE on some servers 'unable to verify current time' while checking for future file timestamps (a devtools check).  There seems to be an issue with the world time server which is not something I can resolve in this package and I prefer not to silence the check in the package.  WinBuilder check did not have the issue but R-Hub Ubuntu reports this, and it appears to have happened before.  Pls. see references below:
-
-* https://stat.ethz.ch/pipermail/r-package-devel/2019q1/003577.html
-* https://stackoverflow.com/questions/63613301/r-cmd-check-note-unable-to-verify-current-time
+* Updated dependencies for shinyDashboardPlus - 2.x will be a breaking release
+* Cleaned up logging documentation and exports
 
 ---  
     
@@ -16,15 +10,14 @@ There is a NOTE on some servers 'unable to verify current time' while checking f
 
 RStudio Server Pro (Ubuntu 18.04.2)  
 
-* R 3.5.3  
 * R 3.6.3
-* R 4.0.2
+* R 4.0.3
 
 Travis-CI (Ubuntu 16.04.6)
 
 * R 3.6.3
 * R 4.0.2
-* R devel (2020-09-16 r79221)
+* R devel (2020-12-12 r79619)
 
 WinBuilder
 

@@ -3,30 +3,18 @@
 \name{logging-entrypoints}
 \alias{logging-entrypoints}
 \alias{logdebug}
-\alias{logfinest}
-\alias{logfiner}
-\alias{logfine}
 \alias{loginfo}
 \alias{logwarn}
 \alias{logerror}
-\alias{levellog}
 \title{Entry points for logging actions}
 \usage{
 logdebug(msg, ..., logger = "")
-
-logfinest(msg, ..., logger = "")
-
-logfiner(msg, ..., logger = "")
-
-logfine(msg, ..., logger = "")
 
 loginfo(msg, ..., logger = "")
 
 logwarn(msg, ..., logger = "")
 
 logerror(msg, ..., logger = "")
-
-levellog(level, msg, ..., logger = "")
 }
 \arguments{
 \item{msg}{the textual message to be output, or the format for the \dots
@@ -36,8 +24,6 @@ arguments}
 are passed to it to form the actual message.}
 
 \item{logger}{the name of the logger to which we pass the record}
-
-\item{level}{The logging level}
 }
 \description{
 Generate a log record and pass it to the logging system.\cr

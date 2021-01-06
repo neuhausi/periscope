@@ -10,9 +10,6 @@
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ## General Public License for more details.
 ##
-## You should have received a copy of the GNU General Public License
-## along with the nens libraray.  If not, see http://www.gnu.org/licenses/.
-##
 ## Copyright (c) 2009..2013 by Mario Frasca
 ##
 
@@ -21,11 +18,11 @@
 logging.options <- new.env()
 
 
-##' The logging levels, names and values
-#'
-#' This list associates names to values and vice versa.\cr
-#' Names and values are the same as in the python standard logging module.
-#' 
+## The logging levels, names and values
+##
+## This list associates names to values and vice versa.\cr
+## Names and values are the same as in the python standard logging module.
+## 
 loglevels <- c(NOTSET = 0,
                FINEST = 1,
                FINER = 4,
@@ -217,7 +214,8 @@ Logger <- setRefClass(
     ) # methods
 ) # setRefClass
 
-#'
+
+
 #' Entry points for logging actions
 #'
 #' Generate a log record and pass it to the logging system.\cr
@@ -234,62 +232,52 @@ Logger <- setRefClass(
 #' @param logger the name of the logger to which we pass the record
 #'
 #' @name logging-entrypoints
+#' @importFrom methods new
 #'
 NULL
 
+
 #' @rdname logging-entrypoints
-#' 
 #' @export
 logdebug <- function(msg, ..., logger = "") {
     .levellog(loglevels["DEBUG"], msg, ..., logger = logger)
 }
 
-#' @rdname logging-entrypoints
-#' 
-#' @export
+## @rdname logging-entrypoints
 logfinest <- function(msg, ..., logger = "") {
     .levellog(loglevels["FINEST"], msg, ..., logger = logger)
 }
 
-#' @rdname logging-entrypoints
-#'  
-#' @export
+## @rdname logging-entrypoints
 logfiner <- function(msg, ..., logger = "") {
     .levellog(loglevels["FINER"], msg, ..., logger = logger)
 }
 
-#' @rdname logging-entrypoints
-#' 
-#' @export
+## @rdname logging-entrypoints
 logfine <- function(msg, ..., logger = "") {
     .levellog(loglevels["FINE"], msg, ..., logger = logger)
 }
 
 #' @rdname logging-entrypoints
-#' 
 #' @export
 loginfo <- function(msg, ..., logger = "") {
     .levellog(loglevels["INFO"], msg, ..., logger = logger)
 }
 
 #' @rdname logging-entrypoints
-#' 
 #' @export
 logwarn <- function(msg, ..., logger = "") {
     .levellog(loglevels["WARN"], msg, ..., logger = logger)
 }
 
 #' @rdname logging-entrypoints
-#' 
 #' @export
 logerror <- function(msg, ..., logger = "") {
     .levellog(loglevels["ERROR"], msg, ..., logger = logger)
 }
 
-#' @rdname logging-entrypoints
-#'
-#' @param level The logging level
-#' 
+## @rdname logging-entrypoints
+## @param level The logging level
 levellog <- function(level, msg, ..., logger = "") {
     # just calling .levellog
     # do not simplify it as call sequence sould be same
@@ -306,18 +294,18 @@ levellog <- function(level, msg, ..., logger = "") {
 
 
 
-#'
-#' Set defaults and get the named logger.
-#'
-#' Make sure a logger with a specific name exists and return it as a
-#' \var{Logger} S4 object.  if not yet present, the logger will be created and
-#' given the values specified in the \dots arguments.
-#' @importFrom methods new
-#' @param name The name of the logger
-#' @param ... Any properties you may want to set in the newly created
-#'    logger. These have no effect if the logger is already present.
-#'
-#' @return The logger retrieved or registered.
+##
+## Set defaults and get the named logger.
+##
+## Make sure a logger with a specific name exists and return it as a
+## \var{Logger} S4 object.  if not yet present, the logger will be created and
+## given the values specified in the \dots arguments.
+## @importFrom methods new
+## @param name The name of the logger
+## @param ... Any properties you may want to set in the newly created
+##    logger. These have no effect if the logger is already present.
+##
+## @return The logger retrieved or registered.
 getLogger <- function(name = "", ...) {
     if (name == "") {
         fullname <- "logging.ROOT"
@@ -341,30 +329,30 @@ getLogger <- function(name = "", ...) {
 
 
 
-#'
-#' Bootstrapping the logging package.
-#'
-#' \code{basicConfig} and \code{logReset} provide a way to put the logging package
-#' in a know initial state.
-#'
-#' @name bootstrapping
-NULL
+##
+## Bootstrapping the logging package.
+##
+## \code{basicConfig} and \code{logReset} provide a way to put the logging package
+## in a know initial state.
+##
+## @name bootstrapping
+## NULL
 
-#' @rdname bootstrapping
-#'
-#' @details
-#' \code{basicConfig} creates the root logger, attaches a console handler(by
-#' \var{basic.stdout} name) to it and sets the level of the handler to
-#' \code{level}. You must not call \code{basicConfig} to for logger to work any more:
-#' then root logger is created it gets initialized by default the same way as
-#' \code{basicConfig} does. If you need clear logger to fill with you own handlers
-#' use \code{logReset} to remove all default handlers.
-#'
-#' @param level The logging level of the root logger. Defaults to INFO. Please do notice that
-#'   this has no effect on the handling level of the handler that basicConfig attaches to the
-#'   root logger.
-#'
-#'
+## @rdname bootstrapping
+##
+## @details
+## \code{basicConfig} creates the root logger, attaches a console handler(by
+## \var{basic.stdout} name) to it and sets the level of the handler to
+## \code{level}. You must not call \code{basicConfig} to for logger to work any more:
+## then root logger is created it gets initialized by default the same way as
+## \code{basicConfig} does. If you need clear logger to fill with you own handlers
+## use \code{logReset} to remove all default handlers.
+##
+## @param level The logging level of the root logger. Defaults to INFO. Please do notice that
+##   this has no effect on the handling level of the handler that basicConfig attaches to the
+##   root logger.
+##
+##
 basicConfig <- function(level = 20) {
     root_logger <- getLogger()
     
@@ -374,23 +362,23 @@ basicConfig <- function(level = 20) {
     invisible()
 }
 
-#' Called from basicConfig and while creating rootLogger.
-#' @noRd
+## Called from basicConfig and while creating rootLogger.
+## @noRd
 .basic_config <- function(root_logger) {
     stopifnot(root_logger$name == "")
     root_logger$addHandler("basic.stdout", writeToConsole)
 }
 
 
-#' @rdname bootstrapping
-#'
-#' @details
-#' \code{logReset} reinitializes the whole logging system as if the package had just been
-#' loaded except it also removes all default handlers. Typically, you would want to call
-#' \code{basicConfig} immediately after a call to \code{logReset}.
-#'
-#' 
-#'
+## @rdname bootstrapping
+##
+## @details
+## \code{logReset} reinitializes the whole logging system as if the package had just been
+## loaded except it also removes all default handlers. Typically, you would want to call
+## \code{basicConfig} immediately after a call to \code{logReset}.
+##
+## 
+##
 logReset <- function() {
     ## reinizialize the whole logging system
     
@@ -405,47 +393,48 @@ logReset <- function() {
 
 
 
-#'
-#' Add a handler to or remove one from a logger.
-#'
-#' Use this function to maintain the list of handlers attached to a logger.\cr
-#' \cr
-#' \code{addHandler} and \code{removeHandler} are also offered as methods of the
-#' \var{Logger} S4 class.
-#'
-#' @details
-#' Handlers are implemented as environments. Within a logger a handler is
-#' identified by its \var{name} and all handlers define at least the
-#' three variables:
-#' \describe{
-#'   \item{level}{all records at level lower than this are skipped.}
-#'   \item{formatter}{a function getting a record and returning a string}
-#'   \item{\code{action(msg, handler)}}{a function accepting two parameters: a
-#'      formatted log record and the handler itself. making the handler a
-#'      parameter of the action allows us to have reusable action functions.}
-#' }
-#'
-#' Being an environment, a handler may define as many variables as you
-#' think you need.  keep in mind the handler is passed to the action
-#' function, which can check for existence and can use all variables that
-#' the handler defines.
-#'
-#' @param handler The name of the handler, or its action
-#' @param logger the name of the logger to which to attach the new handler,
-#'   defaults to the root logger.
-#'
-#' @name handlers-management
-NULL
+##
+## Add a handler to or remove one from a logger.
+##
+## Use this function to maintain the list of handlers attached to a logger.\cr
+## \cr
+## \code{addHandler} and \code{removeHandler} are also offered as methods of the
+## \var{Logger} S4 class.
+##
+## @details
+## Handlers are implemented as environments. Within a logger a handler is
+## identified by its \var{name} and all handlers define at least the
+## three variables:
+## \describe{
+##   \item{level}{all records at level lower than this are skipped.}
+##   \item{formatter}{a function getting a record and returning a string}
+##   \item{\code{action(msg, handler)}}{a function accepting two parameters: a
+##      formatted log record and the handler itself. making the handler a
+##      parameter of the action allows us to have reusable action functions.}
+## }
+##
+## Being an environment, a handler may define as many variables as you
+## think you need.  keep in mind the handler is passed to the action
+## function, which can check for existence and can use all variables that
+## the handler defines.
+##
+## @param handler The name of the handler, or its action
+## @param logger the name of the logger to which to attach the new handler,
+##   defaults to the root logger.
+##
+## @name handlers-management
+## NULL
 
-#' @rdname handlers-management
-#'
-#' @param ... Extra parameters, to be stored in the handler list
-#'
-#' \dots may contain extra parameters that will be passed to the handler
-#' action. Some elements in the \dots will be interpreted here.
-#'
-#' 
-#'
+
+## @rdname handlers-management
+##
+## @param ... Extra parameters, to be stored in the handler list
+##
+## \dots may contain extra parameters that will be passed to the handler
+## action. Some elements in the \dots will be interpreted here.
+##
+## 
+##
 addHandler <- function(handler, ..., logger = "") {
     if (is.character(logger)) {
         logger <- getLogger(logger)
@@ -462,9 +451,9 @@ addHandler <- function(handler, ..., logger = "") {
     }
 }
 
-#' @rdname handlers-management
-#' 
-#'
+## @rdname handlers-management
+## 
+##
 removeHandler <- function(handler, logger = "") {
     if (is.character(logger)) {
         logger <- getLogger(logger)
@@ -476,23 +465,21 @@ removeHandler <- function(handler, logger = "") {
     logger$removeHandler(handler)
 }
 
-#'
-#' Retrieves a handler from a logger.
-#'
-#' @description
-#' Handlers are not uniquely identified by their name. Only within the logger to which
-#' they are attached is their name unique. This function is here to allow you grab a
-#' handler from a logger so you can examine and alter it.
-#'
-#' @description
-#' Typical use of this function is in \code{setLevel(newLevel, getHandler(...))}.
-#'
-#' @param handler The name of the handler, or its action.
-#' @param logger Optional: the name of the logger. Defaults to the root logger.
-#'
-#' @return The retrieved handler object. It returns NULL if handler is not registered.
-#' 
-#'
+##
+## Retrieves a handler from a logger.
+##
+## @description
+## Handlers are not uniquely identified by their name. Only within the logger to which
+## they are attached is their name unique. This function is here to allow you grab a
+## handler from a logger so you can examine and alter it.
+##
+## @description
+## Typical use of this function is in \code{setLevel(newLevel, getHandler(...))}.
+##
+## @param handler The name of the handler, or its action.
+## @param logger Optional: the name of the logger. Defaults to the root logger.
+##
+## @return The retrieved handler object. It returns NULL if handler is not registered.
 getHandler <- function(handler, logger = "") {
     if (is.character(logger)) {
         logger <- getLogger(logger)
@@ -506,16 +493,16 @@ getHandler <- function(handler, logger = "") {
 
 
 
-#'
-#' Set \var{logging.level} for the object.
-#'
-#' Alter an existing logger or handler, setting its \var{logging.level} to a new
-#' value. You can access loggers by name, while you must use \code{getHandler} to
-#' get a handler.
-#'
-#' @param level The new level for this object. Can be numeric or character.
-#' @param container a logger, its name or a handler. Default is root logger.
-#'
+##
+## Set \var{logging.level} for the object.
+##
+## Alter an existing logger or handler, setting its \var{logging.level} to a new
+## value. You can access loggers by name, while you must use \code{getHandler} to
+## get a handler.
+##
+## @param level The new level for this object. Can be numeric or character.
+## @param container a logger, its name or a handler. Default is root logger.
+##
 setLevel <- function(level, container = "") {
     if (is.null(container)) {
         stop("NULL container provided: cannot set level for NULL container")
@@ -527,19 +514,19 @@ setLevel <- function(level, container = "") {
     assign("level", namedLevel(level), container)
 }
 
-#'
-#' Sets message composer for logger.
-#'
-#' Message composer is used to compose log message out of formatting string and arguments.
-#' It is function with signature \code{function(msg, ...)}. Formatting message is passed under msg
-#' and formatting arguments are passed as \code{...}.
-#'
-#' If message composer is not set default is in use (realized with \code{sprintf}). If message
-#' composer is not set for sub-logger, parent's message composer will be used.
-#'
-#' @param composer_f message composer function (type: function(msg, ...))
-#' @param container name of logger to reset message composer for (type: character)
-#'
+##
+## Sets message composer for logger.
+##
+## Message composer is used to compose log message out of formatting string and arguments.
+## It is function with signature \code{function(msg, ...)}. Formatting message is passed under msg
+## and formatting arguments are passed as \code{...}.
+##
+## If message composer is not set default is in use (realized with \code{sprintf}). If message
+## composer is not set for sub-logger, parent's message composer will be used.
+##
+## @param composer_f message composer function (type: function(msg, ...))
+## @param container name of logger to reset message composer for (type: character)
+##
 setMsgComposer <- function(composer_f, container = "") {
     if (is.null(container)) {
         stop("NULL container provided: cannot set message composer for NULL container")
@@ -552,11 +539,11 @@ setMsgComposer <- function(composer_f, container = "") {
     assign("msg_composer", composer_f, container)
 }
 
-#'
-#' Resets previously set message composer.
-#'
-#' @param container name of logger to reset message composer for (type: character)
-#' 
+##
+## Resets previously set message composer.
+##
+## @param container name of logger to reset message composer for (type: character)
+## 
 resetMsgComposer <- function(container = "") {
     if (is.null(container)) {
         stop("NULL container provided: cannot resset message composer for NULL container")
@@ -568,24 +555,24 @@ resetMsgComposer <- function(container = "") {
     assign("msg_composer", function() NULL, container)
 }
 
-#'
-#' Changes settings of logger or handler.
-#'
-#' @param container a logger, its name or a handler.
-#' @param ... options to set for the container.
-#'
+##
+## Changes settings of logger or handler.
+##
+## @param container a logger, its name or a handler.
+## @param ... options to set for the container.
+##
 updateOptions <- function(container, ...)
     UseMethod("updateOptions")
 
-#' @describeIn updateOptions Update options for logger identified by name.
-#' 
+## @describeIn updateOptions Update options for logger identified by name.
+## 
 updateOptions.character <- function(container, ...) {
     ## container is really just the name of the container
     updateOptions(getLogger(container), ...)
 }
 
-#' @describeIn updateOptions Update options of logger or handler passed by reference.
-#' 
+## @describeIn updateOptions Update options of logger or handler passed by reference.
+## 
 updateOptions.environment <- function(container, ...) {
     ## the container is a logger
     config <- list(...)
@@ -606,57 +593,57 @@ updateOptions.environment <- function(container, ...) {
     invisible()
 }
 
-#' @describeIn updateOptions Update options of logger or handler passed by reference.
-#'   
+## @describeIn updateOptions Update options of logger or handler passed by reference.
+##   
 updateOptions.Logger <- function(container, ...) {
     updateOptions.environment(container, ...)
 }
 
-#'
-#' Predefined(sample) handler actions
-#'
-#' When you define a handler, you specify its name and the associated action.
-#' A few predefined actions described below are provided.
-#'
-#' A handler action is a function that accepts a formatted message and handler
-#' configuration.
-#'
-#' Messages passed are filtered already regarding loglevel.
-#'
-#' \dots parameters are used by logging system to interact with the action. \dots can
-#' contain \var{dry} key to inform action that it meant to initialize itself. In the case
-#' action should return TRUE if initialization succeeded.
-#'
-#' If it's not a dry run \dots contain the whole preformatted \var{logging.record}.
-#' A \var{logging.record} is a named list and has following structure:
-#' \describe{
-#'   \item{msg}{contains the real formatted message}
-#'   \item{level}{message level as numeric}
-#'   \item{levelname}{message level name}
-#'   \item{logger}{name of the logger that generated it}
-#'   \item{timestamp}{formatted message timestamp}
-#' }
-#'
-#' @param msg A formatted message to handle.
-#' @param handler The handler environment containing its options. You can
-#'   register the same action to handlers with different properties.
-#' @param ... parameters provided by logger system to interact with the action.
-#'
-#' @examples
-#' ## define your own function and register it with a handler.
-#' ## author is planning a sentry client function.  please send
-#' ## any interesting function you may have written!
-#'
-#' @name inbuilt-actions
-NULL
+##
+## Predefined(sample) handler actions
+##
+## When you define a handler, you specify its name and the associated action.
+## A few predefined actions described below are provided.
+##
+## A handler action is a function that accepts a formatted message and handler
+## configuration.
+##
+## Messages passed are filtered already regarding loglevel.
+##
+## \dots parameters are used by logging system to interact with the action. \dots can
+## contain \var{dry} key to inform action that it meant to initialize itself. In the case
+## action should return TRUE if initialization succeeded.
+##
+## If it's not a dry run \dots contain the whole preformatted \var{logging.record}.
+## A \var{logging.record} is a named list and has following structure:
+## \describe{
+##   \item{msg}{contains the real formatted message}
+##   \item{level}{message level as numeric}
+##   \item{levelname}{message level name}
+##   \item{logger}{name of the logger that generated it}
+##   \item{timestamp}{formatted message timestamp}
+## }
+##
+## @param msg A formatted message to handle.
+## @param handler The handler environment containing its options. You can
+##   register the same action to handlers with different properties.
+## @param ... parameters provided by logger system to interact with the action.
+##
+## @examples
+## ## define your own function and register it with a handler.
+## ## author is planning a sentry client function.  please send
+## ## any interesting function you may have written!
+##
+## @name inbuilt-actions
+## NULL
 
-#' @rdname inbuilt-actions
-#'
-#' @details
-#' \code{writeToConsole} detects if crayon package is available and uses it
-#' to color messages. The coloring can be switched off by means of configuring
-#' the handler with \var{color_output} option set to FALSE.
-#' 
+## @rdname inbuilt-actions
+##
+## @details
+## \code{writeToConsole} detects if crayon package is available and uses it
+## to color messages. The coloring can be switched off by means of configuring
+## the handler with \var{color_output} option set to FALSE.
+## 
 writeToConsole <- function(msg, handler, ...) {
     if (length(list(...)) && "dry" %in% names(list(...))) {
         if (!is.null(handler$color_output) && handler$color_output == FALSE) {
@@ -709,11 +696,11 @@ writeToConsole <- function(msg, handler, ...) {
 }
 
 
-#' @rdname inbuilt-actions
-#'
-#' @details \code{writeToFile} action expects file path to write to under
-#'  \var{file} key in handler options.
-#'  
+## @rdname inbuilt-actions
+##
+## @details \code{writeToFile} action expects file path to write to under
+##  \var{file} key in handler options.
+##  
 writeToFile <- function(msg, handler, ...) {
     if (length(list(...)) && "dry" %in% names(list(...)))
         return(exists("file", envir = handler))

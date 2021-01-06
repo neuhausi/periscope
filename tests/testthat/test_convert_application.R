@@ -40,7 +40,7 @@ expect_converted_application <- function(location, right_sidebar = NULL, reset_b
 }
 
 # creates a temp directory, copies the sample_app to this directory and returns the path of the temp app
-create_app_tmp_dir <- function(left_sidebar = TRUE, right_sidebar = FALSE) {
+create_app_tmp_dir <- function(left_sidebar = TRUE, right_sidebar = FALSE, reset_button = TRUE) {
     app_name     <- "sample_app"
     
     if (left_sidebar && right_sidebar) {
@@ -49,6 +49,10 @@ create_app_tmp_dir <- function(left_sidebar = TRUE, right_sidebar = FALSE) {
         app_name <- "sample_app_r_sidebar"
     } else if (!left_sidebar && !right_sidebar) {
         app_name <- "sample_app_no_sidebar"
+    }
+    
+    if (!reset_button && !left_sidebar && !right_sidebar) {
+        app_name <- "sample_app_no_sidebar_no_resetbutton"
     }
     
     app_temp.dir <- tempdir()
@@ -97,6 +101,13 @@ test_that("add_left_sidebar valid location, added twice", {
     
     expect_message(add_left_sidebar(location = app_location), "Add left sidebar conversion was successful. File\\(s\\) updated: ui.R")
     expect_message(add_left_sidebar(location = app_location), "Left sidebar already available, no conversion needed")
+    expect_converted_application(location = app_location, left_sidebar = TRUE)
+})
+
+test_that("add_left_sidebar to no resetbutton, valid location", {
+    app_location <- create_app_tmp_dir(left_sidebar = FALSE, right_sidebar = FALSE, reset_button = FALSE)
+    
+    expect_message(add_left_sidebar(location = app_location), "Add left sidebar conversion was successful. File\\(s\\) updated: ui.R")
     expect_converted_application(location = app_location, left_sidebar = TRUE)
 })
 
@@ -151,6 +162,20 @@ test_that("add_right_sidebar to r sidebar already present", {
     expect_converted_application(location = app_location, right_sidebar = TRUE)
 })
 
+test_that("add_right_sidebar to no resetbutton", {
+    app_location <- create_app_tmp_dir(left_sidebar = FALSE, right_sidebar = FALSE, reset_button = FALSE)
+    
+    expect_message(add_right_sidebar(location = app_location), "Add right sidebar conversion was successful. File\\(s\\) updated: ui.R")
+    expect_converted_application(location = app_location, right_sidebar = TRUE)
+})
+
+test_that("add_right_sidebar to l sidebars, no resetbutton,", {
+    app_location <- create_app_tmp_dir(left_sidebar = TRUE, right_sidebar = FALSE)
+    expect_message(remove_reset_button(location = app_location), "Remove reset button conversion was successful. File\\(s\\) updated: ui.R")
+    
+    expect_message(add_right_sidebar(location = app_location), "Add right sidebar conversion was successful. File\\(s\\) updated: ui.R")
+    expect_converted_application(location = app_location, right_sidebar = TRUE)
+})
 
 ## remove_reset_button tests 
 
@@ -235,4 +260,16 @@ test_that("add_reset_button valid location, not available yet", {
     remove_reset_button(location = app_location)
     expect_message(add_reset_button(location = app_location), "Add reset button conversion was successful. File\\(s\\) updated: ui.R")
     expect_converted_application(location = app_location, reset_button = TRUE)
+})
+
+test_that("add_reset_button no left sidebar, right sidebar", {
+    app_location <- create_app_tmp_dir(left_sidebar = FALSE, right_sidebar = TRUE)
+    
+    expect_message(add_reset_button(location = app_location), "Left sidebar is not available, please first run 'add_left_sidebar'")
+})
+
+test_that("add_reset_button no sidebars, no resetbutton", {
+    app_location <- create_app_tmp_dir(left_sidebar = FALSE, right_sidebar = FALSE, reset_button = FALSE)
+    
+    expect_message(add_reset_button(location = app_location), "Left sidebar is not available, please first run 'add_left_sidebar'")
 })

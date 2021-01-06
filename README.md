@@ -10,7 +10,7 @@ output:
 <!-- Badge Location -->
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/periscope?color=9bc2cf)](https://cran.r-project.org/package=periscope)
 [![CRAN_Downloads_Badge](https://cranlogs.r-pkg.org/badges/grand-total/periscope?color=9bc2cf)](https://cran.r-project.org/package=periscope)
-[![Travis-CI Build Status](https://travis-ci.org/cb4ds/periscope.svg?branch=master)](https://travis-ci.org/cb4ds/periscope)
+[![Travis-CI Build Status](https://travis-ci.com/cb4ds/periscope.svg?branch=master)](https://travis-ci.com/cb4ds/periscope)
 [![Coverage Status](https://img.shields.io/codecov/c/github/cb4ds/periscope/master.svg)](https://codecov.io/github/cb4ds/periscope?branch=master)
 <!-- End Badges -->
 

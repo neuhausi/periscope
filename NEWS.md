@@ -1,5 +1,9 @@
 #Revisions and Change Log
 
+### v0.5.3
+* Updated dependencies for shinyDashboardPlus - 2.x will be a breaking release
+* Cleaned up logging documentation and exports
+
 ### v0.5.2
 * Moved openxlsx to suggested
 * Added tests

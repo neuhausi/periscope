@@ -321,6 +321,58 @@ test_that("fw_create_right_sidebar", {
 
     expect_equal(result2.children[[2]]$name, "div")
     expect_equal(result2.children[[2]]$attribs, list(class = "control-sidebar-bg", style = "width: 230px;"))
+    
+    add_ui_sidebar_right(elementlist = list(selectInput(inputId = "id", choices = 1:3, label = "Input widget")))
+    result <- periscope:::fw_create_right_sidebar()
+    
+    expect_equal(length(result), 2)
+    expect_equal(result[[1]]$name, "head")
+    expect_equal(length(result[[1]]$attribs), 0)
+    expect_equal(length(result[[1]]$children), 1)
+    
+    result1.children <- result[[1]]$children[[1]]
+    
+    expect_equal(result1.children$name, "style")
+    expect_equal(length(result1.children$attribs), 0)
+    
+    expect_equal(result[[2]]$name, "div")
+    expect_equal(result[[2]]$attribs, list(id = "controlbar"))
+    expect_equal(length(result[[2]]$children), 2)
+    
+    result2.children <- result[[2]]$children
+    
+    expect_equal(result2.children[[1]]$name, "aside")
+    expect_equal(length(result2.children[[1]]$children), 2)
+    
+    expect_equal(result2.children[[1]]$children[[1]]$name, "ul")
+    expect_equal(result2.children[[1]]$children[[1]]$attribs, list(class = "nav nav-tabs nav-justified control-sidebar-tabs"))
+    
+    expect_equal(result2.children[[1]]$children[[2]]$name, "div")
+    expect_equal(result2.children[[1]]$children[[2]]$attribs, list(class = "controlbar tab-content"))
+    
+    result2.1.2.children <- result2.children[[1]]$children[[2]]$children
+    
+    expect_equal(result2.1.2.children[[1]]$name, "div")
+    expect_equal(length(result2.1.2.children[[1]]$children), 1)
+    
+    expect_equal(result2.1.2.children[[2]]$name, "div")
+    expect_equal(result2.1.2.children[[2]]$attribs, list(class = "form-group shiny-input-container"))
+    expect_equal(length(result2.1.2.children[[2]]$children), 2)
+    
+    expect_equal(result2.1.2.children[[2]]$children[[1]]$name, "label")
+    expect_equal(result2.1.2.children[[2]]$children[[1]]$attribs, list(class = "control-label", `for` = "id"))
+    
+    expect_equal(result2.1.2.children[[2]]$children[[2]]$name, "div")
+    expect_equal(length(result2.1.2.children[[2]]$children[[2]]$children), 2)
+    
+    expect_equal(result2.1.2.children[[2]]$children[[2]]$children[[1]]$name, "select")
+    expect_equal(result2.1.2.children[[2]]$children[[2]]$children[[1]]$attribs, list(id = "id"))
+    
+    expect_equal(result2.1.2.children[[2]]$children[[2]]$children[[2]]$name, "script")
+    expect_equal(result2.1.2.children[[2]]$children[[2]]$children[[2]]$attribs, list(type = "application/json", `data-for` = "id", `data-nonempty` = ""))
+    
+    expect_equal(result2.children[[2]]$name, "div")
+    expect_equal(result2.children[[2]]$attribs, list(class = "control-sidebar-bg", style = "width: 230px;"))
 })
 
 test_that("add_ui_sidebar_right", {
@@ -330,5 +382,8 @@ test_that("add_ui_sidebar_right", {
 
 test_that("add_ui_sidebar_right with append", {
     result <- add_ui_sidebar_right(elementlist = NULL, append = TRUE)
+    expect_null(result, "add_ui_sidebar_right")
+    
+    result <- add_ui_sidebar_right(elementlist = NULL, append = FALSE)
     expect_null(result, "add_ui_sidebar_right")
 })

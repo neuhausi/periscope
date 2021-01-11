@@ -1,5 +1,7 @@
 context("periscope - download file")
 
+skip_on_cran()
+
 test_that("downloadFileButton", {
 
     result <- downloadFileButton(id = "myid", downloadtypes = c("csv"), hovertext = "myhovertext")

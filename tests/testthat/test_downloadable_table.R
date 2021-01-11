@@ -1,5 +1,7 @@
 context("periscope - downloadable table")
 
+skip_on_cran()
+
 test_that("downloadableTable", {
 
     result <- downloadableTableUI(id = "myid", downloadtypes = c("csv"), hovertext = "myHoverText")

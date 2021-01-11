@@ -1,5 +1,7 @@
 context("periscope - downloadablePlot")
 
+skip_on_cran()
+
 check_common_downloadablePlotUI_properties <- function(result.children) {
     expect_equal(length(result.children), 1)
 
@@ -16,7 +18,7 @@ check_common_downloadablePlotUI_properties <- function(result.children) {
     expect_equal(length(result.subsubchildren), 2)
 
     expect_equal(result.subsubchildren[[1]]$name, "i")
-    expect_equal(result.subsubchildren[[1]]$attribs, list(class = "fa fa-download"))
+    expect_equal(result.subsubchildren[[1]]$attribs$class, "fa fa-download")
     expect_equal(result.subsubchildren[[1]]$children, list())
 
     expect_equal(result.subsubchildren[[2]], NULL)
@@ -47,7 +49,8 @@ test_that("downloadablePlotUI btn_overlap=true btn_halign=left btn_valign=bottom
     expect_equal(result[[1]]$name, "div")
     expect_equal(result[[1]]$attribs$id, "myid-dplotOutputID")
     expect_equal(result[[1]]$attribs$class, "shiny-plot-output")
-    expect_equal(result[[1]]$attribs$style, "width: 80% ; height: 300px")
+    expect_match(result[[1]]$attribs$style, "width:\\s*80%")
+    expect_match(result[[1]]$attribs$style, "height:\\s*300px")
 
     expect_equal(result[[2]]$name, "span")
 
@@ -82,7 +85,8 @@ test_that("downloadablePlotUI btn_overlap=false btn_halign=center btn_valign=top
     expect_equal(result[[2]]$name, "div")
     expect_equal(result[[2]]$attribs$id, "myid-dplotOutputID")
     expect_equal(result[[2]]$attribs$class, "shiny-plot-output")
-    expect_equal(result[[2]]$attribs$style, "width: 80% ; height: 300px")
+    expect_match(result[[2]]$attribs$style, "width:\\s*80%")
+    expect_match(result[[2]]$attribs$style, "height:\\s*300px")
 
     result.children <- result[[2]]$children
     expect_equal(result.children, list())

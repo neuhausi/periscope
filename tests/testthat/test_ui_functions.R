@@ -1,4 +1,6 @@
 context("periscope - UI functionality")
+skip_on_cran()
+
 
 skip_on_cran()
 

@@ -1,4 +1,6 @@
 context("periscope - downloadable table")
+skip_on_cran()
+
 
 skip_on_cran()
 

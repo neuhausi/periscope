@@ -1,7 +1,8 @@
 ## Comments from Maintainer
 
-* Updated dependencies for shinyDashboardPlus - 2.x will be a breaking release
-* Cleaned up logging documentation and exports
+* Merging test updates from Carson Sievert (RStudio) to resolve minor issues with expectations of UI layout properties that will cause failing tests in Shiny 1.6 which is due to be released next week.
+
+* We were asked by Carson to make this update ASAP, rather than waiting, so there is a NOTE about the time since last submission (5d) - this is necessary as we were just notified a few days ago of the need for this update.
 
 ---  
     
@@ -17,13 +18,12 @@ Travis-CI (Ubuntu 16.04.6)
 
 * R 3.6.3
 * R 4.0.2
-* R devel (2020-12-12 r79619)
+* R devel (2021-01-09 r79815)
 
 WinBuilder
 
 * devtools::check_win_devel()  
 * devtools::check_win_release()  
-* devtools::check_win_oldrelease()  
 
 RHub
 

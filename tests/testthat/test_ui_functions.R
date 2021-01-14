@@ -1,4 +1,8 @@
 context("periscope - UI functionality")
+skip_on_cran()
+
+
+skip_on_cran()
 
 test_that("fw_create_header", {
     result <- periscope:::fw_create_header()
@@ -152,21 +156,21 @@ check_body_result <- function(result, logging = TRUE) {
         expect_equal(length(result.subchilds[[4]]), 3)
 
         expect_equal(result.subchilds[[4]]$name, "div")
-        expect_equal(result.subchilds[[4]]$attribs, list(class = "col-sm-12"))
+        expect_equal(result.subchilds[[4]]$attribs$class, "col-sm-12")
         result.subsubchilds <- result.subchilds[[4]]$children
 
         expect_equal(result.subsubchilds[[1]]$name, "div")
-        expect_equal(result.subsubchilds[[1]]$attribs, list(class = "box collapsed-box"))
+        expect_equal(result.subsubchilds[[1]]$attribs$class, "box collapsed-box")
 
         result.subsubsubchilds <- result.subsubchilds[[1]]$children
         expect_equal(length(result.subsubsubchilds), 3)
         expect_equal(result.subsubsubchilds[[1]]$name, "div")
-        expect_equal(result.subsubsubchilds[[1]]$attribs, list(class = "box-header"))
+        expect_equal(result.subsubsubchilds[[1]]$attribs$class, "box-header")
 
         result.subsubsubsubchilds <- result.subsubsubchilds[[1]]$children
         expect_equal(length(result.subsubsubsubchilds), 2)
         expect_equal(result.subsubsubsubchilds[[1]]$name, "h3")
-        expect_equal(result.subsubsubsubchilds[[1]]$attribs, list(class = "box-title"))
+        expect_equal(result.subsubsubsubchilds[[1]]$attribs$class, "box-title")
 
         result.subsubsubsubsubchilds <- result.subsubsubsubchilds[[1]]$children
         expect_equal(result.subsubsubsubsubchilds[[1]], "User Action Log")
@@ -177,7 +181,7 @@ check_body_result <- function(result, logging = TRUE) {
         expect_equal(length(result.subsubsubsubsubchilds[[1]]$children), 1)
 
         expect_equal(result.subsubsubsubsubchilds[[1]]$children[[1]]$name, "i")
-        expect_equal(result.subsubsubsubsubchilds[[1]]$children[[1]]$attribs, list(class = "fa fa-plus"))
+        expect_equal(result.subsubsubsubsubchilds[[1]]$children[[1]]$attribs$class, "fa fa-plus")
         expect_equal(result.subsubsubsubsubchilds[[1]]$children[[1]]$children, list())
     } else {
         expect_equal(result.subchilds[[2]], NULL)
@@ -360,7 +364,7 @@ test_that("fw_create_right_sidebar", {
     expect_equal(length(result2.1.2.children[[2]]$children), 2)
     
     expect_equal(result2.1.2.children[[2]]$children[[1]]$name, "label")
-    expect_equal(result2.1.2.children[[2]]$children[[1]]$attribs, list(class = "control-label", `for` = "id"))
+    expect_equal(result2.1.2.children[[2]]$children[[1]]$attribs$class, "control-label")
     
     expect_equal(result2.1.2.children[[2]]$children[[2]]$name, "div")
     expect_equal(length(result2.1.2.children[[2]]$children[[2]]$children), 2)

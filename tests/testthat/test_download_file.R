@@ -1,4 +1,8 @@
 context("periscope - download file")
+skip_on_cran()
+
+
+skip_on_cran()
 
 test_that("downloadFileButton", {
 

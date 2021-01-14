@@ -1,5 +1,8 @@
 #Revisions and Change Log
 
+### v0.5.4
+* Updated tests in preparation for Shiny 1.6 release - no functional changes
+
 ### v0.5.3
 * Updated dependencies for shinyDashboardPlus - 2.x will be a breaking release
 * Cleaned up logging documentation and exports

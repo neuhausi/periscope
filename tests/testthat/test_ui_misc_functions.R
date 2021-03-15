@@ -56,5 +56,12 @@ test_that("fw_reset_app_options", {
     expect_null(result, "fw_reset_app_options")
 })
 
+test_that("fw_server_setup", {
+    expect_error(fw_server_setup(input = list(),
+                                   output = list(), 
+                                   session = MockShinySession$new(),
+                                   logger = periscope:::fw_get_user_log()))
+})
+
 # clean up
 unlink("log", TRUE)

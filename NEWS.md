@@ -1,10 +1,17 @@
 #Revisions and Change Log
 
+### v0.6.1
+* Updated to provide handling for shinydashboardPlus old (<= 0.7.5) and new versions (2.X)
+* Removed import less-than requirement designation for shinydashboardPlus
+* Ensured shiny 1.6 compatibility
+* Updated tests and fixed a few minor bugs
+* The shinydashboardPlus package was moved to a suggests scope as it is not utilized directly by this package, just in some of the generated apps.
+
 ### v0.5.4
 * Updated tests in preparation for Shiny 1.6 release - no functional changes
 
 ### v0.5.3
-* Updated dependencies for shinyDashboardPlus - 2.x will be a breaking release
+* Updated dependencies for shinydashboardPlus - 2.x will be a breaking release
 * Cleaned up logging documentation and exports
 
 ### v0.5.2
@@ -39,7 +46,7 @@
 
 ### v0.4.7
 * Added shinydashboard plus functionality for a right-hand sidebar as an option
-* Updated documentation and examples for shinydashboardplus functionality
+* Updated documentation and examples for shinydashboardPlus functionality
 * Added a preference to turn off the reset application button
 
 ### v0.4.6

@@ -51,15 +51,25 @@ fw_create_header <- function() {
 
 # Framework UI Header Creation that includes a right sidebar
 fw_create_header_plus <- function(sidebar_right_icon = shiny::isolate(.g_opts$sidebar_right_icon)) {
+    if (utils::packageVersion('shinydashboardPlus') < 2) {
+        plus_fxn <- getExportedValue("shinydashboardPlus", "dashboardHeaderPlus")
+        arg_list <- list(enable_rightsidebar = TRUE, 
+                         rightSidebarIcon = sidebar_right_icon)
+    } else {
+        plus_fxn <- getExportedValue("shinydashboardPlus", "dashboardHeader")
+        arg_list <- list(controlbarIcon = shiny::icon(sidebar_right_icon))
+    }
+    
     return(
-        shinydashboardPlus::dashboardHeaderPlus(
+        do.call(plus_fxn, args = c(list(
             title = shiny::div(class = "periscope-busy-ind",
                                "Working",
                                shiny::img(alt = "Working...",
                                           hspace = "5px",
                                           src = "img/loader.gif") ),
-            titleWidth = shiny::isolate(.g_opts$sidebar_size),
-            enable_rightsidebar = TRUE, rightSidebarIcon = sidebar_right_icon)
+            titleWidth = shiny::isolate(.g_opts$sidebar_size)),
+            arg_list)
+        )
     )
 }
 
@@ -111,13 +121,20 @@ fw_create_sidebar <- function(showsidebar = shiny::isolate(.g_opts$show_left_sid
 fw_create_right_sidebar <- function() {
     side_right <- shiny::isolate(.g_opts$side_right)
     
-    params <- list(background = "dark", shinyBS::bsAlert("sidebarRightAlert"))
+    params <- list(shinyBS::bsAlert("sidebarRightAlert"))
     if (!is.null(side_right) && length(side_right) > 0) {
         for (element in side_right) {
             params <- append(params, list(element))
         }
     }
-    return(do.call(shinydashboardPlus::rightSidebar, params))
+    
+    if (utils::packageVersion('shinydashboardPlus') < 2) {
+        plus_fxn <- getExportedValue("shinydashboardPlus", "rightSidebar")
+    } else {
+        plus_fxn <- getExportedValue("shinydashboardPlus", "dashboardControlbar")
+    }
+    
+    return(do.call(plus_fxn, params))
 }
 
 # Framework UI Body Creation

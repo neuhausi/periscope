@@ -92,7 +92,7 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
 #' Add UI Elements to the Right Sidebar
 #'
 #' This function registers UI elements at the right dashboard sidebar. 
-#' The UI element should be of type rightSidebarTabContent.
+#' The UI elements to be added depend on the version of shinydashboardPlus in use.
 #'
 #' @param elementlist list of UI elements to add to the sidebar tab
 #' @param append whether to append the \code{elementlist} to the currently
@@ -100,22 +100,34 @@ add_ui_sidebar_advanced <- function(elementlist = NULL,
 #'
 #' @section Shiny Usage:
 #' Call this function after creating elements in \code{program/ui_sidebar_right.R} to register
-#' them to the application framework and show them on the right
-#' dashboard sidebar
+#' them to the application framework and show them on the right dashboard sidebar
 #'
 #' @seealso \link[periscope]{add_ui_sidebar_basic}
 #' @seealso \link[periscope]{add_ui_body}
-#' @seealso \link[shinydashboardPlus]{rightSidebarTabContent}
-#'
+#' @seealso \link[shinydashboardPlus]{shinydashboardPlusGallery}
+
 #' @examples 
+#' \dontrun{
 #' require(shiny)
 #' require(shinydashboardPlus)
 #' 
+#' # shinydashboardPlus changed significantly in version 2.0 and has 
+#' # different syntax for the element content, here is an example for each
+#' 
+#' # shinydashboardPlus < 2.0
 #' s1 <- rightSidebarTabContent(id = 1, icon = "desktop", title = "Tab 1 - Plots", active = TRUE, 
 #'                              div(helpText(align = "center", "Sample UI Text"),
 #'                                  selectInput("sample1", "A Select", c("A", "B", "C")) ))
-#'  
+#' 
+#' # shinydasboardPlus >= 2.0
+#' s1 <- controlbarMenu(id = 1, selected = "Tab 1 - Plots",
+#'                      controlbarItem(icon = icon("desktop"), title = "Tab 1 - Plots",
+#'                                     div(helpText(align = "center", "Sample UI Text"),
+#'                                     selectInput("sample1", "A Select", c("A", "B", "C")) )))
+#'                                     
+#' # add the above content to the sidebar (periscope functionality)
 #' add_ui_sidebar_right(list(s1), append = FALSE)
+#' }
 #' 
 #' @export
 add_ui_sidebar_right <- function(elementlist = NULL, append = FALSE) {

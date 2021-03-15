@@ -1,8 +1,9 @@
 ## Comments from Maintainer
 
-* Merging test updates from Carson Sievert (RStudio) to resolve minor issues with expectations of UI layout properties that will cause failing tests in Shiny 1.6 which is due to be released next week.
+* 0.6.1 - our host had issues and we needed a few redirect fixes.  Solved!  Apologies.
 
-* We were asked by Carson to make this update ASAP, rather than waiting, so there is a NOTE about the time since last submission (5d) - this is necessary as we were just notified a few days ago of the need for this update.
+* Updated the package to handle both the old and new releases of shinydashboardPlus
+* Updated tests, fixed a few minor bugs
 
 ---  
     
@@ -12,13 +13,13 @@
 RStudio Server Pro (Ubuntu 18.04.2)  
 
 * R 3.6.3
-* R 4.0.3
+* R 4.0.4
 
 Travis-CI (Ubuntu 16.04.6)
 
 * R 3.6.3
 * R 4.0.2
-* R devel (2021-01-09 r79815)
+* R devel (2021-03-11 r80086)
 
 WinBuilder
 

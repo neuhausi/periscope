@@ -385,7 +385,7 @@ logReset <- function() {
     ## remove all content from the logging environment
     rm(list = ls(logging.options), envir = logging.options)
     
-    root_logger <- getLogger(level = "INFO")
+    root_logger <- getLogger(level = "NOTSET")
     root_logger$removeHandler("basic.stdout")
     
     invisible()
@@ -580,7 +580,7 @@ updateOptions.environment <- function(container, ...) {
         config$level <- namedLevel(config$level)
     } else if (get("name", container) == "") {
         # root logger
-        config$level <- loglevels["INFO"]
+        config$level <- loglevels["NOTSET"]
     } else {
         config$level <- loglevels["NOTSET"]
     }

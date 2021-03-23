@@ -1,9 +1,8 @@
 ## Comments from Maintainer
 
-* 0.6.1 - our host had issues and we needed a few redirect fixes.  Solved!  Apologies.
+* Right Sidebar Bug fix for ShinyDashboardPlus 2.0 compatibility
 
-* Updated the package to handle both the old and new releases of shinydashboardPlus
-* Updated tests, fixed a few minor bugs
+* There is a NOTE due to the short time between submissions, this is an important bugfix enabling right-sidebar applications to be generated for ShinyDashboardPlus 2.0 and I kindly ask for your exception to allow this release.
 
 ---  
     
@@ -19,7 +18,7 @@ Travis-CI (Ubuntu 16.04.6)
 
 * R 3.6.3
 * R 4.0.2
-* R devel (2021-03-11 r80086)
+* R devel (2021-03-17 r80092)
 
 WinBuilder
 

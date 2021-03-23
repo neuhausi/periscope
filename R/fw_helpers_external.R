@@ -123,9 +123,7 @@ fw_create_right_sidebar <- function() {
     
     params <- list(shinyBS::bsAlert("sidebarRightAlert"))
     if (!is.null(side_right) && length(side_right) > 0) {
-        for (element in side_right) {
-            params <- append(params, list(element))
-        }
+        params <- c(params, side_right)
     }
     
     if (utils::packageVersion('shinydashboardPlus') < 2) {
@@ -133,7 +131,7 @@ fw_create_right_sidebar <- function() {
     } else {
         plus_fxn <- getExportedValue("shinydashboardPlus", "dashboardControlbar")
     }
-    
+
     return(do.call(plus_fxn, params))
 }
 

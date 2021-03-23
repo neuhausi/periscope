@@ -60,9 +60,12 @@
 }
 
 .right_sidebar_injection <- function() {
-    shiny::tags$script(shiny::HTML("setTimeout(function() {
-                                        $('[class~=\"control-sidebar-tabs\"]').find('li:first').remove();
-                                   }, 5000);"))
+    value <- NULL
+    if (utils::packageVersion('shinydashboardPlus') < 2) {
+        shiny::tags$script(shiny::HTML("setTimeout(function() {
+                                            $('[class~=\"control-sidebar-tabs\"]').find('li:first').remove();
+                                       }, 5000);"))
+    }
 }
 
 .remove_sidebar_toggle <- function() {

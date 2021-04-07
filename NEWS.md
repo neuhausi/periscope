@@ -1,5 +1,11 @@
 #Revisions and Change Log
 
+### v0.6.3
+* Bugfix for the framework to not require shinydashboardPlus unless a right sidebar is in use
+* Bugfixes for the sample applications
+* Refined package installation and version checking in onload/onattach
+* Removed lazydata designation to resolve CRAN check note
+
 ### v0.6.2
 * Bugfix for the right sidebar when using shinydashboardPlus 2.0 - first tab was disappearing
 

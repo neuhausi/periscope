@@ -51,7 +51,11 @@ fw_create_header <- function() {
 
 # Framework UI Header Creation that includes a right sidebar
 fw_create_header_plus <- function(sidebar_right_icon = shiny::isolate(.g_opts$sidebar_right_icon)) {
-    if (utils::packageVersion('shinydashboardPlus') < 2) {
+    if (!(.g_sdp_installed)) {
+        stop('shinydashboardPlus is not installed')
+    }
+    
+    if (.g_sdp_oldver) {
         plus_fxn <- getExportedValue("shinydashboardPlus", "dashboardHeaderPlus")
         arg_list <- list(enable_rightsidebar = TRUE, 
                          rightSidebarIcon = sidebar_right_icon)
@@ -119,6 +123,10 @@ fw_create_sidebar <- function(showsidebar = shiny::isolate(.g_opts$show_left_sid
 
 # Framework UI Right Sidebar Creation
 fw_create_right_sidebar <- function() {
+    if (!(.g_sdp_installed)) {
+        stop('shinydashboardPlus is not installed')
+    }
+    
     side_right <- shiny::isolate(.g_opts$side_right)
     
     params <- list(shinyBS::bsAlert("sidebarRightAlert"))
@@ -126,7 +134,7 @@ fw_create_right_sidebar <- function() {
         params <- c(params, side_right)
     }
     
-    if (utils::packageVersion('shinydashboardPlus') < 2) {
+    if (.g_sdp_oldver) {
         plus_fxn <- getExportedValue("shinydashboardPlus", "rightSidebar")
     } else {
         plus_fxn <- getExportedValue("shinydashboardPlus", "dashboardControlbar")

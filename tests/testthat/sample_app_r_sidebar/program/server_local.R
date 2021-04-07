@@ -124,7 +124,7 @@ output$download <- renderUI({
 
 output$alerts   <- renderUI({
     list(hr(),
-         p("There are three standardized locations for alerts. To create ",
+         p("There is one standardized location for alerts. To create ",
            "an alert call the following on the server: ",
            pre('S: createAlert(session, location, content = "Alert Text", ...)'),
            'LOCATION can be: "bodyAlert", See the ', em("alertBS"),
@@ -133,7 +133,6 @@ output$alerts   <- renderUI({
              bsButton( "exampleBodyAlert",
                        label  = "Body",
                        style  = "info",
-                       append = FALSE,
                        width  = "25%")) )
 })
 

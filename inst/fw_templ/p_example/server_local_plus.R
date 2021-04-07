@@ -124,7 +124,7 @@ output$download <- renderUI({
 
 output$alerts   <- renderUI({
     list(hr(),
-         p("There are three standardized locations for alerts. To create ",
+         p("There are four standardized locations for alerts in this app. To create ",
            "an alert call the following on the server: ",
            pre('S: createAlert(session, location, content = "Alert Text", ...)'),
            'LOCATION can be: "sidebarBasicAlert", "sidebarAdvancedAlert", "sidebarRightAlert", ',
@@ -134,20 +134,19 @@ output$alerts   <- renderUI({
              bsButton( "exampleBasicAlert",
                        label  = "Sidebar - Basic",
                        style  = "success",
-                       width  = "25%"),
-             bsButton( "exampleAdvancedAlert",
-                       label  = "Sidebar - Advanced",
-                       style  = "warning",
-                       width  = "25%"),
-             bsButton( "exampleRightAlert",
-                       label  = "Sidebar - Right",
-                       style  = "danger",
-                       width  = "25%"),
+                       width  = "20%"),
              bsButton( "exampleBodyAlert",
                        label  = "Body",
                        style  = "info",
-                       append = FALSE,
-                       width  = "25%")) )
+                       width  = "20%"),
+             bsButton( "exampleAdvancedAlert",
+                       label  = "Sidebar - Advanced",
+                       style  = "warning",
+                       width  = "20%"),
+             bsButton( "exampleRightAlert",
+                       label  = "Sidebar - Right",
+                       style  = "danger",
+                       width  = "20%") ) )
     })
 
 output$loginfo <- renderUI({

@@ -1,8 +1,10 @@
 ## Comments from Maintainer
 
-* Right Sidebar Bug fix for ShinyDashboardPlus 2.0 compatibility
+* LazyData removed from Description to fix Note on CRAN check page
 
-* There is a NOTE due to the short time between submissions, this is an important bugfix enabling right-sidebar applications to be generated for ShinyDashboardPlus 2.0 and I kindly ask for your exception to allow this release.
+* Bugfix for situation where the user wants to generate an app but does not have shinydashboardPlus installed and does not need a right sidebar (which requires sdp)
+
+* There may be a NOTE due to the short time between submissions, this is an important bugfix release and I kindly ask for your exception to allow this release.
 
 ---  
     
@@ -18,7 +20,7 @@ Travis-CI (Ubuntu 16.04.6)
 
 * R 3.6.3
 * R 4.0.2
-* R devel (2021-03-17 r80092)
+* R devel (2021-03-29 r80130)
 
 WinBuilder
 

@@ -148,6 +148,10 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
             }
         }
         
+        if (!(.g_sdp_installed) && dashboard_plus) {
+            stop('shinyDashboardPlus is not currently installed -- it is required to generate an application with a right sidebar.')
+        }
+        
         .create_dirs(newloc, usersep)
         .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, leftsidebar, right_sidebar_icon, style)
         .copy_program_files(newloc, usersep, sampleapp, resetbutton, leftsidebar, dashboard_plus)

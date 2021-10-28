@@ -9,6 +9,9 @@
 #     to server, UI and session scopes
 # ----------------------------------------
 
+library(shiny)
+library(periscope)
+
 
 # -- Setup your Application --
 set_app_parameters(title = "Set title in global.R using set_app_parameters()",

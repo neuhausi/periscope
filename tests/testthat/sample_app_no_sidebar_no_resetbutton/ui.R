@@ -17,4 +17,4 @@ source(paste("program", "ui_body.R", sep = .Platform$file.sep),
 
 dashboardPage(periscope:::fw_create_header(),
               periscope:::fw_create_sidebar(showsidebar = FALSE, resetbutton = FALSE),
-              periscope:::fw_create_body())
+              uiOutput('body'))

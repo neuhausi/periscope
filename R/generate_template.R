@@ -16,7 +16,7 @@
 #' @param rightsidebar parameter to set the right sidebar. It can be TRUE/FALSE or a character 
 #' containing the name of a shiny::icon().
 #' @param leftsidebar whether the left sidebar should be enabled.
-#' @param style list containing application styling properties. By default the skin is blue.
+#' @param custom_theme_file location of custom theme settings yaml file. Default value is NULL.
 #'
 #' @section Name:
 #' The \code{name} directory must not exist in \code{location}.  If the code
@@ -76,6 +76,10 @@
 #' inside of the call to \code{shinyServer(...)}.  Anything placed in this
 #' file will be accessible only within a single user session.\cr
 #' \cr
+#' \strong{\emph{name}/www/periscope_style.yaml} :\cr
+#' This is the application custom styling yaml file. User can update
+#' application different parts style using this file.\cr
+#' \cr
 #' \cr
 #' \strong{Do not modify the following files}: \cr
 #' \preformatted{
@@ -108,12 +112,18 @@
 #' # blank app named 'myblankapp' created in a temp dir
 #' create_new_application(name = 'myblankapp', location = tempdir())
 #' # blank app named 'myblankapp' with a green skin created in a temp dir
-#' create_new_application(name = 'myblankapp', location = tempdir(), style = list(skin = "green"))
+#' create_new_application(name = 'myblankapp', location = tempdir())
 #' # blank app named 'myblankapp' without a left sidebar created in a temp dir
 #' create_new_application(name = 'myblankapp', location = tempdir(), leftsidebar = FALSE)
 #'
 #' @export
-create_new_application <- function(name, location, sampleapp = FALSE, resetbutton = TRUE, rightsidebar = FALSE, leftsidebar = TRUE, style = list(skin = "blue")) {
+create_new_application <- function(name, 
+                                   location, 
+                                   sampleapp = FALSE,
+                                   resetbutton = TRUE,
+                                   rightsidebar = FALSE, 
+                                   leftsidebar = TRUE, 
+                                   custom_theme_file = NULL) {
     usersep <- .Platform$file.sep
     newloc <- paste(location, name, sep = usersep)
 
@@ -138,22 +148,22 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
                 stop("Framework creation could not proceed, invalid type for rightsidebar, only logical or character allowed")
             }
         }
-        if (!is.null(style)) {
-            if (class(style) == "list") {
-                if (!identical(intersect("skin", names(style)), character(0)) && !identical(class(style$skin), "character")) {
-                    stop("Framework creation could not proceed, invalid type for skin, only character allowed. See ?shinydashboard::dashboardPage for supported colors.")  
-                }
-            } else {
-                stop("Framework creation could not proceed, invalid type for style, only list allowed")  
-            }
-        }
         
         if (!(.g_sdp_installed) && dashboard_plus) {
             stop('shinyDashboardPlus is not currently installed -- it is required to generate an application with a right sidebar.')
         }
         
         .create_dirs(newloc, usersep)
-        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, leftsidebar, right_sidebar_icon, style)
+        if (!is.null(custom_theme_file)) {
+            if (any(!is.character(custom_theme_file),
+                    length(custom_theme_file) != 1,
+                    custom_theme_file == "",
+                    !file.exists(custom_theme_file))) {
+                warning("'custom_theme_file' must be single character value pointing to valid yaml file location. Using default values.")
+                custom_theme_file <- NULL
+            }
+        }
+        .copy_fw_files(newloc, usersep, resetbutton, dashboard_plus, leftsidebar, right_sidebar_icon, custom_theme_file, sampleapp)
         .copy_program_files(newloc, usersep, sampleapp, resetbutton, leftsidebar, dashboard_plus)
 
         message("Framework creation was successful.")
@@ -185,7 +195,14 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
 }
 
 # Create Framework Files ----------------------------
-.copy_fw_files <- function(newloc, usersep, resetbutton = TRUE, dashboard_plus = FALSE, leftsidebar = TRUE, right_sidebar_icon = NULL, style = list(skin = "blue")) {
+.copy_fw_files <- function(newloc, 
+                           usersep,
+                           resetbutton = TRUE, 
+                           dashboard_plus = FALSE,
+                           leftsidebar = TRUE, 
+                           right_sidebar_icon = NULL,
+                           custom_theme_file,
+                           sampleapp = FALSE) {
     files <- c("global.R",
                "server.R")
     if (dashboard_plus) {
@@ -233,19 +250,20 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
         writeLines(ui_content, con = ui_file)
         close(ui_file)
     }
-    # styling
-    if (!is.null(style) && identical(class(style), "list") && length(style) > 0 &&
-        !identical(intersect("skin", names(style)), character(0)) && !identical(style, list(skin = "blue"))) {
-        skin_value  <- style$skin
-        ui_file     <- file(paste(newloc, "ui.R", sep = usersep), open = "r+")
-        ui_content  <- readLines(con = ui_file)
-        ui_content[length(ui_content)]     <- paste0(substr(ui_content[length(ui_content)], 1, nchar(ui_content[length(ui_content)]) - 1), ",")
-        white_space <- paste(rep(" ", ifelse(dashboard_plus, nchar("dashboardPagePlus"), nchar("dashboardPage"))), collapse = "")
-        ui_content[length(ui_content) + 1] <- sprintf("%s skin = '%s')", white_space, skin_value)
+    
+    if (sampleapp) {
+        ui_file    <- file(paste(newloc, "ui.R", sep = usersep), open = "r")
+        ui_content <- readLines(con = ui_file)
+        close(ui_file)
+        ui_content <- gsub("periscope:::fw_create_body()", 
+                           "uiOutput('body')", 
+                           ui_content,
+                           fixed = TRUE)
+        ui_file    <- file(paste(newloc, "ui.R", sep = usersep), open = "w")
         writeLines(ui_content, con = ui_file)
         close(ui_file)
     }
-    
+
     #subdir copies
     imgs <- c("loader.gif", "tooltip.png")
     for (file in imgs) {
@@ -256,7 +274,14 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
             con = paste(newloc, "www", "img", file, sep = usersep))
     }
 
-    return()
+    if (!is.null(custom_theme_file)) {
+        file.copy(custom_theme_file, paste(newloc, "www", "periscope_style.yaml", sep = usersep))
+    } else if (sampleapp) {
+        file.copy(system.file("fw_templ", "www", "periscope_style.yaml", package = "periscope"),
+                  paste(newloc, "www", "periscope_style.yaml", sep = usersep))
+    } else {
+        create_default_theme_file(paste(newloc, "www", "periscope_style.yaml", sep = usersep))
+    }
 }
 
 # Create Program Files ----------------------------
@@ -310,6 +335,54 @@ create_new_application <- function(name, location, sampleapp = FALSE, resetbutto
                 con = paste(targetdir, unlist(supporting_files[file], use.names = F), file, sep = usersep))
         }
     }
+}
 
-    return()
+create_default_theme_file <- function(theme_file) {
+    lines <- c("### primary_color",
+               "# Sets the primary status color that affects the color of the header, valueBox, infoBox and box.",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "primary_color: \n\n",
+               
+               
+               "# Sidebar variables: change the default sidebar width, colors:",
+               "### sidebar_width",
+               "# Width is to be specified as a numeric value in pixels. Must be greater than 0 and include numbers only.",
+               "# Valid possible value are 200, 350, 425, ...",
+               "# Blank/empty value will use default value",
+               "sidebar_width: \n",
+               
+               "### sidebar_background_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "sidebar_background_color: \n",
+               
+               "### sidebar_hover_color",
+               "# The color of sidebar menu item upon hovring with mouse.",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "sidebar_hover_color: \n",
+               
+               "### sidebar_text_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "sidebar_text_color: \n\n",
+               
+               "# body variables",
+               "### body_background_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "body_background_color: \n",
+               
+               "# boxes variables",
+               "### box_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "box_color: \n",
+               
+               "### infobox_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "infobox_color: \n")
+    writeLines(lines, theme_file) 
 }

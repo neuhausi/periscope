@@ -5,9 +5,9 @@
 # Framework Server Setup
 fw_server_setup <- function(input, output, session, logger) {
     logfile <- shiny::isolate(.setup_logging(session, logger))
-    shiny::callModule(.bodyFooter, "footerId",   logfile)
+    .bodyFooter("footerId", logfile)
     if (shiny::isolate(.g_opts$reset_button)) {
-        shiny::callModule(.appReset, "appResetId", logger)
+        .appReset("appResetId", logger)
     }
 }
 
@@ -145,6 +145,22 @@ fw_create_right_sidebar <- function() {
 
 # Framework UI Body Creation
 fw_create_body <- function() {
+    header_color_style          <- "$('.logo').css('background-color', $('.navbar').css('background-color'))"
+    update_right_side_bar_width <- "$('.navbar-custom-menu').on('click',
+                                           function() {
+                                               main_width = $('.main-sidebar').css('width');
+                                               if ($('.control-sidebar-open').length != 0) {
+                                                   $('.control-sidebar-open').css('width', main_width);
+                                                   $('.control-sidebar-bg').css('width', main_width);
+                                                   $('.control-sidebar-bg').css('right', '0px' );
+                                                   $('.control-sidebar').css('right', '0px');
+                                               } else {
+                                                  $('.control-sidebar-bg').css('right', '-' + main_width);
+                                                  $('.control-sidebar').css('right', '-' +  main_width);
+                                                  $('.control-sidebar').css('width', '-' +  main_width);
+                                               }
+                                           });"
+                                           
     app_info <- shiny::isolate(.g_opts$app_info)
     info_content <- NULL
 
@@ -157,16 +173,97 @@ fw_create_body <- function() {
                 app_info)
     }
 
-    return(
-        shinydashboard::dashboardBody(
-            shiny::tags$head(
-                shiny::tags$style(.framework_css()),
-                shiny::tags$script(.framework_js())),
-            info_content,
-            shiny::isolate(.g_opts$body_elements),
-            if (shiny::isolate(.g_opts$show_userlog)) {
-                .bodyFooterOutput("footerId") }
-            else {NULL}
+    shinydashboard::dashboardBody(
+        fresh::use_theme(create_theme()),
+        shiny::tags$head(
+            shiny::tags$style(.framework_css()),
+            shiny::tags$script(.framework_js())),
+        shiny::tags$script(update_right_side_bar_width),
+        shiny::tags$script(header_color_style),
+        info_content,
+        shiny::isolate(.g_opts$body_elements),
+        if (shiny::isolate(.g_opts$show_userlog)) {
+            .bodyFooterOutput("footerId") 
+        } else {
+            NULL
+        }
+    )
+    
+}
+
+create_theme <- function() {
+    theme_settings            <- NULL
+    primary_color             <- NULL
+    sidebar_width             <- NULL
+    sidebar_background_color  <- NULL
+    sidebar_hover_color       <- NULL
+    sidebar_text_color        <- NULL
+    body_background_color     <- NULL
+    box_color                 <- NULL
+    infobox_color             <- NULL
+    theme_colors_keys         <- c("primary_color", "sidebar_background_color", "sidebar_hover_color",
+                                   "sidebar_text_color", "body_background_color", "box_color",
+                                   "infobox_color")
+    
+    if (file.exists("www/periscope_style.yaml")) {
+        theme_settings <- tryCatch({
+            yaml::read_yaml("www/periscope_style.yaml")
+        },
+        error = function(e){
+            warning("Could not parse 'periscope_style.yaml' due to: ", e$message)
+            NULL
+        })
+        
+        if (!is.null(theme_settings) && is.list(theme_settings)) {
+            for (color in theme_colors_keys) {
+                if (!is_valid_color(theme_settings[[color]])) {
+                    warning(color, " has invalid color value. Setting default color.")
+                    theme_settings[[color]] <- NULL
+                }
+            }
+            
+            primary_color            <- theme_settings[["primary_color"]]
+            sidebar_width            <- theme_settings[["sidebar_width"]]
+            sidebar_background_color <- theme_settings[["sidebar_background_color"]]
+            sidebar_hover_color      <- theme_settings[["sidebar_hover_color"]]
+            sidebar_text_color       <- theme_settings[["sidebar_text_color"]]
+            body_background_color    <- theme_settings[["body_background_color"]]
+            box_color                <- theme_settings[["box_color"]]
+            infobox_color            <- theme_settings[["infobox_color"]]
+            if (!is.null(sidebar_width)) {
+                if (any(!is.numeric(sidebar_width), sidebar_width <= 0)) {
+                    warning("'sidebar_width' must be positive value. Setting default value.")
+                } else {
+                    sidebar_width <- paste0(sidebar_width, "px")
+                }
+            }
+        }
+    }
+    
+    fresh::create_theme(
+        fresh::adminlte_color(
+            light_blue = primary_color
+        ),
+        fresh::adminlte_sidebar(
+            width = sidebar_width,
+            dark_bg = sidebar_background_color,
+            dark_hover_bg = sidebar_hover_color,
+            dark_color = sidebar_text_color
+        ),
+        fresh::adminlte_global(
+            content_bg = body_background_color,
+            box_bg = box_color, 
+            info_box_bg = infobox_color
         )
     )
+}
+
+is_valid_color <- function(color) {
+    tryCatch({
+        grDevices::col2rgb(color)
+        TRUE
+    },
+    error = function(e) {
+        FALSE
+    })
 }

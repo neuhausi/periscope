@@ -14,7 +14,7 @@ vignette: >
 
 # Overview
 
-## Purpose
+## Purpose 
 
 This *Shiny Module* was created in order to provide a consistent-looking and
 easy-to-use button that facilitates one or multiple types of file downloads.
@@ -36,21 +36,16 @@ easy-to-use button that facilitates one or multiple types of file downloads.
 Shiny modules consist of a pair of functions that modularize, or package, a 
 small piece of reusable functionality.  The UI function is called directly by
 the user to place the UI in the correct location (as with other shiny UI
-objects).  The server function is not called directly by the user of the module. 
-Instead the module server function is called only once to set it up using the
-shiny::callModule function inside the server function (i.e. user-local session
-scope.  The callModule function supplies the first three arguments of the 
-Shiny Module's function inputs - the input, output, and session.  Additional 
-arguments supplied by the user in the callModule function are passed to the
-specific shiny module that is called.  There can be additional helper functions
-that are a part of a shiny module.
+objects). The module server function that is called only once to set it up using the
+module name as a function inside the server function (i.e. user-local session
+scope.  The function first arguments is string represents the module id (the same id used in module UI function). Additional arguments can be supplied by the user based on the specific shiny module that is called.  There can be additional helper functions that are a part of a shiny module.
 
 The **downloadFile** Shiny Module is a part of the *periscope* package and 
 consists of the following functions:
 
 * **downloadFileButton** - the UI function to place the button in the 
-application
-* **downloadFile** - the Server function supplied to callModule.
+application.
+* **downloadFile** - the server function to be called inside server_local.R.
 * **downloadFile_ValidateTypes** - a helper function that will check a given 
 list of file types and warn the caller if the list contains an invalid or 
 unsupported type.
@@ -101,13 +96,8 @@ downloadFileButton("object_id2",
 
 ## downloadFile
 
-The **downloadFile** function is not called directly - instead a call to 
-shiny::callModule is made inside the server.R (or equivalent) file to initialize
-the module.
+The **downloadFile** function is called directly. The call consists of the following:
 
-The call consists of the following:
-
-* the name of the module - unquoted
 * the unique object ID that was provided to downloadFileButton when creating 
 the UI object
 * the logging logger to be used
@@ -142,20 +132,18 @@ to the user from the application.
 # Inside server_local.R
 
 #single download type
-callModule(downloadFile, 
-           "object_id1", 
-           logger = ss_userAction.Log,
-           filenameroot = "mydownload1",
-           datafxns = list(csv = mydatafxn1),
-           aspectratio = 1)
+downloadFile("object_id1", 
+             logger = ss_userAction.Log,
+             filenameroot = "mydownload1",
+             datafxns = list(csv = mydatafxn1),
+             aspectratio = 1)
 
 #multiple download types
-callModule(downloadFile, 
-           "object_id2",
-           logger = ss_userAction.Log,
-           filenameroot = "mytype2",
-           datafxns = list(csv = mydatafxn1, xlsx = mydatafxn2),
-           aspectratio = 1)
+downloadFile("object_id2",
+             logger = ss_userAction.Log,
+             filenameroot = "mytype2",
+             datafxns = list(csv = mydatafxn1, xlsx = mydatafxn2),
+             aspectratio = 1)
 ```
 
 
@@ -169,7 +157,7 @@ library(periscope)
 
 app_dir = tempdir()
 create_new_application('mysampleapp', location = app_dir, sampleapp = TRUE)
-runApp('mysampleapp', appDir = app_dir)
+runApp(paste(app_dir, 'mysampleapp', sep = .Platform$file.sep))
 ```
 
 <br>

@@ -223,7 +223,7 @@ test_that("remove_reset_button both sidebar", {
 test_that("remove_reset_button r sidebar", {
     app_location <- create_app_tmp_dir(left_sidebar = FALSE, right_sidebar = TRUE)
     
-    expect_message(remove_reset_button(location = app_location), "Left sidebar not available, reset button cannot be removed")
+    expect_message(remove_reset_button(location = app_location), "Reset button already removed, no conversion needed")
 })
 
 ## add_reset_button tests

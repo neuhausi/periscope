@@ -2,6 +2,7 @@ require(testthat)
 require(shiny)
 require(periscope)
 require(shinydashboardPlus)
+require(ggplot2)
 
 if (interactive()) {
     test_source_path <- "periscope/R"

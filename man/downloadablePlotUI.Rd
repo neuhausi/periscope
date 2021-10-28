@@ -58,9 +58,7 @@ produced graphics.
 \section{Notes}{
 
 When there is nothing to download in any of the linked downloadfxns the
-button will be hidden as there is nothing to download.  The linked
-downloadfxns are set in the paired callModule (see the \strong{Shiny Usage}
-section)
+button will be hidden as there is nothing to download.
 
 This module is NOT compatible with the built-in (base) graphics \emph{(such as 
 basic plot, etc.)} because they cannot be saved into an object and are directly 
@@ -71,7 +69,7 @@ output by the system at the time of creation.
 
 Call this function at the place in ui.R where the plot should be placed.
 
-Paired with a call to \code{shiny::callModule(downloadablePlot, id, ...)}
+Paired with a call to \code{downloadablePlot(id, ...)}
 in server.R
 }
 

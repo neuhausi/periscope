@@ -38,7 +38,7 @@ for the button.
 
 Call this function at the place in ui.R where the button should be placed.
 
-It is paired with a call to \code{shiny::callModule(downloadFile, id, ...)}
+It is paired with a call to \code{downloadFile(id, ...)}
 in server.R
 }
 

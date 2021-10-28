@@ -23,6 +23,10 @@
 # ----------------------------------------
 
 # -- IMPORTS --
+library(colourpicker)
+library(DT)
+library(htmltools)
+library(htmlwidgets)
 
 
 # -- VARIABLES --

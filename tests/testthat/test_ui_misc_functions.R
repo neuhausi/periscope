@@ -63,5 +63,10 @@ test_that("fw_server_setup", {
                                    logger = periscope:::fw_get_user_log()))
 })
 
+test_that("is_valid_color", {
+    expect_true(is_valid_color("green"))
+    expect_false(is_valid_color("not color"))
+})
+
 # clean up
 unlink("log", TRUE)

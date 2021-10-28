@@ -69,8 +69,7 @@
 }
 
 .remove_sidebar_toggle <- function() {
-    shiny::tags$script(shiny::HTML("$('[class~=\"sidebar-toggle\"]').remove();
-                                    $('[class~=\"logo\"]').css('background-color', '#3c8dbc');"))
+    shiny::tags$script(shiny::HTML("$('[class~=\"sidebar-toggle\"]').remove();"))
 }
 
 # Returns the custom css as HTML

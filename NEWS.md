@@ -1,5 +1,14 @@
 #Revisions and Change Log
 
+### v1.0.0 **major version release**
+* Updated to the latest shiny modules paradigm from the old one
+* Support for downloadableTable DT options
+* Styling changed to use the fresh package
+* Updated example applications, documentation, vignettes, etc.
+* Ensured apps created with the older version of this package will work when the package is upgraded
+
+---
+
 ### v0.6.3
 * Bugfix for the framework to not require shinydashboardPlus unless a right sidebar is in use
 * Bugfixes for the sample applications

@@ -12,6 +12,7 @@
 # -- IMPORTS --
 library(canvasXpress)
 
+
 # -- Setup your Application --
 set_app_parameters(title = "Sample Title (click for an info pop-up)",
                    titleinfo = HTML("<h3>Application Information Pop-Up</h3>",

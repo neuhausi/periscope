@@ -1,7 +1,7 @@
 context("periscope create new application")
 
-
-expect_cleanup_create_new_application <- function(fullname, sampleapp = FALSE, dashboard_plus = FALSE, leftsidebar = TRUE, skin = NULL) {
+expect_cleanup_create_new_application <- function(fullname, sampleapp = FALSE, dashboard_plus = FALSE, leftsidebar = TRUE) {
+    local_edition(3)
     expect_true(dir.exists(fullname))
     expect_true(file.exists(paste0(fullname, "/global.R")))
     expect_true(file.exists(paste0(fullname, "/server.R")))
@@ -9,6 +9,7 @@ expect_cleanup_create_new_application <- function(fullname, sampleapp = FALSE, d
     expect_true(dir.exists(paste0(fullname, "/www")))
     expect_true(dir.exists(paste0(fullname, "/www/css")))
     expect_true(dir.exists(paste0(fullname, "/www/js")))
+    expect_true(file.exists(paste0(fullname, "/www/periscope_style.yaml")))
     expect_true(dir.exists(paste0(fullname, "/www/img")))
     expect_true(file.exists(paste0(fullname, "/www/img/loader.gif")))
     expect_true(file.exists(paste0(fullname, "/www/img/tooltip.png")))
@@ -37,13 +38,6 @@ expect_cleanup_create_new_application <- function(fullname, sampleapp = FALSE, d
     } else {
         expect_true(!file.exists(paste0(fullname, "/program/ui_sidebar_right.R")))
     }
-    if (!is.null(skin)) {
-        ui_file    <- file(paste0(fullname, "/ui.R"), open = "r")
-        ui_content <- readLines(con = ui_file)
-        close(ui_file)
-        expect_true(any(grepl(skin, ui_content)))
-    }
-
     # clean up
     unlink(fullname, TRUE)
 }
@@ -141,43 +135,26 @@ test_that("create_new_application no reset button, no left sidebar", {
     expect_cleanup_create_new_application(appTemp, sampleapp = TRUE, leftsidebar = FALSE)
 })
 
-test_that("create_new_application custom style", {
+
+test_that("create_new_application invalid yaml file", {
     appTemp.dir  <- tempdir()
     appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
     appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
     
-    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, rightsidebar = NULL, style = list(skin = "green")), 
+    expect_warning(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, rightsidebar = NULL, custom_theme_file = ""), 
+                   "'custom_theme_file' must be single character value pointing to valid yaml file location. Using default values.")
+})
+
+test_that("create_new_application with valid yaml file", {
+    appTemp.dir  <- tempdir()
+    appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
+    appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
+    yaml_loc     <- "sample_app/www/periscope_style.yaml" 
+    
+    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, rightsidebar = NULL, custom_theme_file = yaml_loc), 
                    "Framework creation was successful.")
-    expect_cleanup_create_new_application(appTemp, skin = "green")
 })
 
-test_that("create_new_application bad style", {
-    appTemp.dir  <- tempdir()
-    appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
-    appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
-    
-    expect_error(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, rightsidebar = NULL, style = list("green")), 
-                   "Framework creation could not proceed, invalid type for skin, only character allowed")
-})
-
-test_that("create_new_application custom style right sidebar", {
-    appTemp.dir  <- tempdir()
-    appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
-    appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
-    
-    expect_message(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, rightsidebar = TRUE, style = list(skin = "green")), 
-                   "Framework creation was successful.")
-    expect_cleanup_create_new_application(appTemp, dashboard_plus = TRUE, skin = "green")
-})
-
-test_that("create_new_application invalid style", {
-    appTemp.dir  <- tempdir()
-    appTemp      <- tempfile(pattern = "TestThatApp", tmpdir = appTemp.dir)
-    appTemp.name <- gsub('\\\\|/', '', (gsub(appTemp.dir, "", appTemp, fixed = T)))
-    
-    expect_error(create_new_application(name = appTemp.name, location = appTemp.dir, sampleapp = FALSE, rightsidebar = NULL, style = mtcars), 
-                 "Framework creation could not proceed, invalid type for style, only list allowed")
-})
 
 test_that("create_new_application invalid location", {
     expect_warning(create_new_application(name = "Invalid", location = tempfile(), sampleapp = FALSE),

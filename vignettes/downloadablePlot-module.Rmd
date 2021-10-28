@@ -15,7 +15,7 @@ vignette: >
 
 # Overview
 
-## Purpose
+## Purpose 
 
 This *Shiny Module* was created in order to provide an
 easy-to-use downloadFileButton for a plot that is automatically created, linked 
@@ -47,14 +47,9 @@ button
 Shiny modules consist of a pair of functions that modularize, or package, a 
 small piece of reusable functionality.  The UI function is called directly by
 the user to place the UI in the correct location (as with other shiny UI
-objects).  The server function is not called directly by the user of the module.
-Instead the module server function is called only once to set it up using the
-shiny::callModule function inside the server function (i.e. user-local session
-scope.  The callModule function supplies the first three arguments of the 
-Shiny Module's function inputs - the input, output, and session.  Additional 
-arguments supplied by the user in the callModule function are passed to the
-specific shiny module that is called.  There can be additional helper functions
-that are a part of a shiny module.
+objects). The module server function that is called only once to set it up using the
+module name as a function inside the server function (i.e. user-local session
+scope.  The function first arguments is string represents the module id (the same id used in module UI function). Additional arguments can be supplied by the user based on the specific shiny module that is called.  There can be additional helper functions that are a part of a shiny module.
 
 
 ## downloadablePlotUI
@@ -93,13 +88,8 @@ downloadablePlotUI("object_id1",
 
 ## downloadablePlot
 
-The **downloadablePlot** function is not called directly - instead a call to 
-shiny::callModule is made inside the server.R (or equivalent) file to initialize
-the module.
+The **downloadablePlot** function is also called directly. The call consists of the following:
 
-The call consists of the following:
-
-* the name of the module - unquoted
 * the unique object ID that was provided to downloadablePlotUI when creating 
 the UI object
 * the logging logger to be used
@@ -139,13 +129,13 @@ to the user from the application.  All the above requirements apply.
 ```{r, eval = F}
 # Inside server_local.R
 
-callModule(downloadablePlot,
-           "object_id1", 
-           logger = ss_userAction.Log,
-           filenameroot = "mydownload1",
-           aspectratio = 1.33,
-           downloadfxns = list(png = myplotfxn, tsv = mydatafxn),
-           visibleplot = myplotfxn)
+downloadablePlot("object_id1",
+                 logger = ss_userAction.Log,
+                 filenameroot = "mydownload1",
+                 aspectratio = 1.33,
+                 downloadfxns = list(png = myplotfxn, tsv = mydatafxn),
+                 visibleplot = myplotfxn)
+           
 ```
 
 <br>

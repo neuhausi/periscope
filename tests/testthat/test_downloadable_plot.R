@@ -63,11 +63,32 @@ test_that("downloadablePlotUI invalid btn_valign", {
 })
 
 test_that("downloadablePlot", {
-    expect_error(downloadablePlot(input = list(),
+    download_plot <- function() {
+        ggplot2::ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+            geom_point(aes(color = cyl)) +
+            theme(legend.justification = c(1, 1),
+                  legend.position = c(1, 1),
+                  legend.title = element_blank()) +
+            ggtitle("GGPlot Example w/Hover") +
+            xlab("wt") +
+            ylab("mpg")
+    }
+    
+    download_data <- function() {
+        mtcars
+    }
+    
+    expect_silent(shiny::callModule(downloadablePlot,
+                                   "download",
+                                   input = list(),
                                    output = list(), 
                                    session = MockShinySession$new(),
                                    logger = periscope:::fw_get_user_log(),
                                    filenameroot = "mydownload1",
-                                   visibleplot = NULL))
+                                   aspectratio  = 2,
+                                   downloadfxns = list(png  = download_plot,
+                                                       tiff = download_plot,
+                                                       txt  = download_data,
+                                                       tsv  = download_data),
+                                   visibleplot = download_plot))
 })
-          

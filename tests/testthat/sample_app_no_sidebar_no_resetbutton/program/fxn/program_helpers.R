@@ -23,7 +23,13 @@ load_data2 <- function() {
 
 load_data3 <- function() {
     ldf <- df %>%
-        select(1:3)
-
+        select(1:3) %>% 
+        mutate(Total.Population.Change = as.numeric(gsub(",", "", Total.Population.Change)),
+               Natural.Increase = as.numeric(gsub(",", "", Natural.Increase)))
+    
     as.data.frame(ldf)
+}
+
+read_themes <- function() {
+    yaml::read_yaml("www/periscope_style.yaml")
 }

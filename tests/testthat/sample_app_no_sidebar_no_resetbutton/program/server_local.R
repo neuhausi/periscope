@@ -25,8 +25,8 @@
 
 # -- IMPORTS --
 
-
 # -- VARIABLES --
+load_themes <- reactiveValues(themes = NULL)
 
 
 # -- FUNCTIONS --
@@ -83,7 +83,7 @@ output$download <- renderUI({
           "extensions and corresponding data functions with the ",
           "following code:"),
         p(pre("U: downloadFileButton('uiID', list(extensions))"),
-          pre("S: callModule(downloadFile, 'uiID', logger, 'filenameroot', list(datafxns)"),
+          pre("S: downloadFile('uiID', logger, 'filenameroot', list(datafxns)"),
           "Single Download: ",
           downloadFileButton("exampleDownload1", c("csv"), "csv"),
           "Multiple-choice Download: ",
@@ -93,7 +93,7 @@ output$download <- renderUI({
 
 output$alerts   <- renderUI({
     list(hr(),
-         p("There is one standardized location for alerts. To create ",
+         p("There is one standardized location for alerts in this app. To create ",
            "an alert call the following on the server: ",
            pre('S: createAlert(session, location, content = "Alert Text", ...)'),
            'LOCATION can be: "bodyAlert", See the ', em("alertBS"),
@@ -148,6 +148,54 @@ output$hover_info <- renderUI({
     }
 })
 
+output$styles <- renderUI({
+    load_themes$themes <- read_themes()
+    list(p("User can control primary aspects of the application's styles by modifying the www/periscope_style.yaml file.\n This interactive example can be used to explore those parameters."),
+         p("Color values can be specified as:",
+           tags$ul(tags$li("Hex Value:", HTML("&nbsp;"), tags$b(tags$i("i.e. '#31A5CC'"))),
+                   tags$li("RGB Value:", HTML("&nbsp;"), tags$b(tags$i("i.e. 'rgb(49, 165, 204)'"))),
+                   tags$li("Color Name:", HTML("&nbsp;"), tags$b(tags$i("i.e. 'green', 'red', ..."))))),
+         fluidRow(
+             column(width = 6,
+                    colourpicker::colourInput("primary_color", 
+                                              ui_tooltip("primary_tip", 
+                                                         "Primary Color", 
+                                                         "Sets the primary status color that affects the color of the header, valueBox, infoBox and box."),
+                                              load_themes$themes[["primary_color"]])),
+             column(width = 6,
+                    numericInput("sidebar_width", 
+                                 ui_tooltip("sidebar_width_tip", 
+                                            "Sidebar Width", 
+                                            "Change the default sidebar width"),
+                                 load_themes$themes[["sidebar_width"]]))),
+         fluidRow(
+             column(width = 6,
+                    colourpicker::colourInput("sidebar_background_color", 
+                                              ui_tooltip("sidebar_background_color_tip", 
+                                                         "Sidebar Background Color", 
+                                                         "Change the default sidebar background color"),
+                                              load_themes$themes[["sidebar_background_color"]])),
+             column(width = 6,
+                    colourpicker::colourInput("body_background_color", 
+                                              ui_tooltip("body_background_color_tip", 
+                                                         "Body Background Color", 
+                                                         "Change body background color"),
+                                              load_themes$themes[["body_background_color"]]))),
+         fluidRow(
+             column(width = 6,
+                    colourpicker::colourInput("box_color", 
+                                              ui_tooltip("box_color_tip", 
+                                                         "Box Color", 
+                                                         "Change box default color"),
+                                              load_themes$themes[["box_color"]])),
+             column(width = 6,
+                    br(),
+                    bsButton("updateStyles",
+                             label  = "Update Application Theme"),
+                    style = "margin-top: 5px;")))
+    
+})
+
 # -- CanvasXpress Plot Example
 
 output$examplePlot1  <- renderCanvasXpress({
@@ -158,33 +206,74 @@ loginfo("Be Sure to Remember to Log ALL user actions",
         logger = ss_userAction.Log)
 
 # -- Setup Download Modules with Functions we want called
-callModule(downloadFile, "exampleDownload1", ss_userAction.Log,
-           "examplesingle",
-           list(csv = load_data1))
-callModule(downloadFile, "exampleDownload2", ss_userAction.Log,
-           "examplemulti",
-           list(csv = load_data2, xlsx = load_data2, tsv = load_data2))
-callModule(downloadableTable, "exampleDT1",  ss_userAction.Log,
-           "exampletable",
-           list(csv = load_data3, tsv = load_data3),
-           load_data3,
-           rownames = FALSE)
+downloadFile("exampleDownload1", 
+             ss_userAction.Log,
+             "examplesingle",
+             list(csv = load_data1))
+downloadFile("exampleDownload2", 
+             ss_userAction.Log,
+             "examplemulti",
+             list(csv = load_data2, xlsx = load_data2, tsv = load_data2))
 
-callModule(downloadablePlot, "examplePlot2", ss_userAction.Log,
-           filenameroot = "plot2_ggplot",
-           downloadfxns = list(jpeg = plot2ggplot,
-                               csv  = plot2ggplot_data),
-           aspectratio  = 1.5,
-           visibleplot  = plot2ggplot)
+sketch <- htmltools::withTags(
+    table(
+        class = "display",
+        thead(
+            tr(
+                th(rowspan = 2, "Location"),
+                th(colspan = 2, "Statistics")),
+            tr(
+                th("Change"),
+                th("Increase")))
+))
 
-callModule(downloadablePlot, "examplePlot3", ss_userAction.Log,
-           filenameroot = "plot3_lattice",
-           aspectratio  = 2,
-           downloadfxns = list(png  = plot3lattice,
-                               tiff = plot3lattice,
-                               txt  = plot3lattice_data,
-                               tsv  = plot3lattice_data),
-           visibleplot  = plot3lattice)
+downloadableTable("exampleDT1",
+                  ss_userAction.Log,
+                  "exampletable",
+                  list(csv = load_data3, tsv = load_data3),
+                  load_data3,
+                  colnames = c("Area", "Delta", "Increase"),
+                  filter = "bottom",
+                  callback = htmlwidgets::JS("table.order([1, 'asc']).draw();"),
+                  container = sketch,
+                  formatStyle = list(columns = c("Total.Population.Change"),   
+                                     color = DT::styleInterval(0, c("red", "green"))),
+                  formatStyle = list(columns = c("Natural.Increase"),   
+                                     backgroundColor = DT::styleInterval(c(7614, 15914, 34152),
+                                                                         c("lightgray", "gray", "cadetblue", "#808000"))))
+
+output$table_info <- renderUI({
+    list(
+        tags$ul(tags$li("User can customize downloadableTable modules using DT options such as:",
+                        tags$ul(tags$li("labels:", HTML("&nbsp;"),
+                                        tags$b(tags$i("i.e. 'colnames', 'caption', ..."))),
+                                tags$li("layout and columns styles:", HTML("&nbsp;"),
+                                        tags$b(tags$i("i.e. 'container', 'formatStyle', ..."))),
+                                tags$li("other addons:", HTML("&nbsp;"),
+                                        tags$b(tags$i("i.e. 'filter', 'callback', ..."))))),
+                tags$li("For more information about table options please visit the",
+                        tags$a("DT documentation", target = "_blank", href = "https://rstudio.github.io/DT/"),
+                        "site")
+        ))
+})
+
+downloadablePlot("examplePlot2", 
+                 ss_userAction.Log,
+                 filenameroot = "plot2_ggplot",
+                 downloadfxns = list(jpeg = plot2ggplot,
+                                     csv  = plot2ggplot_data),
+                 aspectratio  = 1.5,
+                 visibleplot  = plot2ggplot)
+
+downloadablePlot("examplePlot3",
+                 ss_userAction.Log,
+                 filenameroot = "plot3_lattice",
+                 aspectratio  = 2,
+                 downloadfxns = list(png  = plot3lattice,
+                                     tiff = plot3lattice,
+                                     txt  = plot3lattice_data,
+                                     tsv  = plot3lattice_data),
+                 visibleplot  = plot3lattice)
 
 # -- Observe UI Changes
 observeEvent(input$exampleBasicAlert, {
@@ -216,4 +305,76 @@ observeEvent(input$showWorking, {
     loginfo("Show Busy Indicator Button Pushed",
             logger = ss_userAction.Log)
     Sys.sleep(5)
+})
+
+output$body <- renderUI({
+    list(
+        periscope:::fw_create_body(),
+        shiny::tags$script(shiny::HTML("setTimeout(function (){$('div.navbar-custom-menu').click()}, 1000);")),
+        shiny::tags$script(shiny::HTML("$('div.navbar-custom-menu').click();"))
+    )
+})
+
+observeEvent(input$updateStyles, {
+    req(input$primary_color)
+    req(input$sidebar_width)
+    req(input$sidebar_background_color)
+    req(input$body_background_color)
+    req(input$box_color)
+    
+    lines <- c("### primary_color",
+               "# Sets the primary status color that affects the color of the header, valueBox, infoBox and box.",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               paste0("primary_color: '", input$primary_color, "'\n\n"),
+               
+               
+               "# Sidebar variables: change the default sidebar width, colors:",
+               "### sidebar_width",
+               "# Width is to be specified as a numeric value in pixels. Must be greater than 0 and include numbers only.",
+               "# Valid possible value are 200, 350, 425, ...",
+               "# Blank/empty value will use default value",
+               paste0("sidebar_width: ", input$sidebar_width, "\n"),
+               
+               "### sidebar_background_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               paste0("sidebar_background_color: '", input$sidebar_background_color, "'\n"),
+               
+               "### sidebar_hover_color",
+               "# The color of sidebar menu item upon hovring with mouse.",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "sidebar_hover_color: \n",
+               
+               "### sidebar_text_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "sidebar_text_color: \n\n",
+               
+               "# body variables",
+               "### body_background_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               paste0("body_background_color: '", input$body_background_color, "'\n"),
+               
+               "# boxes variables",
+               "### box_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               paste0("box_color: '", input$box_color, "'\n"),
+               
+               "### infobox_color",
+               "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
+               "# Blank/empty value will use default value",
+               "infobox_color: ")
+    
+    write(lines, "www/periscope_style.yaml", append = F)
+    load_themes$themes <- read_themes()
+    output$body <- renderUI({
+        list(periscope:::fw_create_body(),
+             shiny::tags$script("$('#app_styling').closest('.box').find('[data-widget=collapse]').click();"),
+             shiny::tags$script(shiny::HTML("setTimeout(function (){$('div.navbar-custom-menu').click()}, 1000);")),
+             shiny::tags$script(shiny::HTML("$('div.navbar-custom-menu').click();")))
+    }) 
 })

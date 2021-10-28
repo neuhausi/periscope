@@ -15,7 +15,7 @@ vignette: >
 
 # Overview
 
-## Purpose
+## Purpose 
 
 This *Shiny Module* was created in order to provide a consistent-looking and
 easy-to-use table including a downloadFileButton that is automatically created,
@@ -48,21 +48,16 @@ scrolling (no paging)
 Shiny modules consist of a pair of functions that modularize, or package, a 
 small piece of reusable functionality.  The UI function is called directly by
 the user to place the UI in the correct location (as with other shiny UI
-objects).  The server function is not called directly by the user of the module.
-Instead the module server function is called only once to set it up using the
-shiny::callModule function inside the server function (i.e. user-local session
-scope.  The callModule function supplies the first three arguments of the 
-Shiny Module's function inputs - the input, output, and session.  Additional 
-arguments supplied by the user in the callModule function are passed to the
-specific shiny module that is called.  There can be additional helper functions
-that are a part of a shiny module.
+objects). The module server function that is called only once to set it up using the
+module name as a function inside the server function (i.e. user-local session
+scope.  The function first arguments is string represents the module id (the same id used in module UI function). Additional arguments can be supplied by the user based on the specific shiny module that is called.  There can be additional helper functions that are a part of a shiny module.
 
 The **downloadableTable** Shiny Module is a part of the *periscope* package and 
 consists of the following functions:
 
 * **downloadableTableUI** - the UI function to place the table in the 
 application
-* **downloadableTable** - the Server function supplied to callModule.
+* **downloadableTable** - the server function to be called inside server_local.R.
 
 
 ## downloadableTableUI
@@ -99,13 +94,8 @@ downloadableTableUI("object_id1",
 
 ## downloadableTable
 
-The **downloadableTable** function is not called directly - instead a call to 
-shiny::callModule is made inside the server.R (or equivalent) file to initialize
-the module.
+The **downloadableTable** function is called directly. The call consists of the following:
 
-The call consists of the following:
-
-* the name of the module - unquoted
 * the unique object ID that was provided to downloadableTableUI when creating 
 the UI object
 * the logging logger to be used
@@ -119,8 +109,8 @@ initiates a download *(see requirements below)*.
 * a data function providing the data for the visible table.  It can be the same,
 or different, data as that provided by the download data functions.  This
 allows finer control over what the user can view vs. download if desired.
-* whether or not to show rownames on the table
-* a table caption, if desired.
+* ... free parameters **named list** to pass table customization options. 
+It supports most of DT table options customization. See example below.
 
 
 **Data Function Requirements**
@@ -138,26 +128,60 @@ to the user from the application.  All the above requirements apply.
 
 **Reactive Return Value**
 
-The callModule function returns a reactive expression containing the selected
+The server function returns a reactive expression containing the selected
 rows (data, not references, rownumbers, etc - the actual table row data).  This
 allows the user to capture this to update another table, chart, etc. as desired.
 It is acceptable to ignore the return value as well if this functionality is not
 needed.
 
+**Customization Options**
+
+*downloadableTable* module can be customized using the same `?DT::datatable` arguments. options or format functions. These options can be sent as a named options via the server function, see example below. 
+*Notes*: 
+
+* `selection` parameter in the server function has different usage than `DT::datatable` `selection` option as it should be a function or reactive expression providing the row_ids of the rows that should be selected. Its default value is `NULL`
+* `editable`, `width`, `height` options in `DT::datatable` are not supported
+
+The following is an example of a customized downloadableTable:
+
+<center><img src="figures/downloadableTable-2.jpg" width="500px"></center>
+
+It is generated using the following code:
 
 ```{r, eval = F}
 # Inside server_local.R
+sketch <- htmltools::withTags(table(
+    class = "display",
+    thead(
+        tr(
+            th(rowspan = 2, "Location"),
+            th(colspan = 2, "Statistics")
+        ),
+        tr(
+            th("Change"),
+            th("Increase")
+        )
+        
+    )
+))
 
-selectedrows <- callModule(downloadableTable, 
-                           "object_id1", 
-                           logger = ss_userAction.Log,
-                           filenameroot = "mydownload1",
-                           downloaddatafxns = list(csv = mydatafxn1, tsv = mydatafxn2),
-                           tabledata = mydatafxn3,
-                           rownames = FALSE,
-                           caption = "This is a great table!  By: Me" )
+selectedrows <- downloadableTable("exampleDT1",
+                                  ss_userAction.Log,
+                                  "exampletable",
+                                  list(csv = load_data3, tsv = load_data3),
+                                  load_data3,
+                                  colnames = c("Area", "Delta", "Increase"),
+                                  filter = "bottom",
+                                  callback = htmlwidgets::JS("table.order([1, 'asc']).draw();"),
+                                  container = sketch,
+                                  formatStyle = list(columns = c("Total.Population.Change"),   
+                                                     color = DT::styleInterval(0, c("red", "green"))),
+                                  formatStyle = list(columns = c("Natural.Increase"),   
+                                                     backgroundColor = DT::styleInterval(
+                                                         c(7614, 15914, 34152),
+                                                         c("blue", "lightblue", "#FF7F7F", "red"))))
 
-# selectedrows is the reactive return value, captured for later use
+# NOTE: selectedrows is the reactive return value, captured for later use
 ```
 
 
@@ -171,7 +195,7 @@ library(periscope)
 
 app_dir = tempdir()
 create_new_application('mysampleapp', location = app_dir, sampleapp = TRUE)
-runApp('mysampleapp', appDir = app_dir)
+runApp(paste(app_dir, 'mysampleapp', sep = .Platform$file.sep))
 ```
 
 <br>

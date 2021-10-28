@@ -1,0 +1,47 @@
+### primary_color
+# Sets the primary status color that affects the color of the header, valueBox, infoBox and box.
+# Valid values are names of the color or hex-decimal value of the color (i.e,: "blue", "#086A87").
+# Blank/empty value will use default value
+primary_color: "#4F718F"
+
+
+# Sidebar variables: change the default sidebar width, colors:
+### sidebar_width
+# Width is to be specified as a numeric value in pixels. Must be greater than 0 and include numbers only.
+# Valid possible value are 200, 350, 425, ...
+# Blank/empty value will use default value
+sidebar_width: 300
+
+### sidebar_background_color
+# Valid values are names of the color or hex-decimal value of the color (i.e,: "blue", "#086A87").
+# Blank/empty value will use default value
+sidebar_background_color: "#A0B89E"
+
+### sidebar_hover_color
+# The color of sidebar menu item upon hovring with mouse.
+# Valid values are names of the color or hex-decimal value of the color (i.e,: "blue", "#086A87").
+# Blank/empty value will use default value
+sidebar_hover_color: 
+
+### sidebar_text_color
+# Valid values are names of the color or hex-decimal value of the color (i.e,: "blue", "#086A87").
+# Blank/empty value will use default value
+sidebar_text_color: 
+
+
+# body variables
+### body_background_color
+# Valid values are names of the color or hex-decimal value of the color (i.e,: "blue", "#086A87").
+# Blank/empty value will use default value
+body_background_color: "#EDECE8"
+
+# boxes variables
+### box_color
+# Valid values are names of the color or hex-decimal value of the color (i.e,: "blue", "#086A87").
+# Blank/empty value will use default value
+box_color: "#DAE0D9"
+
+### infobox_color
+# Valid values are names of the color or hex-decimal value of the color (i.e,: "blue", "#086A87").
+# Blank/empty value will use default value
+infobox_color: 

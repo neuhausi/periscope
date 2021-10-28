@@ -151,9 +151,20 @@ createAlert(session, "sidebarRightAlert",
 ```
 
 #### Styling
+##### Overview
+Different parts of the generated application can be customized with a custom yaml file called *periscope_style.yaml* located under *www* folder as follow:
 
-The application can be created with a custom style. For now, only the color of the application header bar can be changed, 
-but more options will be added later on. The bar color (aka the 'skin') is by default blue, but it can also be set to "black", "purple", "green", "red" or "yellow".
+<center><img src="figures/periscope_style.jpg" width="800px"></center>
+
+##### Usage
+
+* User can update the values for **periscope_style.yaml** then restart the application so new changes can take affect.
+* User can pass an existing **periscope_style.yaml** from an existing app to new one through passing its location to `custom_theme_file` parameter in `create_new_application` method.
+* The sample applications contain a section to explore updating some styles interactively:
+
+<center><img src="figures/sample_app_styling.jpg" width="800px"></center>
+
+* The generated yaml file for blank applications will contain no values for the properties -- blank application will use default style options unless they are customized.
 
 *See the Creating a Sample Application and Creating your Application sections for an example* 
 
@@ -199,8 +210,8 @@ create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE,
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, rightsidebar = TRUE)
 # application with a right sidebar using a custom icon
 create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, rightsidebar = "table")
-# application with a custom header bar color (skin)
-create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, style = list(skin = "green"))
+# application with a custom style file
+create_new_application(name = 'mytestapp', location = app_dir, sampleapp = TRUE, custom_theme_file = "periscope_style.yaml")
 ```
 
 This generates a default sample application optionally with a left/right sidebar in a subdirectory named *mytestapp* 
@@ -213,7 +224,8 @@ user's system.
 ## Step 2: Run
 
 ```{r, eval=F}
-runApp('mytestapp', appDir = app_dir)
+runApp(paste(app_dir, 'mytestapp', sep = .Platform$file.sep))
+
 ```
 
 The application should run in either the viewer or browser (depending on system
@@ -239,8 +251,8 @@ create_new_application(name = 'mytestapp', location = app_dir, resetbutton = FAL
 create_new_application(name = 'mytestapp', location = app_dir, rightsidebar = TRUE)
 # application with a right sidebar using a custom icon
 create_new_application(name = 'mytestapp', location = app_dir, rightsidebar = "table")
-# application with a custom header bar color (skin)
-create_new_application(name = 'mytestapp', location = app_dir, style = list(skin = "green"))
+# application with a custom style file
+create_new_application(name = 'mytestapp', location = app_dir, custom_theme_file = "periscope_style.yaml")
 ```
 
 This generates a default blank application optionally with a left/right sidebar in a subdirectory named *mytestapp* 
@@ -410,8 +422,7 @@ output$example1 <- renderUI({
          p("Some great explanatory text in my application"))
     })
 
-callModule(downloadFile, "ex_d1", ss_userAction.Log, "mydownload", 
-           list(csv=get_ref_data))
+downloadFile("ex_d1", ss_userAction.Log, "mydownload", list(csv=get_ref_data))
 
 observeEvent(input$exButton, {
     loginfo("exButton Pressed!", logger = ss_userAction.Log)
@@ -455,6 +466,10 @@ forget to source these files in the appropriate place according to your scoping
 needs.  *(i.e. you would source a file in server_local.R to scope by user 
 session, server_global.R to scope across all sessions, and global.R to scope 
 across all sessions and UI)*
+
+#### www/periscope_style.yaml
+
+Updated this file values and restart app to customize application different parts styles.
 
 <br>
 

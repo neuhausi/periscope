@@ -19,8 +19,16 @@ source(paste("program", "ui_body.R", sep = .Platform$file.sep),
        local = TRUE)
 
 
-dashboardPagePlus(periscope:::fw_create_header_plus(),
-                  periscope:::fw_create_sidebar(),
-                  periscope:::fw_create_body(),
-                  periscope:::fw_create_right_sidebar(),
-                  sidebar_fullCollapse = TRUE)
+addl_opts <- list()
+if (utils::packageVersion('shinydashboardPlus') < 2) {
+    plus_fxn  <- getExportedValue("shinydashboardPlus", "dashboardPagePlus")
+    addl_opts <- list(sidebar_fullCollapse = TRUE)
+} else {
+    plus_fxn <- getExportedValue("shinydashboardPlus", "dashboardPage")
+}
+
+do.call(plus_fxn, c(list(periscope:::fw_create_header_plus(),
+                         periscope:::fw_create_sidebar(),
+                         uiOutput('body'),
+                         periscope:::fw_create_right_sidebar()),
+                    addl_opts))

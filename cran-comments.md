@@ -1,10 +1,11 @@
 ## Comments from Maintainer
 
-* LazyData removed from Description to fix Note on CRAN check page
+Resubmission comments:
+Updated travis link in Readme file
 
-* Bugfix for situation where the user wants to generate an app but does not have shinydashboardPlus installed and does not need a right sidebar (which requires sdp)
-
-* There may be a NOTE due to the short time between submissions, this is an important bugfix release and I kindly ask for your exception to allow this release.
+Initial comments: 
+This is a major functionality update including changing the shiny module paradigm, supporting additional DT options in downloadableTables and updating the styling paradigm to allow more flexibility when customizing periscope applications.  This release is compatible with apps created with the 0.x version of the package and
+documentation including the sample applications, examples, vignettes, tests, etc. were also updated.
 
 ---  
     
@@ -14,13 +15,14 @@
 RStudio Server Pro (Ubuntu 18.04.2)  
 
 * R 3.6.3
-* R 4.0.4
+* R 4.0.5
+* R 4.1.1
 
 Travis-CI (Ubuntu 16.04.6)
 
 * R 3.6.3
 * R 4.0.2
-* R devel (2021-03-29 r80130)
+* R devel (2021-09-29 r80990)
 
 WinBuilder
 
@@ -29,7 +31,7 @@ WinBuilder
 
 RHub
 
-* devtools::check_rhub(interactive = F)
+* devtools::check_rhub(interactive = F, env_vars = c("R_CHECK_FORCE_SUGGESTS" = "false"))
 
 ---  
     
@@ -49,9 +51,9 @@ devtools::check()
 **NONE**
     
 ```
-pdb <- available.packages()
 tools::package_dependencies(packages = c('periscope'),
-                            db = pdb, reverse = TRUE)
+                            db       = available.packages(), 
+                            reverse  = TRUE)
 
 $periscope  
 character(0)

@@ -52,16 +52,14 @@ sorting by columns and returns a reactive dataset of selected items.
 \section{Notes}{
 
 When there are no rows to download in any of the linked downloaddatafxns the
-button will be hidden as there is nothing to download.  The linked
-downloaddatafxns are set in the paired callModule (see the \strong{Shiny Usage}
-section)
+button will be hidden as there is nothing to download.
 }
 
 \section{Shiny Usage}{
 
 Call this function at the place in ui.R where the table should be placed.
 
-Paired with a call to \code{shiny::callModule(downloadableTable, id, ...)}
+Paired with a call to \code{downloadableTable(id, ...)}
 in server.R
 }
 

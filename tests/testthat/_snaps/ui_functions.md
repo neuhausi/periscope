@@ -171,7 +171,7 @@
           <ul class="nav navbar-nav">
             <li>
               <a href="#" data-toggle="control-sidebar">
-                <i class="fa fa-gears" role="presentation" aria-label="gears icon"></i>
+                <i class="fa fa-cogs" role="presentation" aria-label="cogs icon"></i>
               </a>
             </li>
           </ul>

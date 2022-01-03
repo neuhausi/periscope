@@ -28,7 +28,7 @@
     side_basic_label    = "Basic",
     side_advanced       = .g_sidebar_default_value,
     side_advanced_label = "Advanced",
-    sidebar_right_icon  = "gears"
+    sidebar_right_icon  = "cogs"
 )
 
 # reset app options

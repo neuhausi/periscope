@@ -338,7 +338,7 @@ download_table <- function(input, output, session,
         tryCatch({
             dt <- do.call(DT::datatable, dt_args)
             
-            if (length(format_options) > 0) {
+            if ((length(format_options) > 0) && (NROW(dt_args$data) > 0)) {
                 dt <- format_columns(dt, format_options)
             }
             dt

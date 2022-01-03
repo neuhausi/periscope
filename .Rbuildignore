@@ -6,3 +6,5 @@
 ^cran-comments.md$
 ^winbuilder_results$
 ^CRAN-RELEASE$
+^\.circleci$
+^CRAN-SUBMISSION$

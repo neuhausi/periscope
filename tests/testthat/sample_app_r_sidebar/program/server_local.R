@@ -85,7 +85,7 @@ output$proginfo <- renderUI({
            "application-wide functionality is useful across all users that ",
            "should be added into server_global.R.  Scoping information is in ",
            "the top comment of all program example files.") )
-    })
+})
 
 output$tooltips <- renderUI({
     list(hr(),
@@ -94,7 +94,7 @@ output$tooltips <- renderUI({
                       text = "Example tooltip text"),
            "can be added with the following code in the UI:"),
          p(pre("U: ui_tooltip('tooltipID', 'label text (optional)', 'text content')")) )
-    })
+})
 
 output$busyind  <- renderUI({
     list(hr(),
@@ -104,7 +104,7 @@ output$busyind  <- renderUI({
              bsButton("showWorking",
                       label = "Show application busy indicator for 5 seconds",
                       style = "primary")) )
-    })
+})
 
 output$download <- renderUI({
     list(
@@ -120,7 +120,7 @@ output$download <- renderUI({
           "Multiple-choice Download: ",
           downloadFileButton("exampleDownload2",
                              c("csv", "xlsx", "tsv"), "Download options")) )
-    })
+})
 
 output$alerts   <- renderUI({
     list(hr(),
@@ -155,7 +155,7 @@ output$loginfo <- renderUI({
            "the log is kept as 'actions.log.last"),
          p("See the ", em("logging"), "documentation for more information ",
            "on functions and other options") )
-    })
+})
 
 output$hover_info <- renderUI({
     hover <- input$examplePlot2_hover
@@ -168,15 +168,15 @@ output$hover_info <- renderUI({
     else {
         left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
         left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
-
+        
         top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
         top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
-
+        
         style <- paste0("position:absolute;",
                         "z-index:100;",
                         "background-color: rgba(245, 245, 245, 0.85); ",
                         "left:", left_px + 2, "px; top:", top_px + 2, "px;")
-
+        
         return(wellPanel(class = "well-sm",
                          style = style,
                          HTML("<b> Car: </b>", rownames(point))) )
@@ -262,7 +262,7 @@ sketch <- htmltools::withTags(
             tr(
                 th("Change"),
                 th("Increase")))
-))
+        ))
 
 downloadableTable("exampleDT1",
                   ss_userAction.Log,
@@ -328,7 +328,6 @@ observeEvent(input$exampleAdvancedAlert, {
     createAlert(session, "sidebarAdvancedAlert",
                 style = "warning",
                 content = "Example Advanced Sidebar Alert")
-
 })
 
 observeEvent(input$exampleRightAlert, {
@@ -355,25 +354,16 @@ observeEvent(input$showWorking, {
 })
 
 output$body <- renderUI({
-    list(
-        periscope:::fw_create_body(),
-        shiny::tags$script(shiny::HTML("setTimeout(function (){$('div.navbar-custom-menu').click()}, 1000);")),
-        shiny::tags$script(shiny::HTML("$('div.navbar-custom-menu').click();"))
-    )
+    list(periscope:::fw_create_body(),
+         init_js_command())
 })
 
-observeEvent(input$updateStyles, {
-    req(input$primary_color)
-    req(input$sidebar_width)
-    req(input$sidebar_background_color)
-    req(input$body_background_color)
-    req(input$box_color)
-    
+apply_themes <- function(primary_color, sidebar_width, sidebar_background_color, body_background_color, box_color) {
     lines <- c("### primary_color",
                "# Sets the primary status color that affects the color of the header, valueBox, infoBox and box.",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
                "# Blank/empty value will use default value",
-               paste0("primary_color: '", input$primary_color, "'\n\n"),
+               paste0("primary_color: '", primary_color, "'\n\n"),
                
                
                "# Sidebar variables: change the default sidebar width, colors:",
@@ -381,12 +371,12 @@ observeEvent(input$updateStyles, {
                "# Width is to be specified as a numeric value in pixels. Must be greater than 0 and include numbers only.",
                "# Valid possible value are 200, 350, 425, ...",
                "# Blank/empty value will use default value",
-               paste0("sidebar_width: ", input$sidebar_width, "\n"),
+               paste0("sidebar_width: ", sidebar_width, "\n"),
                
                "### sidebar_background_color",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
                "# Blank/empty value will use default value",
-               paste0("sidebar_background_color: '", input$sidebar_background_color, "'\n"),
+               paste0("sidebar_background_color: '", sidebar_background_color, "'\n"),
                
                "### sidebar_hover_color",
                "# The color of sidebar menu item upon hovring with mouse.",
@@ -403,13 +393,13 @@ observeEvent(input$updateStyles, {
                "### body_background_color",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
                "# Blank/empty value will use default value",
-               paste0("body_background_color: '", input$body_background_color, "'\n"),
+               paste0("body_background_color: '", body_background_color, "'\n"),
                
                "# boxes variables",
                "### box_color",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
                "# Blank/empty value will use default value",
-               paste0("box_color: '", input$box_color, "'\n"),
+               paste0("box_color: '", box_color, "'\n"),
                
                "### infobox_color",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
@@ -418,10 +408,44 @@ observeEvent(input$updateStyles, {
     
     write(lines, "www/periscope_style.yaml", append = F)
     load_themes$themes <- read_themes()
+}
+
+observeEvent(input$updateStyles, {
+    req(input$primary_color)
+    req(input$sidebar_width)
+    req(input$sidebar_background_color)
+    req(input$body_background_color)
+    req(input$box_color)
+    
+    apply_themes(primary_color            = input$primary_color, 
+                 sidebar_width            = input$sidebar_width, 
+                 sidebar_background_color = input$sidebar_background_color,
+                 body_background_color    = input$body_background_color, 
+                 box_color                = input$box_color)
+    
     output$body <- renderUI({
         list(periscope:::fw_create_body(),
              shiny::tags$script("$('#app_styling').closest('.box').find('[data-widget=collapse]').click();"),
-             shiny::tags$script(shiny::HTML("setTimeout(function (){$('div.navbar-custom-menu').click()}, 1000);")),
-             shiny::tags$script(shiny::HTML("$('div.navbar-custom-menu').click();")))
+             init_js_command())
     }) 
 })
+
+observeEvent(TRUE, {
+    apply_themes(primary_color            = "#4F718F", 
+                 sidebar_width            = "300", 
+                 sidebar_background_color = "#A0B89E", 
+                 body_background_color    = "#EDECE8", 
+                 box_color                = "#DAE0D9")
+    
+    output$body <- renderUI({
+        list(periscope:::fw_create_body(),
+             init_js_command())
+    })
+})
+
+init_js_command <- function() {
+    list(shiny::tags$script("setTimeout(function() {$('div.navbar-custom-menu').click()}, 1000);"),
+         shiny::tags$script("$('div.navbar-custom-menu').click();"),
+         shiny::tags$script("$('#examplePlot2-dplotButtonDiv').css('display', 'inherit')"),
+         shiny::tags$script("$('#examplePlot3-dplotButtonDiv').css('display', 'inherit')"))
+}

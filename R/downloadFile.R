@@ -72,7 +72,7 @@ downloadFileButton <- function(id,
             shinyBS::bsButton(
                 inputId = ns("downloadFileList"),
                 label = NULL,
-                icon = shiny::icon("files-o", lib = "font-awesome"),
+                icon = shiny::icon("copy", lib = "font-awesome"),
                 type  = "action",
                 class = "dropdown-toggle periscope-download-btn",
                 `data-toggle` = "dropdown",

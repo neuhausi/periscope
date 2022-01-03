@@ -1,5 +1,10 @@
 #Revisions and Change Log
 
+
+### v1.0.1
+* Minor bugfixes - updated font awesome icons (to v5 compatible)
+* Updated example templated applications
+
 ### v1.0.0 **major version release**
 * Updated to the latest shiny modules paradigm from the old one
 * Support for downloadableTable DT options

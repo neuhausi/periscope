@@ -312,18 +312,12 @@ output$body <- renderUI({
          init_js_command())
 })
 
-observeEvent(input$updateStyles, {
-    req(input$primary_color)
-    req(input$sidebar_width)
-    req(input$sidebar_background_color)
-    req(input$body_background_color)
-    req(input$box_color)
-    
+apply_themes <- function(primary_color, sidebar_width, sidebar_background_color, body_background_color, box_color) {
     lines <- c("### primary_color",
                "# Sets the primary status color that affects the color of the header, valueBox, infoBox and box.",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
                "# Blank/empty value will use default value",
-               paste0("primary_color: '", input$primary_color, "'\n\n"),
+               paste0("primary_color: '", primary_color, "'\n\n"),
                
                
                "# Sidebar variables: change the default sidebar width, colors:",
@@ -331,12 +325,12 @@ observeEvent(input$updateStyles, {
                "# Width is to be specified as a numeric value in pixels. Must be greater than 0 and include numbers only.",
                "# Valid possible value are 200, 350, 425, ...",
                "# Blank/empty value will use default value",
-               paste0("sidebar_width: ", input$sidebar_width, "\n"),
+               paste0("sidebar_width: ", sidebar_width, "\n"),
                
                "### sidebar_background_color",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
                "# Blank/empty value will use default value",
-               paste0("sidebar_background_color: '", input$sidebar_background_color, "'\n"),
+               paste0("sidebar_background_color: '", sidebar_background_color, "'\n"),
                
                "### sidebar_hover_color",
                "# The color of sidebar menu item upon hovring with mouse.",
@@ -353,13 +347,13 @@ observeEvent(input$updateStyles, {
                "### body_background_color",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
                "# Blank/empty value will use default value",
-               paste0("body_background_color: '", input$body_background_color, "'\n"),
+               paste0("body_background_color: '", body_background_color, "'\n"),
                
                "# boxes variables",
                "### box_color",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
                "# Blank/empty value will use default value",
-               paste0("box_color: '", input$box_color, "'\n"),
+               paste0("box_color: '", box_color, "'\n"),
                
                "### infobox_color",
                "# Valid values are names of the color or hex-decimal value of the color (i.e,: \"blue\", \"#086A87\").",
@@ -368,11 +362,39 @@ observeEvent(input$updateStyles, {
     
     write(lines, "www/periscope_style.yaml", append = F)
     load_themes$themes <- read_themes()
+}
+
+observeEvent(input$updateStyles, {
+    req(input$primary_color)
+    req(input$sidebar_width)
+    req(input$sidebar_background_color)
+    req(input$body_background_color)
+    req(input$box_color)
+    
+    apply_themes(primary_color            = input$primary_color, 
+                 sidebar_width            = input$sidebar_width, 
+                 sidebar_background_color = input$sidebar_background_color,
+                 body_background_color    = input$body_background_color, 
+                 box_color                = input$box_color)
+    
     output$body <- renderUI({
         list(periscope:::fw_create_body(),
              shiny::tags$script("$('#app_styling').closest('.box').find('[data-widget=collapse]').click();"),
              init_js_command())
     }) 
+})
+
+observeEvent(TRUE, {
+    apply_themes(primary_color            = "#4F718F", 
+                 sidebar_width            = "300", 
+                 sidebar_background_color = "#A0B89E", 
+                 body_background_color    = "#EDECE8", 
+                 box_color                = "#DAE0D9")
+    
+    output$body <- renderUI({
+        list(periscope:::fw_create_body(),
+             init_js_command())
+    })
 })
 
 init_js_command <- function() {

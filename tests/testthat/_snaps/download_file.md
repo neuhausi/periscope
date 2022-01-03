@@ -11,7 +11,7 @@
 
     <span class="btn-group">
       <button aria-expanded="false" aria-haspopup="true" class="btn btn-default action-button dropdown-toggle periscope-download-btn" data-toggle="dropdown" id="myid-downloadFileList" type="button">
-        <i class="fa fa-files-o" role="presentation" aria-label="files-o icon"></i>
+        <i class="fa fa-copy" role="presentation" aria-label="copy icon"></i>
       </button>
       <ul class="dropdown-menu" id="myid-testList">
         <li>

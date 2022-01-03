@@ -1,11 +1,10 @@
 ## Comments from Maintainer
 
-Resubmission comments:
-Updated travis link in Readme file
+Resubmission Comments:
+* permanent redirect for CircleCI was not caught, corrected the URL in the readme
 
-Initial comments: 
-This is a major functionality update including changing the shiny module paradigm, supporting additional DT options in downloadableTables and updating the styling paradigm to allow more flexibility when customizing periscope applications.  This release is compatible with apps created with the 0.x version of the package and
-documentation including the sample applications, examples, vignettes, tests, etc. were also updated.
+Original Comments:
+Minor bugfix release to update icons, templated examples
 
 ---  
     
@@ -18,11 +17,10 @@ RStudio Server Pro (Ubuntu 18.04.2)
 * R 4.0.5
 * R 4.1.1
 
-Travis-CI (Ubuntu 16.04.6)
+CircleCI
 
-* R 3.6.3
-* R 4.0.2
-* R devel (2021-09-29 r80990)
+* R 4.0.5
+* R 4.1.2
 
 WinBuilder
 

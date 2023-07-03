@@ -1,26 +1,21 @@
 ## Comments from Maintainer
 
-Resubmission Comments:
-* permanent redirect for CircleCI was not caught, corrected the URL in the readme
-
-Original Comments:
-Minor bugfix release to update icons, templated examples
+Bugfixes for the changes in utils::packageVersion and class checks in the package and tests
 
 ---  
     
 ## Test Environments
     
 
-RStudio Server Pro (Ubuntu 18.04.2)  
-
-* R 3.6.3
+RStudio Server Pro (Ubuntu 20.04)
 * R 4.0.5
-* R 4.1.1
+* R 4.2.3
+* R 4.3.0
 
 CircleCI
 
 * R 4.0.5
-* R 4.1.2
+* R latest
 
 WinBuilder
 

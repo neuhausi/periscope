@@ -139,9 +139,9 @@ create_new_application <- function(name,
         dashboard_plus <- FALSE
         right_sidebar_icon <- NULL
         if (!is.null(rightsidebar)) {
-            if (class(rightsidebar) == "logical") {
+            if ("logical" %in% class(rightsidebar)) {
                 if (rightsidebar) { dashboard_plus <- TRUE  }
-            } else if (class(rightsidebar) == "character") {
+            } else if ("character" %in% class(rightsidebar)) {
                 dashboard_plus <- TRUE
                 right_sidebar_icon <- rightsidebar
             } else {

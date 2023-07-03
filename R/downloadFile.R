@@ -274,7 +274,7 @@ download_file <- function(input,
         # excel file
         else if (type == "xlsx") {
             if ("openxlsx" %in% utils::installed.packages()) {
-                if ((class(data) == "Workbook") && ("openxlsx" %in% attributes(class(data)))) {
+                if (("Workbook" %in% class(data)) && ("openxlsx" %in% attributes(class(data)))) {
                     openxlsx::saveWorkbook(data, file)
                 } else {
                     show_rownames <- attr(data, "show_rownames")
@@ -288,7 +288,7 @@ download_file <- function(input,
         }
         # text file processing
         else if (type == "txt") {
-            if (class(data) == "character") {
+            if ("character" %in% class(data)) {
                 writeLines(data, file)
             }
             else if (is.data.frame(data) || is.matrix(data)) {

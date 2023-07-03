@@ -49,7 +49,7 @@
             "$(\"<div class='periscope-title'>",
             ifelse(is.null(app_info),
                    app_title,
-                   ifelse(class(app_info)[1] == "html",
+                   ifelse("html" %in% class(app_info),
                           paste("<a id='titleinfobox_trigger' href='#'>",
                                 app_title, "</a>"),
                           paste("<a href='", app_info,

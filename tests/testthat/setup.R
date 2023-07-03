@@ -13,4 +13,4 @@ if (interactive()) {
 }
 
 # indicator for shinydashboardPlus version
-t_sdp_old <- utils::packageVersion('shinydashboardPlus') < 2.0
+t_sdp_old <- utils::packageVersion('shinydashboardPlus') < "2"

@@ -18,7 +18,7 @@ source(paste("program", "ui_body.R", sep = .Platform$file.sep),
 
 
 addl_opts <- list()
-if (utils::packageVersion('shinydashboardPlus') < 2) {
+if (utils::packageVersion('shinydashboardPlus') < "2") {
     plus_fxn  <- getExportedValue("shinydashboardPlus", "dashboardPagePlus")
     addl_opts <- list(sidebar_fullCollapse = TRUE)
 } else {

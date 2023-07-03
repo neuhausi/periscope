@@ -164,7 +164,7 @@ fw_create_body <- function() {
     app_info <- shiny::isolate(.g_opts$app_info)
     info_content <- NULL
 
-    if (!is.null(app_info) && (class(app_info)[1] == "html")) {
+    if (!is.null(app_info) && ("html" %in% class(app_info))) {
         info_content <- shinyBS::bsModal(
                 id = "titleinfobox",
                 title = shiny::isolate(.g_opts$app_title),

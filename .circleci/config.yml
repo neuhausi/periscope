@@ -3,15 +3,6 @@
 # - Builds attempted for 3.6.3, 4.0.5, and the *latest* R edition supported by rocker.
 
 version: 2.1
-
-workflows:
-
-  version: 2
-  Prepare-All-R-Editions:
-    jobs:
-      - Build-for-r4_0_5
-      - Build-for-rLATEST
-      
 jobs:
 
   Build-for-r4_0_5:
@@ -55,7 +46,6 @@ jobs:
             R -e 'install.packages("png")'
             # Perform package check
             R CMD check *tar.gz
-
 
   Build-for-rLATEST:
     docker:
@@ -103,4 +93,11 @@ jobs:
             R -e 'install.packages("png")'
             # Perform package check
             R CMD check *tar.gz
+
+workflows:
+  version: 2
+  Prepare-All-R-Editions:
+    jobs:
+      - Build-for-r4_0_5
+      - Build-for-rLATEST
 

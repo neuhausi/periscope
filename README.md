@@ -11,7 +11,7 @@ output:
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/periscope?color=9bc2cf)](https://cran.r-project.org/package=periscope)
 [![CRAN_Downloads_Badge](https://cranlogs.r-pkg.org/badges/grand-total/periscope?color=9bc2cf)](https://cran.r-project.org/package=periscope)
 [![CircleCI](https://circleci.com/gh/cb4ds/periscope/tree/master.svg?style=shield)](https://app.circleci.com/pipelines/github/cb4ds/periscope?branch=master)
-[![Coverage Status](https://img.shields.io/codecov/c/github/cb4ds/periscope/master.svg)](https://codecov.io/github/cb4ds/periscope?branch=master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/cb4ds/periscope/master.svg)](https://app.codecov.io/github/cb4ds/periscope?branch=master)
 <!-- End Badges -->
 
 ***periscope*** was originally developed as the core Shiny component for bioinformatics and systems biology analysis applications. It provides a predefined but flexible template for new Shiny applications with a default dashboard layout, three locations for user alerts, a nice busy indicator and logging features. 

@@ -6,7 +6,7 @@
           <h3 class="box-title">User Action Log</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse">
-              <i class="fa fa-plus" role="presentation" aria-label="plus icon"></i>
+              <i class="fas fa-plus" role="presentation" aria-label="plus icon"></i>
             </button>
           </div>
         </div>

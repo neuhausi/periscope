@@ -23,7 +23,7 @@
 
 # -- Create Elements
 
-if (utils::packageVersion('shinydashboardPlus') < 2) {
+if (utils::packageVersion('shinydashboardPlus') < "2") {
     tab1 <- rightSidebarTabContent(
         id = 1,
         icon = "desktop",

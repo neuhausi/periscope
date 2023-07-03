@@ -9,7 +9,7 @@
       </span>
       <nav class="navbar navbar-static-top" role="navigation">
         <span style="display:none;">
-          <i class="fa fa-bars" role="presentation" aria-label="bars icon"></i>
+          <i class="fas fa-bars" role="presentation" aria-label="bars icon"></i>
         </span>
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
           <span class="sr-only">Toggle navigation</span>
@@ -106,7 +106,7 @@
               <h3 class="box-title">User Action Log</h3>
               <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse">
-                  <i class="fa fa-plus" role="presentation" aria-label="plus icon"></i>
+                  <i class="fas fa-plus" role="presentation" aria-label="plus icon"></i>
                 </button>
               </div>
             </div>
@@ -159,7 +159,7 @@
       </span>
       <nav class="navbar navbar-static-top" role="navigation">
         <span style="display:none;">
-          <i class="fa fa-bars" role="presentation" aria-label="bars icon"></i>
+          <i class="fas fa-bars" role="presentation" aria-label="bars icon"></i>
         </span>
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
           <span class="sr-only">Toggle navigation</span>
@@ -171,7 +171,7 @@
           <ul class="nav navbar-nav">
             <li>
               <a href="#" data-toggle="control-sidebar">
-                <i class="fa fa-cogs" role="presentation" aria-label="cogs icon"></i>
+                <i class="fas fa-gears" role="presentation" aria-label="gears icon"></i>
               </a>
             </li>
           </ul>

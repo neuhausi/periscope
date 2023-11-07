@@ -38,6 +38,7 @@
 #' @docType package
 #'
 #' @name periscope
+#' @aliases periscope-package
 NULL
 
 .g_sdp_installed <- FALSE

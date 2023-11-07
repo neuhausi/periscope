@@ -1,6 +1,6 @@
 ## Comments from Maintainer
 
-Bugfixes for the changes in utils::packageVersion and class checks in the package and tests
+Updated package documentation per issue instructions
 
 ---  
     
@@ -10,7 +10,7 @@ Bugfixes for the changes in utils::packageVersion and class checks in the packag
 RStudio Server Pro (Ubuntu 20.04)
 * R 4.0.5
 * R 4.2.3
-* R 4.3.0
+* R 4.3.1
 
 CircleCI
 

@@ -20,7 +20,7 @@ vignette: >
 This framework was created for the express purpose of making it easy for shiny
 developers to create consistent-looking and functioning applications.  This is
 important because it reduces the time a user must spend to learn the interface
-for new applications (this reducing application support time and increasing 
+for new applications (thus reducing application support time and increasing 
 the user's satisfaction across applications).
 
 In addition to creating a consistent UI experience this framework reduces
@@ -59,7 +59,8 @@ add tabbed pages, etc.
 
 The right sidebar is, like the left sidebar, reserved for configuration options, settings, 
 and general user application controls and functionality that will affect the body of the
-application.  
+application.
+
 Users can create their own tabs in the right sidebar up to a maximum of 5.
 
 The right sidebar is collapsed by default, it can be opened by clicking on the (customizable) icon.
@@ -175,7 +176,7 @@ Different parts of the generated application can be customized with a custom yam
 This is a high-functionality set of custom-styled buttons with the built-in 
 ability to download data in different file formats.
 
-*See the downloadFileButton Vignette for more detailed information*
+*See the downloadFile Vignette for more detailed information*
 
 #### downloadableTable
 

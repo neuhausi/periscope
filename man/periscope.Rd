@@ -3,6 +3,7 @@
 \docType{package}
 \name{periscope}
 \alias{periscope}
+\alias{periscope-package}
 \title{Periscope Shiny Application Framework}
 \description{
 This package supports a ui-standardized environment as well as

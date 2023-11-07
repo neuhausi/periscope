@@ -275,6 +275,7 @@ download_table <- function(input, output, session,
             dtInfo$selection <- NULL
         }
         dtInfo$selection <- result
+        dtInfo$selected  <- rownames(result)
     })
     
     shiny::observe({
